@@ -60,6 +60,7 @@ type SendTemplateEmailRequest struct {
 	FromEmail    string
 	TemplateID   string
 	TemplateData TemplateData
+	AsmGroupID   int
 }
 
 // SendTemplateEmail sends an email based on a template in the email provider.
@@ -80,6 +81,12 @@ func (e *Emailer) SendTemplateEmail(req *SendTemplateEmailRequest) error {
 	}
 
 	msg.AddPersonalizations(p)
+
+	if req.AsmGroupID != 0 {
+		a := mail.NewASM()
+		a.SetGroupID(req.AsmGroupID)
+		msg.SetASM(a)
+	}
 
 	resp, err := e.sendGridClient.Send(msg)
 	if err != nil {
