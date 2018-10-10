@@ -2,6 +2,7 @@ package utils
 
 import (
 	"bytes"
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -110,4 +111,11 @@ func (h *RestHelper) buildGetDeleteRequest(method string, url string,
 	}
 	// log.Infof("%v", req.URL.String())
 	return req, nil
+}
+
+// BuildBasicAuthHeader builds an auth header needed for Basic Authentication
+func BuildBasicAuthHeader(username string, password string) string {
+	encoded := base64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%v:%v", username, password)))
+
+	return "Basic " + encoded
 }
