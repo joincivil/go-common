@@ -28,11 +28,17 @@ func NewRestHelper(baseURL string, authorizationHeader string) *RestHelper {
 // SendRequest generates an HTTP request to the REST endpoint
 func (h *RestHelper) SendRequest(endpointName string, method string, params *url.Values,
 	payload interface{}) ([]byte, error) {
+	url := fmt.Sprintf("%v/%v", h.baseURL, endpointName)
+	return h.SendRequestToURL(url, method, params, payload)
+}
+
+// SendRequestToURL generates an HTTP request to the given URL.
+func (h *RestHelper) SendRequestToURL(url string, method string, params *url.Values,
+	payload interface{}) ([]byte, error) {
+
 	client := &http.Client{}
 	var req *http.Request
 	var err error
-
-	url := fmt.Sprintf("%v/%v", h.baseURL, endpointName)
 
 	if method == http.MethodPost {
 		req, err = h.buildPostPutRequest(method, url, payload)
