@@ -6,8 +6,8 @@ import (
 	"time"
 
 	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/joincivil/civil-events-crawler/pkg/eth"
-	"github.com/joincivil/civil-events-crawler/pkg/utils"
+	"github.com/joincivil/go-common/pkg/eth"
+	ctime "github.com/joincivil/go-common/pkg/time"
 )
 
 func TestBlockHeaderCache(t *testing.T) {
@@ -18,7 +18,7 @@ func TestBlockHeaderCache(t *testing.T) {
 		t.Error("Should have failed to retrieve any headers")
 	}
 
-	ts := big.NewInt(utils.CurrentEpochSecsInInt64())
+	ts := big.NewInt(ctime.CurrentEpochSecsInInt64())
 	header1 := &types.Header{
 		Time: ts,
 	}

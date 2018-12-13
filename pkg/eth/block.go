@@ -2,7 +2,7 @@ package eth
 
 import (
 	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/joincivil/civil-events-crawler/pkg/utils"
+	"github.com/joincivil/go-common/pkg/time"
 )
 
 type blockHeaderCacheItem struct {
@@ -33,7 +33,7 @@ func (b *BlockHeaderCache) HeaderByBlockNumber(num uint64) *types.Header {
 	if !ok {
 		return nil
 	}
-	if utils.CurrentEpochSecsInInt64()-blockItem.addedTs > b.expiryPeriodSecs {
+	if time.CurrentEpochSecsInInt64()-blockItem.addedTs > b.expiryPeriodSecs {
 		delete(b.cache, num)
 		return nil
 	}
@@ -43,7 +43,7 @@ func (b *BlockHeaderCache) HeaderByBlockNumber(num uint64) *types.Header {
 // AddHeader adds a types.Block to the map with the key being block number.
 func (b *BlockHeaderCache) AddHeader(num uint64, header *types.Header) {
 	b.cache[num] = &blockHeaderCacheItem{
-		addedTs: utils.CurrentEpochSecsInInt64(),
+		addedTs: time.CurrentEpochSecsInInt64(),
 		header:  header,
 	}
 }

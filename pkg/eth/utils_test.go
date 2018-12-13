@@ -4,7 +4,7 @@ package eth_test
 import (
 	"testing"
 
-	"github.com/joincivil/civil-events-crawler/pkg/eth"
+	"github.com/joincivil/go-common/pkg/eth"
 )
 
 func TestNormalizeEthAddress(t *testing.T) {
