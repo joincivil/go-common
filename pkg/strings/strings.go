@@ -1,5 +1,5 @@
-// Package utils contains various common utils separate by utility types
-package utils
+// Package strings contains various common utils for strings
+package strings
 
 import (
 	"crypto/rand"

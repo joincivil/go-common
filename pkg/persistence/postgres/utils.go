@@ -1,4 +1,4 @@
-package postgres // import "github.com/joincivil/civil-events-crawler/pkg/persistence/postgres"
+package postgres // import "github.com/joincivil/go-common/pkg/persistence/postgres"
 
 import (
 	"bytes"

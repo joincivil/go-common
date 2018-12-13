@@ -6,7 +6,7 @@ import (
 
 	"github.com/ethereum/go-ethereum/common"
 
-	"github.com/joincivil/civil-events-crawler/pkg/persistence/postgres"
+	"github.com/joincivil/go-common/pkg/persistence/postgres"
 )
 
 type testStruct struct {

@@ -1,17 +1,17 @@
 // +build integration
 
-package utils_test
+package pubsub_test
 
 import (
 	// "fmt"
 	"testing"
 	"time"
 
-	"github.com/joincivil/civil-events-crawler/pkg/utils"
+	"github.com/joincivil/go-common/pkg/pubsub"
 )
 
 func TestCreateDeleteTopic(t *testing.T) {
-	ps, err := utils.NewGooglePubSub("civil-media")
+	ps, err := pubsub.NewGooglePubSub("civil-media")
 	if err != nil {
 		t.Fatalf("Should not have failed to create a new pubsub obj: err: %v", err)
 	}
@@ -45,7 +45,7 @@ func TestCreateDeleteTopic(t *testing.T) {
 }
 
 func TestCreateDeleteSubscription(t *testing.T) {
-	ps, err := utils.NewGooglePubSub("civil-media")
+	ps, err := pubsub.NewGooglePubSub("civil-media")
 	if err != nil {
 		t.Fatalf("Should not have failed to create a new pubsub obj: err: %v", err)
 	}
@@ -76,7 +76,7 @@ func TestCreateDeleteSubscription(t *testing.T) {
 }
 
 func TestStartStopPubSubPublishers(t *testing.T) {
-	ps, err := utils.NewGooglePubSub("civil-media")
+	ps, err := pubsub.NewGooglePubSub("civil-media")
 	if err != nil {
 		t.Fatalf("Should not have failed to create a new pubsub obj: err: %v", err)
 	}
@@ -92,7 +92,7 @@ func TestStartStopPubSubPublishers(t *testing.T) {
 }
 
 func TestStartStopPubSubSubscribers(t *testing.T) {
-	ps, err := utils.NewGooglePubSub("civil-media")
+	ps, err := pubsub.NewGooglePubSub("civil-media")
 	if err != nil {
 		t.Fatalf("Should not have failed to create a new pubsub obj: err: %v", err)
 	}
@@ -128,7 +128,7 @@ func TestStartStopPubSubSubscribers(t *testing.T) {
 }
 
 func TestPubSubPublishersPublish(t *testing.T) {
-	ps, err := utils.NewGooglePubSub("civil-media")
+	ps, err := pubsub.NewGooglePubSub("civil-media")
 	if err != nil {
 		t.Fatalf("Should not have failed to create a new pubsub obj: err: %v", err)
 	}
@@ -162,7 +162,7 @@ func TestPubSubPublishersPublish(t *testing.T) {
 
 	go func() {
 		time.Sleep(2 * time.Second)
-		ps.Publish(&utils.GooglePubSubMsg{
+		ps.Publish(&pubsub.GooglePubSubMsg{
 			Topic:   "test-topic",
 			Payload: "payloadvalue",
 		})

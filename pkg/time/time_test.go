@@ -1,10 +1,11 @@
-// Package time_test contains tests for the time utils
-package utils_test
+// Package time_test contains tests for the time time
+package time_test
 
 import (
-	"github.com/joincivil/civil-events-crawler/pkg/utils"
 	"testing"
 	"time"
+
+	ctime "github.com/joincivil/go-common/pkg/time"
 )
 
 var EPSILON float64 = 0.999
@@ -14,7 +15,7 @@ func floatEquals(a float64, b float64) bool {
 }
 
 func TestCurrentEpochSecsInFloat(t *testing.T) {
-	ts := utils.CurrentEpochSecsInFloat()
+	ts := ctime.CurrentEpochSecsInFloat()
 	if ts <= 0.0 {
 		t.Error("Timestamp is <= 0.0, it should be greater than 0")
 	}
@@ -25,7 +26,7 @@ func TestCurrentEpochSecsInFloat(t *testing.T) {
 }
 
 func TestCurrentEpochSecsInInt64(t *testing.T) {
-	ts := utils.CurrentEpochSecsInInt64()
+	ts := ctime.CurrentEpochSecsInInt64()
 	if ts <= 0 {
 		t.Error("Timestamp is <= 0, it should be greater than 0")
 	}
@@ -36,7 +37,7 @@ func TestCurrentEpochSecsInInt64(t *testing.T) {
 }
 
 func TestCurrentEpochSecsInInt(t *testing.T) {
-	ts := utils.CurrentEpochSecsInInt()
+	ts := ctime.CurrentEpochSecsInInt()
 	if ts <= 0 {
 		t.Error("Timestamp is <= 0, it should be greater than 0")
 	}
@@ -47,8 +48,8 @@ func TestCurrentEpochSecsInInt(t *testing.T) {
 }
 
 func TestSecsToNanosecsInInt64(t *testing.T) {
-	tsecs := utils.CurrentEpochSecsInInt64()
-	tnsecs := utils.SecsToNanoSecsInInt64(tsecs)
+	tsecs := ctime.CurrentEpochSecsInInt64()
+	tnsecs := ctime.SecsToNanoSecsInInt64(tsecs)
 	secsTime := time.Unix(tsecs, 0)
 	nanoTime := time.Unix(0, tnsecs)
 	if secsTime.Year() != nanoTime.Year() {
@@ -72,7 +73,7 @@ func TestSecsToNanosecsInInt64(t *testing.T) {
 }
 
 func TestCurrentEpochNanoSecsInInt64(t *testing.T) {
-	tnsecs := utils.CurrentEpochNanoSecsInInt64()
+	tnsecs := ctime.CurrentEpochNanoSecsInInt64()
 	if tnsecs <= 0 {
 		t.Error("Should have returned a valid value for nano secs from epoch")
 	}

@@ -1,5 +1,5 @@
-// Package utils contains various common utils separate by utility types
-package utils
+// Package time contains various common time separate by utility types
+package time
 
 import (
 	"time"
