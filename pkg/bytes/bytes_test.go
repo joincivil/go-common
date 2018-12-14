@@ -1,4 +1,4 @@
-package utils_test
+package bytes_test
 
 import (
 	"bytes"
@@ -6,7 +6,7 @@ import (
 	"math/rand"
 	"testing"
 
-	"github.com/joincivil/civil-events-processor/pkg/utils"
+	cbytes "github.com/joincivil/go-common/pkg/bytes"
 )
 
 func randomHex(n int) (string, error) {
@@ -24,12 +24,12 @@ func TestByte32Utils(t *testing.T) {
 	testFixed := [32]byte{}
 	copy(testFixed[:], testBytes)
 
-	result := utils.Byte32ToHexString(testFixed)
+	result := cbytes.Byte32ToHexString(testFixed)
 	if result == "" {
 		t.Error("Empty result for string")
 	}
 
-	bys, err := utils.HexStringToByte32(result)
+	bys, err := cbytes.HexStringToByte32(result)
 	if err != nil {
 		t.Errorf("Should not have returned an error: err: %v", err)
 	}

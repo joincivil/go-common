@@ -1,6 +1,6 @@
 // build +integration
 
-package utils_test
+package email_test
 
 import (
 	"testing"

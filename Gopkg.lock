@@ -109,6 +109,24 @@
   version = "v2.0.2"
 
 [[projects]]
+  digest = "1:043a68c728982a54355d57e347dd4b52ba5ab3fec50e7a57894b1baa80aa7a9e"
+  name = "github.com/sendgrid/rest"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "306b9bef57dc36f3435ccfcc08fe6ae2c6920344"
+  version = "v2.4.1"
+
+[[projects]]
+  digest = "1:68d8629ca6e58088f809d3acf58d8dab8d1cd8f78230fb70420feedafb3f8e6e"
+  name = "github.com/sendgrid/sendgrid-go"
+  packages = [
+    ".",
+    "helpers/mail",
+  ]
+  pruneopts = "UT"
+  revision = "8cb43f4ca4f5a26bb75861eaf5ee58c3302eacb1"
+
+[[projects]]
   branch = "master"
   digest = "1:685fdfea42d825ebd39ee0994354b46c374cf2c2b2d97a41a8dee1807c6a9b62"
   name = "github.com/syndtr/goleveldb"
@@ -329,6 +347,8 @@
     "github.com/ethereum/go-ethereum/common",
     "github.com/ethereum/go-ethereum/core/types",
     "github.com/golang/glog",
+    "github.com/sendgrid/sendgrid-go",
+    "github.com/sendgrid/sendgrid-go/helpers/mail",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1

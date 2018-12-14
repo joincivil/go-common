@@ -1,8 +1,10 @@
-package utils
+package email
 
 import (
 	log "github.com/golang/glog"
+
 	sendgrid "github.com/sendgrid/sendgrid-go"
+
 	"github.com/sendgrid/sendgrid-go/helpers/mail"
 )
 
