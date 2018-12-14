@@ -14,6 +14,9 @@ GOTEST=$(GOCMD) test
 GOGET=$(GOCMD) get
 GOCOVER=$(GOCMD) tool cover
 
+GOMETALINTER_INSTALLER=scripts/gometalinter_install.sh
+GOMETALINTER_VERSION_TAG=v2.0.11
+
 GO:=$(shell command -v go 2> /dev/null)
 # DOCKER:=$(shell command -v docker 2> /dev/null)
 APT:=$(shell command -v apt-get 2> /dev/null)
@@ -43,8 +46,8 @@ install-dep: check-go-env ## Installs dep
 
 .PHONY: install-linter
 install-linter: check-go-env ## Installs linter
-	@$(GOGET) -u github.com/alecthomas/gometalinter
-	@gometalinter --install
+	sh $(GOMETALINTER_INSTALLER) -b $(GOPATH)/bin $(GOMETALINTER_VERSION_TAG)
+
 ifdef APT
 	@sudo apt-get install golang-race-detector-runtime || true
 endif
