@@ -18,16 +18,55 @@
   version = "v0.34.0"
 
 [[projects]]
-  digest = "1:02502632ee89fba2b0907b0d5e89d59c43c1534f04a4c8c00b75d387e8063b0c"
-  name = "github.com/ethereum/go-ethereum"
+  digest = "1:1156cfea0ff969858f6027df95c15ca5e802556b466aebeedaf53dde3b301db3"
+  name = "github.com/allegro/bigcache"
   packages = [
-    "common",
-    "common/hexutil",
-    "crypto/sha3",
+    ".",
+    "queue",
   ]
   pruneopts = "UT"
+  revision = "f31987a23e44c5121ef8c8b2f2ea2e8ffa37b068"
+  version = "v1.1.0"
+
+[[projects]]
+  branch = "master"
+  digest = "1:093bf93a65962e8191e3e8cd8fc6c363f83d43caca9739c906531ba7210a9904"
+  name = "github.com/btcsuite/btcd"
+  packages = ["btcec"]
+  pruneopts = "UT"
+  revision = "7d2daa5bfef28c5e282571bc06416516936115ee"
+
+[[projects]]
+  digest = "1:87fa9f2d71fd2516e6c0d906b7eb58886c8b4fcc6ee8cada0553a0e50bfeef3a"
+  name = "github.com/ethereum/go-ethereum"
+  packages = [
+    ".",
+    "common",
+    "common/hexutil",
+    "common/math",
+    "common/prque",
+    "core/types",
+    "crypto",
+    "crypto/secp256k1",
+    "crypto/sha3",
+    "ethdb",
+    "log",
+    "metrics",
+    "params",
+    "rlp",
+    "trie",
+  ]
+  pruneopts = "T"
   revision = "24d727b6d6e2c0cde222fa12155c4a6db5caaf2e"
   version = "v1.8.20"
+
+[[projects]]
+  digest = "1:586ea76dbd0374d6fb649a91d70d652b7fe0ccffb8910a77468e7702e7901f3d"
+  name = "github.com/go-stack/stack"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "2fee6af1a9795aafbe0253a0cfbdf668e1fb8a9a"
+  version = "v1.8.0"
 
 [[projects]]
   branch = "master"
@@ -54,12 +93,41 @@
   version = "v1.2.0"
 
 [[projects]]
+  branch = "master"
+  digest = "1:4a0c6bb4805508a6287675fac876be2ac1182539ca8a32468d8128882e9d5009"
+  name = "github.com/golang/snappy"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "2e65f85255dbc3072edf28d6b5b8efc472979f5a"
+
+[[projects]]
   digest = "1:e04cc716992a302cacf6d726409a05aa9546241998b24356d6dd0f01bc5a374e"
   name = "github.com/googleapis/gax-go"
   packages = ["."]
   pruneopts = "UT"
   revision = "b001040cd31805261cbd978842099e326dfa857b"
   version = "v2.0.2"
+
+[[projects]]
+  branch = "master"
+  digest = "1:685fdfea42d825ebd39ee0994354b46c374cf2c2b2d97a41a8dee1807c6a9b62"
+  name = "github.com/syndtr/goleveldb"
+  packages = [
+    "leveldb",
+    "leveldb/cache",
+    "leveldb/comparer",
+    "leveldb/errors",
+    "leveldb/filter",
+    "leveldb/iterator",
+    "leveldb/journal",
+    "leveldb/memdb",
+    "leveldb/opt",
+    "leveldb/storage",
+    "leveldb/table",
+    "leveldb/util",
+  ]
+  pruneopts = "UT"
+  revision = "b001fa50d6b27f3f0bb175a87d0cb55426d0a0ae"
 
 [[projects]]
   digest = "1:381ccafa5e013a0e3f9b54604ae522a73b9533a375a6a714b483c634d5e927ab"
@@ -257,7 +325,9 @@
   analyzer-version = 1
   input-imports = [
     "cloud.google.com/go/pubsub",
+    "github.com/ethereum/go-ethereum",
     "github.com/ethereum/go-ethereum/common",
+    "github.com/ethereum/go-ethereum/core/types",
     "github.com/golang/glog",
   ]
   solver-name = "gps-cdcl"
