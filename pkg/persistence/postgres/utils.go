@@ -92,3 +92,13 @@ func InsertIntoDBQueryString(tableName string, dbModelStruct interface{}) string
 	queryString := fmt.Sprintf("INSERT INTO %s (%s) VALUES(%s);", tableName, fieldNames, fieldNamesColon) // nolint: gosec
 	return queryString
 }
+
+// DbFieldNameFromModelName gets the field name from db given postgres model struct
+func DbFieldNameFromModelName(exampleStruct interface{}, fieldName string) (string, error) {
+	sType := reflect.TypeOf(exampleStruct)
+	field, ok := sType.FieldByName(fieldName)
+	if !ok {
+		return "", fmt.Errorf("%s may not exist in struct", fieldName)
+	}
+	return field.Tag.Get("db"), nil
+}

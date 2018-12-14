@@ -5,6 +5,8 @@ import (
 	"crypto/rand"
 	"encoding/hex"
 	"regexp"
+	"strconv"
+	"strings"
 
 	"github.com/ethereum/go-ethereum/common"
 )
@@ -32,4 +34,43 @@ func RandomHexStr(n int) (string, error) {
 		return "", err
 	}
 	return hex.EncodeToString(bys), nil
+}
+
+// ListCommonAddressToListString converts a list of common.address to list of string
+func ListCommonAddressToListString(addresses []common.Address) []string {
+	addressesString := make([]string, len(addresses))
+	for i, address := range addresses {
+		addressesString[i] = address.Hex()
+	}
+	return addressesString
+}
+
+// ListStringToListCommonAddress converts a list of strings to list of common.address
+func ListStringToListCommonAddress(addresses []string) []common.Address {
+	addressesCommon := make([]common.Address, len(addresses))
+	for i, address := range addresses {
+		addressesCommon[i] = common.HexToAddress(address)
+	}
+	return addressesCommon
+}
+
+// ListCommonAddressesToString converts a list of common.address to a comma delimited string
+func ListCommonAddressesToString(addresses []common.Address) string {
+	addressesString := ListCommonAddressToListString(addresses)
+	return strings.Join(addressesString, ",")
+}
+
+// ListIntToListString converts a list of big.int to a list of string
+func ListIntToListString(listInt []int) []string {
+	listString := make([]string, len(listInt))
+	for idx, i := range listInt {
+		listString[idx] = strconv.Itoa(i)
+	}
+	return listString
+}
+
+// StringToCommonAddressesList converts a comma delimited string to a list of common.address
+func StringToCommonAddressesList(addresses string) []common.Address {
+	addressesString := strings.Split(addresses, ",")
+	return ListStringToListCommonAddress(addressesString)
 }
