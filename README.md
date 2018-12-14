@@ -5,7 +5,7 @@
 
 This repository contains open-source code for common components used in various Civil projects written in Go. 
 
-[![CircleCI](https://img.shields.io/circleci/project/github/joincivil/go-common.svg)](https://circleci.com/gh/joincivil/go-common/tree/master)
+[![CircleCI](https://circleci.com/gh/joincivil/go-common.svg?style=shield)](https://circleci.com/gh/joincivil/go-common)
 [![Go Report Card](https://goreportcard.com/badge/github.com/joincivil/go-common)](https://goreportcard.com/report/github.com/joincivil/go-common)
 [![Gitter chat](https://badges.gitter.im/joincivil/Lobby.png)](https://gitter.im/joincivil/Lobby)
 [![Telegram chat](https://img.shields.io/badge/chat-telegram-blue.svg)](https://t.me/join_civil)
