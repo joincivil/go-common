@@ -51,6 +51,7 @@ jobs:
             - pkg
             - Makefile
             - vendor
+            - scripts
             - cmd
             - .gometalinter.json
 
