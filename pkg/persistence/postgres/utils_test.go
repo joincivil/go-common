@@ -18,7 +18,7 @@ type testStruct struct {
 }
 
 func TestStructFieldsForQuery(t *testing.T) {
-	fieldNames, fieldNamesColon := postgres.StructFieldsForQuery(testStruct{}, true)
+	fieldNames, fieldNamesColon := postgres.StructFieldsForQuery(testStruct{}, true, "")
 
 	splitFields := strings.Split(fieldNames, ",")
 	if len(splitFields) != 3 {

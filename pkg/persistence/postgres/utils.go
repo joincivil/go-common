@@ -58,8 +58,8 @@ func (jp *JsonbPayload) Scan(src interface{}) error {
 }
 
 // StructFieldsForQuery is a generic Insert statement for any table
-// NOTE(IS): There may be a better way to construct this query
-func StructFieldsForQuery(exampleStruct interface{}, colon bool) (string, string) {
+// tablePrefix="" is used to specify table name, i.e. "l" to get "l.name", etc.
+func StructFieldsForQuery(exampleStruct interface{}, colon bool, tablePrefix string) (string, string) {
 	var fields bytes.Buffer
 	var fieldsWithColon bytes.Buffer
 	valStruct := reflect.ValueOf(exampleStruct)
@@ -69,6 +69,9 @@ func StructFieldsForQuery(exampleStruct interface{}, colon bool) (string, string
 		// Skip ignored fields
 		if strings.TrimSpace(dbFieldName) == ignoredFieldName {
 			continue
+		}
+		if tablePrefix != "" {
+			fields.WriteString(fmt.Sprintf("%v.", tablePrefix)) // nolint: gosec
 		}
 		fields.WriteString(dbFieldName) // nolint: gosec
 		if colon {
@@ -88,7 +91,7 @@ func StructFieldsForQuery(exampleStruct interface{}, colon bool) (string, string
 
 // InsertIntoDBQueryString creates the query to insert a given struct into a given table
 func InsertIntoDBQueryString(tableName string, dbModelStruct interface{}) string {
-	fieldNames, fieldNamesColon := StructFieldsForQuery(dbModelStruct, true)
+	fieldNames, fieldNamesColon := StructFieldsForQuery(dbModelStruct, true, "")
 	queryString := fmt.Sprintf("INSERT INTO %s (%s) VALUES(%s);", tableName, fieldNames, fieldNamesColon) // nolint: gosec
 	return queryString
 }
