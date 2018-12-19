@@ -30,6 +30,14 @@
 
 [[projects]]
   branch = "master"
+  digest = "1:7d191fd0c54ff370eaf6116a14dafe2a328df487baea280699f597aae858d00d"
+  name = "github.com/aristanetworks/goarista"
+  packages = ["monotime"]
+  pruneopts = "UT"
+  revision = "aa2a42e13be68c4a95fe9e58003adaf63fe6476f"
+
+[[projects]]
+  branch = "master"
   digest = "1:093bf93a65962e8191e3e8cd8fc6c363f83d43caca9739c906531ba7210a9904"
   name = "github.com/btcsuite/btcd"
   packages = ["btcec"]
@@ -37,19 +45,33 @@
   revision = "7d2daa5bfef28c5e282571bc06416516936115ee"
 
 [[projects]]
+  digest = "1:e47d51dab652d26c3fba6f8cba403f922d02757a82abdc77e90df7948daf296e"
+  name = "github.com/deckarep/golang-set"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "cbaa98ba5575e67703b32b4b19f73c91f3c4159e"
+  version = "v1.7.1"
+
+[[projects]]
   digest = "1:87fa9f2d71fd2516e6c0d906b7eb58886c8b4fcc6ee8cada0553a0e50bfeef3a"
   name = "github.com/ethereum/go-ethereum"
   packages = [
     ".",
+    "accounts",
+    "accounts/abi",
+    "accounts/abi/bind",
+    "accounts/keystore",
     "common",
     "common/hexutil",
     "common/math",
+    "common/mclock",
     "common/prque",
     "core/types",
     "crypto",
     "crypto/secp256k1",
     "crypto/sha3",
     "ethdb",
+    "event",
     "log",
     "metrics",
     "params",
@@ -59,6 +81,14 @@
   pruneopts = "T"
   revision = "24d727b6d6e2c0cde222fa12155c4a6db5caaf2e"
   version = "v1.8.20"
+
+[[projects]]
+  digest = "1:af43bdaaf86655a2343f113e9b293bbc16b12099eaeb223982bbe4d4c22ba14d"
+  name = "github.com/fatih/structs"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "4966fc68f5b7593aafa6cbbba2d65ec6e1416047"
+  version = "v1.1.0"
 
 [[projects]]
   digest = "1:586ea76dbd0374d6fb649a91d70d652b7fe0ccffb8910a77468e7702e7901f3d"
@@ -101,12 +131,48 @@
   revision = "2e65f85255dbc3072edf28d6b5b8efc472979f5a"
 
 [[projects]]
+  digest = "1:236d7e1bdb50d8f68559af37dbcf9d142d56b431c9b2176d41e2a009b664cda8"
+  name = "github.com/google/uuid"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "9b3b1e0f5f99ae461456d768e7d301a7acdaa2d8"
+  version = "v1.1.0"
+
+[[projects]]
   digest = "1:e04cc716992a302cacf6d726409a05aa9546241998b24356d6dd0f01bc5a374e"
   name = "github.com/googleapis/gax-go"
   packages = ["."]
   pruneopts = "UT"
   revision = "b001040cd31805261cbd978842099e326dfa857b"
   version = "v2.0.2"
+
+[[projects]]
+  branch = "master"
+  digest = "1:1d4626d33713e976d6000e680e5e48433ff29865c50d427c87fc8a7e280e1109"
+  name = "github.com/joincivil/civil-events-crawler"
+  packages = [
+    "pkg/gen",
+    "pkg/generated/contract",
+    "pkg/model",
+  ]
+  pruneopts = "UT"
+  revision = "698c46f9ea916ecb42599ecfbd695ee5b210b940"
+
+[[projects]]
+  digest = "1:e5d0bd87abc2781d14e274807a470acd180f0499f8bf5bb18606e9ec22ad9de9"
+  name = "github.com/pborman/uuid"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "adf5a7427709b9deb95d29d3fa8a2bf9cfd388f1"
+  version = "v1.2"
+
+[[projects]]
+  digest = "1:31d83d1b1c288073c91abadee3caec87de2a1fb5dbe589039264a802e67a26b8"
+  name = "github.com/rjeczalik/notify"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "69d839f37b13a8cb7a78366f7633a4071cb43be7"
+  version = "v0.9.2"
 
 [[projects]]
   digest = "1:043a68c728982a54355d57e347dd4b52ba5ab3fec50e7a57894b1baa80aa7a9e"
@@ -170,6 +236,17 @@
   pruneopts = "UT"
   revision = "b7bf3cdb64150a8c8c53b769fdeb2ba581bd4d4b"
   version = "v0.18.0"
+
+[[projects]]
+  branch = "master"
+  digest = "1:dd658e9008df9e0bea1ddb2caa3df8250e5e42bf54dcb776ed5bef0496395549"
+  name = "golang.org/x/crypto"
+  packages = [
+    "pbkdf2",
+    "scrypt",
+  ]
+  pruneopts = "UT"
+  revision = "505ab145d0a99da450461ae2c1a9f6cd10d1f447"
 
 [[projects]]
   branch = "master"
@@ -344,9 +421,14 @@
   input-imports = [
     "cloud.google.com/go/pubsub",
     "github.com/ethereum/go-ethereum",
+    "github.com/ethereum/go-ethereum/accounts/abi",
+    "github.com/ethereum/go-ethereum/accounts/abi/bind",
     "github.com/ethereum/go-ethereum/common",
     "github.com/ethereum/go-ethereum/core/types",
+    "github.com/ethereum/go-ethereum/crypto",
+    "github.com/ethereum/go-ethereum/event",
     "github.com/golang/glog",
+    "github.com/joincivil/civil-events-crawler/pkg/gen",
     "github.com/sendgrid/sendgrid-go",
     "github.com/sendgrid/sendgrid-go/helpers/mail",
   ]
