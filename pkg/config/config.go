@@ -60,3 +60,19 @@ func OutputUsage(configStruct interface{}, appName string, envarPrefix string) {
 	_ = envconfig.Usagef(envarPrefix, configStruct, tabs, usageFormat) // nolint: gosec
 	_ = tabs.Flush()                                                   // nolint: gosec
 }
+
+// PersisterTypeFromName returns the correct persisterType from the string name
+func PersisterTypeFromName(typeStr string) (PersisterType, error) {
+	pType, ok := PersisterNameToType[typeStr]
+	if !ok {
+		validNames := make([]string, len(PersisterNameToType))
+		index := 0
+		for name := range PersisterNameToType {
+			validNames[index] = name
+			index++
+		}
+		return PersisterTypeInvalid,
+			fmt.Errorf("Invalid persister value: %v; valid types %v", typeStr, validNames)
+	}
+	return pType, nil
+}
