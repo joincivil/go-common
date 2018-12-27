@@ -30,6 +30,16 @@ var (
 	}
 )
 
+// PersisterConfig defines the interfaces for persister-related configuration
+type PersisterConfig interface {
+	PersistType() PersisterType
+	PostgresAddress() string
+	PostgresPort() int
+	PostgresDbname() string
+	PostgresUser() string
+	PostgresPw() string
+}
+
 const (
 	usageFormat = `The %v is configured via environment vars only. The following environment variables can be used:
 {{range .}}
