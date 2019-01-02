@@ -69,6 +69,7 @@ type GooglePubSub struct {
 	subscribeContext       context.Context
 	subscribeContextCancel context.CancelFunc
 	subscribeStarted       bool
+	subscribeMutex         sync.Mutex
 	numRunningSubscribe    int
 }
 
@@ -149,12 +150,18 @@ func (g *GooglePubSub) Publish(msg *GooglePubSubMsg) error {
 
 // PublishersStarted returns true if the publishers are running, false if not.
 func (g *GooglePubSub) PublishersStarted() bool {
-	return g.publishStarted
+	g.publishMutex.Lock()
+	pubStarted := g.publishStarted
+	g.publishMutex.Unlock()
+	return pubStarted
 }
 
 // NumPublishersRunning return the number of publishers goroutines running.
 func (g *GooglePubSub) NumPublishersRunning() int {
-	return g.numRunningPublish
+	g.publishMutex.Lock()
+	numPubs := g.numRunningPublish
+	g.publishMutex.Unlock()
+	return numPubs
 }
 
 // StopPublishers will stop the publisher goroutines
@@ -177,6 +184,8 @@ func (g *GooglePubSub) StopPublishers() error {
 
 // StartSubscribersWithConfig starts up a pool of PubSub publishers.
 func (g *GooglePubSub) StartSubscribersWithConfig(config SubscribeConfig) error {
+	g.subscribeMutex.Lock()
+	defer g.subscribeMutex.Unlock()
 	ok, err := g.SubscriptionExists(config.Name)
 	if err != nil {
 		return err
@@ -268,12 +277,18 @@ func (g *GooglePubSub) SubscriptionExists(subName string) (bool, error) {
 
 // SubscribersStarted returns true if the subscribers are running, false if not.
 func (g *GooglePubSub) SubscribersStarted() bool {
-	return g.subscribeStarted
+	g.subscribeMutex.Lock()
+	subStarted := g.subscribeStarted
+	g.subscribeMutex.Unlock()
+	return subStarted
 }
 
 // NumSubscribersRunning return the number of subscriber goroutines running.
 func (g *GooglePubSub) NumSubscribersRunning() int {
-	return g.numRunningSubscribe
+	g.subscribeMutex.Lock()
+	numSubs := g.numRunningSubscribe
+	g.subscribeMutex.Unlock()
+	return numSubs
 }
 
 // SubscriptionName returns the name of the subscription to track.
@@ -285,7 +300,9 @@ func (g *GooglePubSub) SubscriptionName() string {
 func (g *GooglePubSub) StopSubscribers() error {
 	g.subscribeContextCancel()
 	close(g.SubscribeChan)
+	g.subscribeMutex.Lock()
 	g.subscribeStarted = false
+	g.subscribeMutex.Unlock()
 	return nil
 }
 
