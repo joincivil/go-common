@@ -205,9 +205,7 @@ func (g *GooglePubSub) StartSubscribersWithConfig(config SubscribeConfig) error 
 			go g.subscriber(&wg)
 			log.Info("Subscriber started")
 		}
-		g.publishMutex.Lock()
-		g.publishStarted = true
-		g.publishMutex.Unlock()
+		g.subscribeStarted = true
 		log.Infof("All subscribers started: num: %v", numRoutines)
 
 		wg.Wait()
@@ -275,7 +273,7 @@ func (g *GooglePubSub) SubscribersStarted() bool {
 
 // NumSubscribersRunning return the number of subscriber goroutines running.
 func (g *GooglePubSub) NumSubscribersRunning() int {
-	return g.numRunningPublish
+	return g.numRunningSubscribe
 }
 
 // SubscriptionName returns the name of the subscription to track.
