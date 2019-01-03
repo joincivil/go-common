@@ -85,6 +85,14 @@ func TestStartStopPubSubPublishers(t *testing.T) {
 		t.Fatalf("Should have started publishers up: err: %v", err)
 	}
 	time.Sleep(2 * time.Second)
+	pubStarted := ps.PublishersStarted()
+	if !pubStarted {
+		t.Fatalf("Should have started publishers")
+	}
+	numPubs := ps.NumPublishersRunning()
+	if numPubs <= 0 {
+		t.Fatalf("Should have started 1 publisher")
+	}
 	err = ps.StopPublishers()
 	if err != nil {
 		t.Fatalf("Should have stopped publishers: err: %v", err)
@@ -113,6 +121,14 @@ func TestStartStopPubSubSubscribers(t *testing.T) {
 		t.Fatalf("Should have started up subscription: err: %v", err)
 	}
 	time.Sleep(2 * time.Second)
+	subStarted := ps.SubscribersStarted()
+	if !subStarted {
+		t.Fatalf("Should have started subscribers")
+	}
+	numSubs := ps.NumSubscribersRunning()
+	if numSubs <= 0 {
+		t.Fatalf("Should have started 1 subscriber")
+	}
 	err = ps.StopSubscribers()
 	if err != nil {
 		t.Fatalf("Should have stopped subscribers: err: %v", err)
@@ -148,6 +164,16 @@ func TestPubSubPublishersPublish(t *testing.T) {
 	err = ps.StartPublishers()
 	if err != nil {
 		t.Fatalf("Should have started publishers up: err: %v", err)
+	}
+	time.Sleep(2 * time.Second)
+
+	pubStarted := ps.PublishersStarted()
+	if !pubStarted {
+		t.Fatalf("Should have started publishers")
+	}
+	numPubs := ps.NumPublishersRunning()
+	if numPubs <= 0 {
+		t.Fatalf("Should have started 1 publisher")
 	}
 
 	numResults := 0
