@@ -31,6 +31,13 @@ GO:=$(shell command -v go 2> /dev/null)
 # DOCKER:=$(shell command -v docker 2> /dev/null)
 APT:=$(shell command -v apt-get 2> /dev/null)
 
+UNAME=$(shell uname)
+
+SED=sed -i ""
+ifeq ($(UNAME),Linux)
+	SED=sed -i
+endif
+
 ## Reliant on go and $GOPATH being set
 .PHONY: check-go-env
 check-go-env:
@@ -57,10 +64,6 @@ install-dep: check-go-env ## Installs dep
 .PHONY: install-linter
 install-linter: check-go-env ## Installs linter
 	sh $(GOMETALINTER_INSTALLER) -b $(GOPATH)/bin $(GOMETALINTER_VERSION_TAG)
-
-ifdef APT
-	@sudo apt-get install golang-race-detector-runtime || true
-endif
 
 .PHONY: install-cover
 install-cover: check-go-env ## Installs code coverage tool
@@ -122,12 +125,12 @@ ifneq ("$(wildcard $(ABI_DIR)/*.abi)", "")
 	@# This is due to abigen no being able to handle user defined structs, but not needed
 	@# for our purposes
 	@cp ./$(ABI_DIR)/AttributeStore.abi ./$(ABI_DIR)/AttributeStore.abi.bak
-	@sed -i "" 's/AttributeStore\.Data\ storage/string/g' ./$(ABI_DIR)/AttributeStore.abi
+	@$(SED) 's/AttributeStore\.Data\ storage/string/g' ./$(ABI_DIR)/AttributeStore.abi
 	@$(GORUN) $(LIB_GEN_MAIN) -abi ./$(ABI_DIR)/AttributeStore.abi -bin ./$(ABI_DIR)/AttributeStore.bin -type AttributeStoreContract -out ./$(GENERATED_CONTRACT_DIR)/AttributeStoreContract.go -pkg contract
 	@mv ./$(ABI_DIR)/AttributeStore.abi.bak ./$(ABI_DIR)/AttributeStore.abi
 
 	@cp ./$(ABI_DIR)/DLL.abi ./$(ABI_DIR)/DLL.abi.bak
-	@sed -i "" 's/DLL\.Data\ storage/string/g' ./$(ABI_DIR)/DLL.abi
+	@$(SED) 's/DLL\.Data\ storage/string/g' ./$(ABI_DIR)/DLL.abi
 	@$(GORUN) $(LIB_GEN_MAIN) -abi ./$(ABI_DIR)/DLL.abi -bin ./$(ABI_DIR)/DLL.bin -type DLLContract -out ./$(GENERATED_CONTRACT_DIR)/DLLContract.go -pkg contract
 	@mv ./$(ABI_DIR)/DLL.abi.bak ./$(ABI_DIR)/DLL.abi
 
