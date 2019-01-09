@@ -17,6 +17,7 @@ set -e
 
 CIVIL_REPO_DIR=$1
 DEST_DIR=$2
+CONTRACTS_SUB_DIR=packages/contracts
 ARTIFACTS_SUB_DIR=packages/contracts/build/artifacts
 USAGE_STR="Usage: ./abi_retrieval.sh /full/path/to/main/civil/repo /full/path/to/dest/dir"
 
@@ -42,8 +43,8 @@ fi
 echo "SOURCE:", $CIVIL_REPO_DIR
 echo "DESTINATION:", $DEST_DIR
 
-# Run a full clean and build of the Civil main repo
-cd $CIVIL_REPO_DIR
+# Run a full clean and build of the Civil contracts package
+cd $CIVIL_REPO_DIR/$CONTRACTS_SUB_DIR
 yarn clean
 yarn install
 yarn build
