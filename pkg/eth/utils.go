@@ -33,7 +33,7 @@ func ABILinkLibrary(bin string, libraryName string, libraryAddress common.Addres
 	return modifiedBin
 }
 
-// DeployContractWithLinks patches an a contract bin with provided library addresses
+// DeployContractWithLinks patches a contract bin with provided library addresses
 func DeployContractWithLinks(opts *bind.TransactOpts, backend bind.ContractBackend, abiString string, bin string, libraries map[string]common.Address) (common.Address, *types.Transaction, *bind.BoundContract, error) {
 
 	linkedBin := bin
