@@ -11,8 +11,16 @@ import (
 // NewEmailer is a convenience function that returns a new Emailer struct with
 // the given apiKey
 func NewEmailer(apiKey string) *Emailer {
+	return NewEmailerWithSandbox(apiKey, false)
+}
+
+// NewEmailerWithSandbox is a convenience function that returns a new Emailer struct with
+// the given apiKey for use with the Sendgrid sandbox.
+// FOR TESTING PURPOSES, use NewEmailer for production code.
+func NewEmailerWithSandbox(apiKey string, useSandbox bool) *Emailer {
 	return &Emailer{
 		sendGridClient: sendgrid.NewSendClient(apiKey),
+		useSandbox:     useSandbox,
 	}
 }
 
@@ -20,6 +28,7 @@ func NewEmailer(apiKey string) *Emailer {
 // easier to use.
 type Emailer struct {
 	sendGridClient *sendgrid.Client
+	useSandbox     bool
 }
 
 // SendEmailRequest provides all the parameters to SendEmail to deliver an email.
@@ -38,12 +47,18 @@ func (e *Emailer) SendEmail(req *SendEmailRequest) error {
 	from := mail.NewEmail(req.FromName, req.FromEmail)
 	to := mail.NewEmail(req.ToName, req.ToEmail)
 	msg := mail.NewSingleEmail(from, req.Subject, to, req.Text, req.HTML)
+	msg.MailSettings = &mail.MailSettings{
+		SandboxMode: &mail.Setting{
+			Enable: &e.useSandbox,
+		},
+	}
 
 	resp, err := e.sendGridClient.Send(msg)
 	if err != nil {
 		log.Errorf("Error sending email: err: %v", err)
 		return err
 	}
+	log.Infof("sendemail: useSandbox: %v", e.useSandbox)
 	log.Infof("sendemail: response status: %v", resp.StatusCode)
 	log.Infof("sendemail: response body: %v", resp.Body)
 	log.Infof("sendemail: response headers: %v", resp.Headers)
@@ -51,7 +66,7 @@ func (e *Emailer) SendEmail(req *SendEmailRequest) error {
 }
 
 // TemplateData represents the key-value data for the template
-type TemplateData map[string]string
+type TemplateData map[string]interface{}
 
 // SendTemplateEmailRequest provides all the parameters to SendTemplateEmail to
 // deliver an templated email.
@@ -68,6 +83,11 @@ type SendTemplateEmailRequest struct {
 // SendTemplateEmail sends an email based on a template in the email provider.
 func (e *Emailer) SendTemplateEmail(req *SendTemplateEmailRequest) error {
 	msg := mail.NewV3Mail()
+	msg.MailSettings = &mail.MailSettings{
+		SandboxMode: &mail.Setting{
+			Enable: &e.useSandbox,
+		},
+	}
 
 	from := mail.NewEmail(req.FromName, req.FromEmail)
 	to := mail.NewEmail(req.ToName, req.ToEmail)
@@ -95,6 +115,7 @@ func (e *Emailer) SendTemplateEmail(req *SendTemplateEmailRequest) error {
 		log.Errorf("Error sending email: err: %v", err)
 		return err
 	}
+	log.Infof("sendemail: useSandbox: %v", e.useSandbox)
 	log.Infof("sendemail: response status: %v", resp.StatusCode)
 	log.Infof("sendemail: response body: %v", resp.Body)
 	log.Infof("sendemail: response headers: %v", resp.Headers)
