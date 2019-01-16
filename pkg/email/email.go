@@ -51,7 +51,7 @@ func (e *Emailer) SendEmail(req *SendEmailRequest) error {
 }
 
 // TemplateData represents the key-value data for the template
-type TemplateData map[string]string
+type TemplateData map[string]interface{}
 
 // SendTemplateEmailRequest provides all the parameters to SendTemplateEmail to
 // deliver an templated email.

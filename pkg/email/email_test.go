@@ -4,7 +4,7 @@ package email_test
 
 import (
 	"testing"
-	// "github.com/joincivil/civil-api-server/pkg/utils"
+	// "github.com/joincivil/go-common/pkg/email"
 )
 
 // const (
@@ -30,14 +30,14 @@ func TestSimpleEmailSend(t *testing.T) {
 }
 
 func TestTemplateEmailSend(t *testing.T) {
-	// emailer := utils.NewEmailer(sendGridEmailKey)
+	// emailer := email.NewEmailer(sendGridEmailKey)
 
-	// templateData := utils.TemplateData{}
+	// templateData := email.TemplateData{}
 	// templateData["name"] = "Peter Ng"
 	// templateData["subject"] = "Testing Emailer with Template"
 	// templateData["preheader"] = "Preheader Test"
 
-	// req := &utils.SendTemplateEmailRequest{
+	// req := &email.SendTemplateEmailRequest{
 	// 	ToName:       "Peter Ng",
 	// 	ToEmail:      "peter@civil.co",
 	// 	FromName:     "The Civil Media Company",
