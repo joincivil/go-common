@@ -1,8 +1,9 @@
 package jobs
 
 import (
-	"log"
 	"math/rand"
+
+	log "github.com/golang/glog"
 )
 
 // JobService interface defines what is needed to retrieve and persist jobs
@@ -32,7 +33,7 @@ func (s *InMemoryJobService) StartJob(id string, work func(updates chan<- string
 		return nil, ErrJobAlreadyExists
 	}
 
-	log.Println("Starting job with ID " + id)
+	log.Infof("Starting job with ID %v", id)
 	job = NewJob(id, work)
 	s.jobs[id] = job
 
@@ -40,7 +41,7 @@ func (s *InMemoryJobService) StartJob(id string, work func(updates chan<- string
 
 	go func() {
 		job.WaitForFinish()
-		log.Printf("Job complete (%v), cleaning up", id)
+		log.Infof("Job complete (%v), cleaning up", id)
 		delete(s.jobs, id)
 	}()
 

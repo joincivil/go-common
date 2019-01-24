@@ -44,6 +44,5 @@ func TestTxListener(t *testing.T) {
 
 	wg.Wait()
 	t.Log("Complete")
-	//svc.WaitForTx()
 
 }

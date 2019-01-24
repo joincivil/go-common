@@ -10,6 +10,10 @@ var (
 	ErrJobDoesNotExist = errors.New("Job does not exist")
 	// ErrJobAlreadyExists is thrown when trying to submit a job with the same ID as one previously submitted
 	ErrJobAlreadyExists = errors.New("Job with this ID already exists")
+
+	statusRunning     = "running"
+	statusComplete    = "complete"
+	statusInitialized = "initialized"
 )
 
 // Subscription receives job updates
@@ -36,7 +40,7 @@ func NewJob(jobID string, work func(chan<- string)) *Job {
 		observers: map[string]*Subscription{},
 		work:      work,
 		updates:   make(chan string),
-		status:    "initialized",
+		status:    statusInitialized,
 	}
 	return job
 }
@@ -48,7 +52,6 @@ func (j *Job) GetStatus() string {
 	return j.status
 }
 
-// GetStatus returns the status of the job
 func (j *Job) setStatus(status string) {
 	j.mu.Lock()
 	defer j.mu.Unlock()
@@ -60,9 +63,9 @@ func (j *Job) Start() {
 
 	// start doing the work
 	go func() {
-		j.setStatus("running")
+		j.setStatus(statusRunning)
 		j.work(j.updates)
-		j.setStatus("complete")
+		j.setStatus(statusComplete)
 		close(j.updates)
 	}()
 
@@ -110,10 +113,11 @@ func (j *Job) Unsubscribe(receipt *Subscription) {
 	j.mu.Unlock()
 }
 
-// WaitForFinish subscribes to job updates and returns when the channel closes
+// WaitForFinish subscribes to job updates, blocks and returns when the update
+// channel is closed, indicating the job is completed
 func (j *Job) WaitForFinish() {
 	s := j.Subscribe()
 	for range s.Updates {
-
+		// Waiting here for the channel to close
 	}
 }
