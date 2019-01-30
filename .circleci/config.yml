@@ -4,6 +4,8 @@ defaults: &defaults
     docker:
       # CircleCI Go images available at: https://hub.docker.com/r/circleci/golang/
       - image: circleci/golang:1.11.1
+      # Google pubsub emulator image
+      - image: kinok/google-pubsub-emulator:latest
       # CircleCI PostgreSQL images available at: https://hub.docker.com/r/circleci/postgres/
       # - image: circleci/postgres:9.4.12-alpine
       #   environment:
@@ -73,16 +75,21 @@ jobs:
     <<: *defaults
     working_directory: /go/src/github.com/joincivil/go-common
     environment:
+      PUBSUB_EMULATOR_HOST: localhost:8042
     steps:
         - attach_workspace:
             at: ./
+        # - run:
+        #     name: Setting up pubsub simulator
+        #     command: |
+        #       make pubsub-start
         - run:
             name: Run unit tests
             # environment:
             #    DB_URL: "postgres://root@localhost:5432/circle_test?sslmode=disable"
             #    DB_MIGRATIONS: /go/src/github.com/joincivil/go-common/migrations
             command: |
-               make test
+               make test-integration
 
 
 workflows:
