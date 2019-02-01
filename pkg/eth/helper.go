@@ -4,6 +4,8 @@ import (
 	"crypto/ecdsa"
 	"math/big"
 
+	"github.com/ethereum/go-ethereum/ethclient"
+
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind/backends"
 	"github.com/ethereum/go-ethereum/common"
@@ -24,6 +26,36 @@ type Account struct {
 	Key     *ecdsa.PrivateKey
 	Auth    *bind.TransactOpts
 	Address common.Address
+}
+
+// NewETHClientHelper creates a new Helper using an ethclient with the provided URL
+// accountKeys is a mapping of name->privateKey hex string
+func NewETHClientHelper(ethAPIURL string, accountKeys map[string]string) (*Helper, error) {
+	blockchain, err := ethclient.Dial(ethAPIURL)
+	if err != nil {
+		return nil, err
+	}
+
+	accounts := make(map[string]Account)
+	for keyName, privateKey := range accountKeys {
+		account, err := AccountFromPK(privateKey)
+		if err != nil {
+			return nil, err
+		}
+		accounts[keyName] = account
+	}
+
+	helper := &Helper{
+		Blockchain: blockchain,
+		Accounts:   accounts,
+	}
+
+	if (accounts["default"] != Account{}) {
+		helper.Key = accounts["default"].Key
+		helper.Auth = accounts["default"].Auth
+	}
+
+	return helper, nil
 }
 
 // NewSimulatedBackendHelper creates a new Helper using an ethereum SimulatedBackend
@@ -70,6 +102,16 @@ func (h *Helper) TransactWithGasLimit() *bind.TransactOpts {
 // Call creates an empty bind.CallOpts instance
 func (h *Helper) Call() *bind.CallOpts {
 	return &bind.CallOpts{}
+}
+
+// AccountFromPK constructs an Account from the provided ECDSA private key hex string
+func AccountFromPK(privateKey string) (Account, error) {
+	pk, err := crypto.HexToECDSA(privateKey)
+	if err != nil {
+		return Account{}, err
+	}
+	auth := bind.NewKeyedTransactor(pk)
+	return Account{Key: pk, Auth: auth, Address: GetEthAddressFromPrivateKey(pk)}, nil
 }
 
 // AddAccount generates a new account and adds it to the account mapping
