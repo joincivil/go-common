@@ -59,23 +59,29 @@ func NewETHClientHelper(ethAPIURL string, accountKeys map[string]string) (*Helpe
 }
 
 // NewSimulatedBackendHelper creates a new Helper using an ethereum SimulatedBackend
+// generates accounts for "genesis", "alice", "bob", "carol", "dan", "erin"
 func NewSimulatedBackendHelper() (*Helper, error) {
-	key, err := crypto.GenerateKey()
-	if err != nil {
-		return nil, err
-	}
-	auth := bind.NewKeyedTransactor(key)
 	alloc := make(core.GenesisAlloc)
-	alloc[auth.From] = core.GenesisAccount{Balance: big.NewInt(1000000000)}
-	blockchain := backends.NewSimulatedBackend(alloc, 1000000000)
 
 	accounts := make(map[string]Account)
-	accounts["genesis"] = Account{Key: key, Auth: auth, Address: GetEthAddressFromPrivateKey(key)}
+
+	accountNames := []string{"genesis", "alice", "bob", "carol", "dan", "eric"}
+
+	for _, name := range accountNames {
+		account, err := MakeAccount()
+		if err != nil {
+			return nil, err
+		}
+		accounts[name] = account
+		alloc[account.Address] = core.GenesisAccount{Balance: big.NewInt(9223372036854775807)}
+	}
+
+	blockchain := backends.NewSimulatedBackend(alloc, 1000000000)
 
 	return &Helper{
 		Blockchain: blockchain,
-		Key:        key,
-		Auth:       auth,
+		Key:        accounts["genesis"].Key,
+		Auth:       accounts["genesis"].Auth,
 		Accounts:   accounts,
 	}, nil
 }
@@ -116,20 +122,27 @@ func AccountFromPK(privateKey string) (Account, error) {
 
 // AddAccount generates a new account and adds it to the account mapping
 func (h *Helper) AddAccount(name string) (Account, error) {
+	account, err := MakeAccount()
+	if err != nil {
+		return Account{}, err
+	}
+
+	h.Accounts[name] = account
+
+	return h.Accounts[name], nil
+}
+
+// MakeAccount generates a new random Account
+func MakeAccount() (Account, error) {
 	key, err := crypto.GenerateKey()
 	if err != nil {
 		return Account{}, err
 	}
 	auth := bind.NewKeyedTransactor(key)
-	alloc := make(core.GenesisAlloc)
-
-	alloc[auth.From] = core.GenesisAccount{Balance: big.NewInt(1000000000)}
-
-	h.Accounts[name] = Account{
+	return Account{
 		Key:     key,
 		Auth:    auth,
 		Address: crypto.PubkeyToAddress(key.PublicKey),
-	}
+	}, nil
 
-	return h.Accounts[name], nil
 }
