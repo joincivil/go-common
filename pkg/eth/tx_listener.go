@@ -5,10 +5,11 @@ import (
 	"fmt"
 	"time"
 
+	ethereum "github.com/ethereum/go-ethereum"
+	"github.com/ethereum/go-ethereum/core/types"
 	log "github.com/golang/glog"
 
 	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/joincivil/go-common/pkg/jobs"
 )
 
@@ -27,14 +28,20 @@ const (
 	txListenerPrefix = "TxListener"
 )
 
+// ReadTransaction is a temporary interface until go-ethereum/pull/19026 is merged
+// at which point TxListener should probably use ethereum.TransactionReader interface
+type ReadTransaction interface {
+	TransactionReceipt(ctx context.Context, txHash common.Hash) (*types.Receipt, error)
+}
+
 // TxListener provides methods to interact with Ethereum transactions
 type TxListener struct {
-	blockchain *ethclient.Client
+	blockchain ReadTransaction
 	jobs       jobs.JobService
 }
 
 // NewTxListener creates a new TransactionService instance
-func NewTxListener(blockchain *ethclient.Client, jobs jobs.JobService) *TxListener {
+func NewTxListener(blockchain ReadTransaction, jobs jobs.JobService) *TxListener {
 	return &TxListener{blockchain, jobs}
 }
 
@@ -89,11 +96,25 @@ func (t *TxListener) PollForTxCompletion(txID string, updates chan<- string) {
 }
 
 func (t *TxListener) checkTx(hash common.Hash) (bool, error) {
-	_, isPending, err := t.blockchain.TransactionByHash(context.Background(), hash)
+
+	// todo(dankins): TransactionByHash is not implemented by SimulatedBackend
+	// once https://github.com/ethereum/go-ethereum/pull/19026 is resolved we should be able to use the following:
+	// _, isPending, err := t.blockchain.TransactionByHash(context.Background(), hash)
+
+	// this method has no way of determining if a tx just doesn't exist,
+	// so there is potential an invalid tx ID will just poll forever
+	tx, err := t.blockchain.TransactionReceipt(context.Background(), hash)
+	if err == ethereum.NotFound {
+		return true, nil
+	}
 	if err != nil {
-		log.Errorf("Error retrieving transaction by hash: err: %v\n", err)
+		log.Errorf("Error retrieving TransactionReceipt: err: %v\n", err)
 		return false, err
 	}
 
-	return isPending, nil
+	if tx == nil {
+		return true, nil
+	}
+
+	return false, nil
 }
