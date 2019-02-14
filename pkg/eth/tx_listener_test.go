@@ -4,9 +4,7 @@ import (
 	"context"
 	"crypto/ecdsa"
 	"math/big"
-	"sync"
 	"testing"
-	"time"
 
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind/backends"
@@ -34,8 +32,6 @@ func sendTx(t *testing.T, sim bind.ContractBackend, key *ecdsa.PrivateKey) *type
 }
 
 func TestTxListener(t *testing.T) {
-	var wg sync.WaitGroup
-
 	ethHelper, err := eth.NewSimulatedBackendHelper()
 	client := ethHelper.Blockchain.(*backends.SimulatedBackend)
 	if err != nil {
@@ -44,6 +40,7 @@ func TestTxListener(t *testing.T) {
 
 	tx := sendTx(t, ethHelper.Blockchain, ethHelper.Key)
 	txHash := tx.Hash()
+	client.Commit()
 
 	svc := eth.NewTxListener(client, jobs.NewInMemoryJobService())
 
@@ -52,22 +49,10 @@ func TestTxListener(t *testing.T) {
 		t.Fatalf("sub1: unable to get tx subscription %v", txHash.String())
 	}
 
-	wg.Add(2)
-	go func() {
-		for event := range sub1.Updates {
-			t.Logf("sub1: %v", event)
-		}
-		wg.Done()
-	}()
+	for event := range sub1.Updates {
+		t.Logf("sub1: %v", event)
 
-	go func() {
-		timer1 := time.NewTimer(1 * time.Second)
-		<-timer1.C
-		client.Commit()
-		wg.Done()
-	}()
-
-	wg.Wait()
+	}
 	t.Log("Complete")
 
 }
