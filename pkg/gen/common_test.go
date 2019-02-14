@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"testing"
 
-	"github.com/joincivil/civil-events-crawler/pkg/gen"
+	"github.com/joincivil/go-common/pkg/gen"
 )
 
 var badTestTmpl = `{{.BadVarUnknown}}`

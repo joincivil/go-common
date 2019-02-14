@@ -61,7 +61,8 @@
   version = "v1.0.0"
 
 [[projects]]
-  digest = "1:87fa9f2d71fd2516e6c0d906b7eb58886c8b4fcc6ee8cada0553a0e50bfeef3a"
+  branch = "master"
+  digest = "1:1b5d7d4025b5fb2ae9159d5a3b484111c94af49b6f63cc2ce77e2cdc7aec4438"
   name = "github.com/ethereum/go-ethereum"
   packages = [
     ".",
@@ -90,8 +91,8 @@
     "crypto/bn256/cloudflare",
     "crypto/bn256/google",
     "crypto/secp256k1",
-    "crypto/sha3",
     "eth/filters",
+    "ethclient",
     "ethdb",
     "event",
     "log",
@@ -103,16 +104,7 @@
     "trie",
   ]
   pruneopts = "T"
-  revision = "24d727b6d6e2c0cde222fa12155c4a6db5caaf2e"
-  version = "v1.8.20"
-
-[[projects]]
-  digest = "1:af43bdaaf86655a2343f113e9b293bbc16b12099eaeb223982bbe4d4c22ba14d"
-  name = "github.com/fatih/structs"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "4966fc68f5b7593aafa6cbbba2d65ec6e1416047"
-  version = "v1.1.0"
+  revision = "ba90a4aaa42428fc5f38c4869455db5a51565714"
 
 [[projects]]
   digest = "1:586ea76dbd0374d6fb649a91d70d652b7fe0ccffb8910a77468e7702e7901f3d"
@@ -180,18 +172,6 @@
   pruneopts = "UT"
   revision = "20f1fb78b0740ba8c3cb143a61e86ba5c8669768"
   version = "v0.5.0"
-
-[[projects]]
-  branch = "master"
-  digest = "1:1d4626d33713e976d6000e680e5e48433ff29865c50d427c87fc8a7e280e1109"
-  name = "github.com/joincivil/civil-events-crawler"
-  packages = [
-    "pkg/gen",
-    "pkg/generated/contract",
-    "pkg/model",
-  ]
-  pruneopts = "UT"
-  revision = "698c46f9ea916ecb42599ecfbd695ee5b210b940"
 
 [[projects]]
   digest = "1:edbef42561faa44c19129b68d1e109fbc1647f63239250391eadc8d0e7c9f669"
@@ -290,15 +270,16 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:734c27157144367f37acd13536569700f61f01576c4a5e9665ccb76f79966d97"
+  digest = "1:a6f85d6d31c8c1185cf138cc82144c101e828472009bd8479425a011fd321e77"
   name = "golang.org/x/crypto"
   packages = [
     "pbkdf2",
     "ripemd160",
     "scrypt",
+    "sha3",
   ]
   pruneopts = "UT"
-  revision = "505ab145d0a99da450461ae2c1a9f6cd10d1f447"
+  revision = "74369b46fc6756741c016591724fd1cb8e26845f"
 
 [[projects]]
   branch = "master"
@@ -493,9 +474,9 @@
     "github.com/ethereum/go-ethereum/core",
     "github.com/ethereum/go-ethereum/core/types",
     "github.com/ethereum/go-ethereum/crypto",
+    "github.com/ethereum/go-ethereum/ethclient",
     "github.com/ethereum/go-ethereum/event",
     "github.com/golang/glog",
-    "github.com/joincivil/civil-events-crawler/pkg/gen",
     "github.com/kelseyhightower/envconfig",
     "github.com/sendgrid/sendgrid-go",
     "github.com/sendgrid/sendgrid-go/helpers/mail",
