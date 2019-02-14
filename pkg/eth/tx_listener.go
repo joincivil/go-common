@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"time"
 
+	ethereum "github.com/ethereum/go-ethereum"
 	log "github.com/golang/glog"
 
 	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/joincivil/go-common/pkg/jobs"
 )
 
@@ -29,12 +29,12 @@ const (
 
 // TxListener provides methods to interact with Ethereum transactions
 type TxListener struct {
-	blockchain *ethclient.Client
+	blockchain ethereum.TransactionReader
 	jobs       jobs.JobService
 }
 
 // NewTxListener creates a new TransactionService instance
-func NewTxListener(blockchain *ethclient.Client, jobs jobs.JobService) *TxListener {
+func NewTxListener(blockchain ethereum.TransactionReader, jobs jobs.JobService) *TxListener {
 	return &TxListener{blockchain, jobs}
 }
 
@@ -89,11 +89,11 @@ func (t *TxListener) PollForTxCompletion(txID string, updates chan<- string) {
 }
 
 func (t *TxListener) checkTx(hash common.Hash) (bool, error) {
+
 	_, isPending, err := t.blockchain.TransactionByHash(context.Background(), hash)
 	if err != nil {
-		log.Errorf("Error retrieving transaction by hash: err: %v\n", err)
+		log.Errorf("Error retrieving TransactionByHash: err: %v\n", err)
 		return false, err
 	}
-
 	return isPending, nil
 }

@@ -1,48 +1,58 @@
 package eth_test
 
 import (
-	"sync"
+	"context"
+	"crypto/ecdsa"
+	"math/big"
 	"testing"
 
-	"github.com/ethereum/go-ethereum/ethclient"
+	"github.com/ethereum/go-ethereum/accounts/abi/bind"
+	"github.com/ethereum/go-ethereum/accounts/abi/bind/backends"
+
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/joincivil/go-common/pkg/eth"
 	"github.com/joincivil/go-common/pkg/jobs"
 )
 
-func TestTxListener(t *testing.T) {
-	var wg sync.WaitGroup
-	client, err := ethclient.Dial("https://mainnet.infura.io")
+func sendTx(t *testing.T, sim bind.ContractBackend, key *ecdsa.PrivateKey) *types.Transaction {
+	// generate a transaction and confirm you can retrieve it
+	code := `6060604052600a8060106000396000f360606040526008565b00`
+	var gas uint64 = 3000000
+	tx := types.NewContractCreation(0, big.NewInt(0), gas, big.NewInt(1), common.FromHex(code))
+	tx, _ = types.SignTx(tx, types.HomesteadSigner{}, key)
+
+	err := sim.SendTransaction(context.Background(), tx)
 	if err != nil {
-		t.Fatal(err)
+		t.Fatal("error sending transaction")
 	}
+
+	return tx
+
+}
+
+func TestTxListener(t *testing.T) {
+	ethHelper, err := eth.NewSimulatedBackendHelper()
+	client := ethHelper.Blockchain.(*backends.SimulatedBackend)
+	if err != nil {
+		t.Fatalf("error with NewSimulatedBackendHelper: %v", err)
+	}
+
+	tx := sendTx(t, ethHelper.Blockchain, ethHelper.Key)
+	txHash := tx.Hash()
+	client.Commit()
 
 	svc := eth.NewTxListener(client, jobs.NewInMemoryJobService())
 
-	sub1, err := svc.StartListener("0x3d8a78e268db358a88ae1006138d65dc06f7369617b9b991d694abbce13fe3aa")
+	sub1, err := svc.StartListener(txHash.String())
 	if err != nil {
-		t.Fatalf("sub1: unable to get tx subscription")
-	}
-	sub2, err := svc.StartListener("0x3d8a78e268db358a88ae1006138d65dc06f7369617b9b991d694abbce13fe3aa")
-	if err != nil {
-		t.Fatalf("sub2: unable to get tx subscription")
+		t.Fatalf("sub1: unable to get tx subscription %v", txHash.String())
 	}
 
-	wg.Add(2)
-	go func() {
-		for event := range sub1.Updates {
-			t.Logf("sub1: %v", event)
-		}
-		wg.Done()
-	}()
+	for event := range sub1.Updates {
+		t.Logf("sub1: %v", event)
 
-	go func() {
-		for event := range sub2.Updates {
-			t.Logf("sub2: %v", event)
-		}
-		wg.Done()
-	}()
-
-	wg.Wait()
+	}
 	t.Log("Complete")
 
 }
