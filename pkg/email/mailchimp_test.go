@@ -1,0 +1,84 @@
+package email_test
+
+import (
+	"fmt"
+	"math/rand"
+	"os"
+	"testing"
+	"time"
+
+	"github.com/joincivil/go-common/pkg/email"
+)
+
+const (
+	mailchimpApiKeyEnvVar = "MAILCHIMP_TEST_KEY"
+
+	testListId = "a02d21e80f" // Test User List in Mailchimp
+)
+
+func getMailchimpKeyFromEnvVar() string {
+	return os.Getenv(mailchimpApiKeyEnvVar)
+}
+
+func TestMailchimpAddExistsRemove(t *testing.T) {
+	apiKey := getMailchimpKeyFromEnvVar()
+	if apiKey == "" {
+		t.Log("No MAILCHIMP_TEST_KEY set, skipping mailchimp test")
+		return
+	}
+
+	mcAPI := email.NewMailchimpAPI(apiKey)
+	rand.Seed(time.Now().UnixNano())
+	testEmail := fmt.Sprintf("testuser%d@civil.co", rand.Intn(500))
+
+	// Ensure it is unsubscribed on the list
+	_ = mcAPI.UnsubscribeFromList(testListId, testEmail, true)
+
+	// Should not have existed at first
+	subscribed, err := mcAPI.IsSubscribedToList(testListId, testEmail)
+	if err != nil {
+		t.Errorf("Should not have gotten error for subscribed on list: err: %v", err)
+	}
+
+	if subscribed {
+		t.Errorf("Email should not have existed")
+	}
+
+	// Add it to the list
+	err = mcAPI.SubscribeToList(testListId, testEmail)
+	if err != nil {
+		t.Errorf("Should not have gotten error for add to list: err: %v", err)
+	}
+
+	// Check to see that it in factsubscribed
+	subscribed, err = mcAPI.IsSubscribedToList(testListId, testEmail)
+	if err != nil {
+		t.Errorf("Should not have gotten error for exists on list: err: %v", err)
+	}
+
+	if !subscribed {
+		t.Errorf("Email should have been on the list")
+	}
+
+	// Try to subscribe this user again
+	err = mcAPI.SubscribeToList(testListId, testEmail)
+	if err == nil {
+		t.Errorf("Should have gotten error for add duplicate to list: err: %v", err)
+	}
+
+	// Remove it from the list
+	err = mcAPI.UnsubscribeFromList(testListId, testEmail, false)
+	if err != nil {
+		t.Errorf("Should not have gotten error for remove from list: err: %v", err)
+	}
+
+	// Ensure it has been removed properly
+	subscribed, err = mcAPI.IsSubscribedToList(testListId, testEmail)
+	if err != nil {
+		t.Errorf("Should not have gotten error for subscribed on list: err: %v", err)
+	}
+
+	if subscribed {
+		t.Errorf("Email should not have existed")
+	}
+}
