@@ -2,24 +2,15 @@ package bytes_test
 
 import (
 	"bytes"
-	"encoding/hex"
-	"math/rand"
 	"testing"
 
 	cbytes "github.com/joincivil/go-common/pkg/bytes"
+	cstrings "github.com/joincivil/go-common/pkg/strings"
 )
-
-func randomHex(n int) (string, error) {
-	bytes := make([]byte, n)
-	if _, err := rand.Read(bytes); err != nil {
-		return "", err
-	}
-	return hex.EncodeToString(bytes), nil
-}
 
 // TestByte32Utils tests encoding, then decoding from byte[32] to string
 func TestByte32Utils(t *testing.T) {
-	hexStr, _ := randomHex(32)
+	hexStr, _ := cstrings.RandomHexStr(32)
 	testBytes := []byte(hexStr)
 	testFixed := [32]byte{}
 	copy(testFixed[:], testBytes)
