@@ -38,6 +38,18 @@
 
 [[projects]]
   branch = "master"
+  digest = "1:f8455e889308d11dbe612bcec0286512c587395eda4272dfc412fa00e9fe7559"
+  name = "github.com/beeker1121/mailchimp-go"
+  packages = [
+    ".",
+    "lists/members",
+    "query",
+  ]
+  pruneopts = "UT"
+  revision = "7c5f827423b2a08c0cb05f6a79ea9fec1d2eb257"
+
+[[projects]]
+  branch = "master"
   digest = "1:093bf93a65962e8191e3e8cd8fc6c363f83d43caca9739c906531ba7210a9904"
   name = "github.com/btcsuite/btcd"
   packages = ["btcec"]
@@ -180,14 +192,6 @@
   pruneopts = "UT"
   revision = "f611eb38b3875cc3bd991ca91c51d06446afa14c"
   version = "v1.3.0"
-
-[[projects]]
-  branch = "master"
-  digest = "1:66e942c52d4b0b3de846e8db3f9d4f9554873dd17798486743fb02b3c2bfed59"
-  name = "github.com/mattbaird/gochimp"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "a267553896d1cbd0ccfc259ad5442e62bdc3d30d"
 
 [[projects]]
   digest = "1:e5d0bd87abc2781d14e274807a470acd180f0499f8bf5bb18606e9ec22ad9de9"
@@ -474,6 +478,8 @@
   analyzer-version = 1
   input-imports = [
     "cloud.google.com/go/pubsub",
+    "github.com/beeker1121/mailchimp-go",
+    "github.com/beeker1121/mailchimp-go/lists/members",
     "github.com/ethereum/go-ethereum",
     "github.com/ethereum/go-ethereum/accounts/abi",
     "github.com/ethereum/go-ethereum/accounts/abi/bind",
@@ -486,7 +492,6 @@
     "github.com/ethereum/go-ethereum/event",
     "github.com/golang/glog",
     "github.com/kelseyhightower/envconfig",
-    "github.com/mattbaird/gochimp",
     "github.com/sendgrid/sendgrid-go",
     "github.com/sendgrid/sendgrid-go/helpers/mail",
   ]

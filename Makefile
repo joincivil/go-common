@@ -156,11 +156,11 @@ build: ## Builds the repo, mainly to ensure all the files will build properly
 
 .PHONY: test
 test: ## Runs unit tests and tests code coverage
-	@echo 'mode: atomic' > coverage.txt && $(GOTEST) -covermode=atomic -coverprofile=coverage.txt -v -race -timeout=30s ./...
+	@echo 'mode: atomic' > coverage.txt && $(GOTEST) -covermode=atomic -coverprofile=coverage.txt -v -race -timeout=60s ./...
 
 .PHONY: test-integration
 test-integration: ## Runs tagged integration tests
-	@echo 'mode: atomic' > coverage.txt && PUBSUB_EMULATOR_HOST=localhost:8042 $(GOTEST) -covermode=atomic -coverprofile=coverage.txt -v -race -timeout=30s -tags=integration ./...
+	@echo 'mode: atomic' > coverage.txt && PUBSUB_EMULATOR_HOST=localhost:8042 $(GOTEST) -covermode=atomic -coverprofile=coverage.txt -v -race -timeout=60s -tags=integration ./...
 
 .PHONY: cover
 cover: test ## Runs unit tests, code coverage, and runs HTML coverage tool.
