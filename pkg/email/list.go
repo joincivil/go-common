@@ -40,6 +40,8 @@ type SubscriptionParams struct {
 // ListMemberManager is an interface that represents a service that manages email lists
 // consisting of members. This
 type ListMemberManager interface {
+	// ServiceName returns the underlying mailing list service (sendgrid, mailchimp, etc.)
+	ServiceName() string
 	// GetListMember returns this member of the given list
 	GetListMember(listID string, email string) (*ListMember, error)
 	// IsSubscribedToList checks if email is subscribed to the given list

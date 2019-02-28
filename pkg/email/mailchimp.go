@@ -36,9 +36,19 @@ const (
 	ErrTitleMemberExists = "member exists"
 )
 
+const (
+	// ServiceNameMailchimp is the service name for Mailchimp
+	ServiceNameMailchimp = "mailchimp"
+)
+
 // MailchimpAPI is a wrapper around the MailChimp API.  Uses the gochimp lib.
 type MailchimpAPI struct {
 	apiKey string
+}
+
+// ServiceName returns the underlying mailing list service
+func (m *MailchimpAPI) ServiceName() string {
+	return ServiceNameMailchimp
 }
 
 // GetListMember returns a Mailchimp mailing list member
