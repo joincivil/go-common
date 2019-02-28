@@ -5,6 +5,7 @@ package email
 import (
 	"crypto/md5" // nolint: gosec
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"strings"
 	"time"
@@ -127,9 +128,12 @@ func (m *MailchimpAPI) SubscribeToList(listID string, email string, params *Subs
 		return err
 	}
 
+	now := time.Now().UTC()
 	newParams := &NewMemberParams{
-		EmailAddress: strings.ToLower(email),
-		Status:       members.StatusSubscribed,
+		EmailAddress:    strings.ToLower(email),
+		Status:          members.StatusSubscribed,
+		TimestampSignup: now,
+		TimestampOpt:    now,
 	}
 
 	var mcTags []MailchimpTag
@@ -238,6 +242,31 @@ type NewMemberParams struct {
 	TimestampOpt    time.Time              `json:"timestamp_opt,omitempty"`
 	EmailAddress    string                 `json:"email_address"`
 	Tags            []MailchimpTag         `json:"tags,omitempty"`
+}
+
+// MarshalJSON handles custom JSON marshalling for the NewMembersParams object.
+// Added here to correct the invalid timestamp format issue.
+func (np *NewMemberParams) MarshalJSON() ([]byte, error) {
+	var timestampSignup string
+	var timestampOpt string
+
+	if !np.TimestampSignup.IsZero() {
+		timestampSignup = np.TimestampSignup.Format(time.RFC3339)
+	}
+	if !np.TimestampOpt.IsZero() {
+		timestampOpt = np.TimestampOpt.Format(time.RFC3339)
+	}
+
+	type alias NewMemberParams
+	return json.Marshal(&struct {
+		*alias
+		TimestampSignup string `json:"timestamp_signup,omitempty"`
+		TimestampOpt    string `json:"timestamp_opt,omitempty"`
+	}{
+		alias:           (*alias)(np),
+		TimestampSignup: timestampSignup,
+		TimestampOpt:    timestampOpt,
+	})
 }
 
 // MemberTag represents a tag on a Member struct
