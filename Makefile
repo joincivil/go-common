@@ -17,6 +17,8 @@ ABIGEN=abigen
 
 LIB_GEN_MAIN=cmd/libgen/main.go
 
+PUBSUB_SIM_DOCKER_IMAGE=kinok/google-pubsub-emulator:latest
+
 ABI_DIR=abi
 
 ## List of expected dirs for generated code
@@ -28,7 +30,7 @@ GOMETALINTER_VERSION_TAG=v2.0.11
 
 
 GO:=$(shell command -v go 2> /dev/null)
-# DOCKER:=$(shell command -v docker 2> /dev/null)
+DOCKER:=$(shell command -v docker 2> /dev/null)
 APT:=$(shell command -v apt-get 2> /dev/null)
 
 UNAME=$(shell uname)
@@ -50,11 +52,11 @@ endif
 
 ## NOTE: If installing on a Mac, use Docker for Mac, not Docker toolkit
 ## https://www.docker.com/docker-mac
-# .PHONY: check-docker-env
-# check-docker-env:
-# ifndef DOCKER
-# 	$(error docker command is not installed or in PATH)
-# endif
+.PHONY: check-docker-env
+check-docker-env:
+ifndef DOCKER
+	$(error docker command is not installed or in PATH)
+endif
 
 .PHONY: install-dep
 install-dep: check-go-env ## Installs dep
@@ -105,6 +107,19 @@ setup: check-go-env install-dep install-linter install-cover install-abigen ## S
 # postgres-stop: check-docker-env ## Stops the development PostgreSQL server
 # 	@docker stop `docker ps -q`
 # 	@echo 'Postgres stopped'
+
+.PHONY: pubsub-setup-launch
+pubsub-setup-launch:
+	@docker run -it -d -p 8042:8042 $(PUBSUB_SIM_DOCKER_IMAGE)
+
+.PHONY: pubsub-start
+pubsub-start: check-docker-env pubsub-setup-launch ## Starts up the pubsub simulator
+	@echo 'Google pubsub simulator up'
+
+.PHONY: pubsub-stop
+pubsub-stop: check-docker-env ## Stops the pubsub simulator
+	@docker stop `docker ps -q --filter "ancestor=$(PUBSUB_SIM_DOCKER_IMAGE)"`
+	@echo 'Google pubsub simulator down'
 
 .PHONY: generate-civil-contracts
 generate-civil-contracts: ## Builds the contract wrapper code from the ABIs in /abi for Civil.

@@ -14,7 +14,9 @@ import (
 )
 
 // NOTE(PN): Mainly use this Mailchimp library to add addresses to mailing lists for.
-// Mainly use the Emailer via Sendgrid for delivery of emails.
+// Use the Emailer via Sendgrid for delivery of emails.
+// TODO(PN): Abstract away the services a bit more, this could just be an
+// implementation of a mailing list interface
 
 // NewMailchimpAPI is a convenience function to instantiate a new MailChimpAPI
 // struct
@@ -175,6 +177,9 @@ func (m *MailchimpAPI) isMemberAlreadyOnListError(err error) bool {
 	}
 	return false
 }
+
+// NOTE(PN): The items below extend the mailchimp-go library to include tags
+// Will try and submit a PR into that repo to include these changes when time permits
 
 // NewMemberParams is a version of NewParams that adds a tags field
 type NewMemberParams struct {
