@@ -103,7 +103,9 @@ func TestMailchimpSubscriberWithTags(t *testing.T) {
 	// Ensure it is unsubscribed on the list
 	_ = mcAPI.UnsubscribeFromList(testListId, testEmail, true)
 
-	tags := []email.MailchimpTag{email.MailchimpTagNewsroomSignup}
+	testTag := email.MailchimpTag("Test Tag")
+
+	tags := []email.MailchimpTag{testTag}
 
 	// Add it to the list
 	err := mcAPI.SubscribeToList(testListId, testEmail, tags)
@@ -163,7 +165,7 @@ func TestMailchimpSubscriberWithTags(t *testing.T) {
 		t.Errorf("Should have gotten some tags")
 	}
 
-	if member.Tags[0].Name != string(email.MailchimpTagNewsroomSignup) {
+	if member.Tags[0].Name != string(testTag) {
 		t.Errorf("Should have gotten the newsroom signup tag")
 	}
 

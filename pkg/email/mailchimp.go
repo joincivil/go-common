@@ -30,16 +30,6 @@ func NewMailchimpAPI(apiKey string) *MailchimpAPI {
 type MailchimpTag string
 
 const (
-	// MailchimpTagNewsroomSignup is the Mailchimp tag to indicate the user is signed up
-	// from the newsroom signup module
-	MailchimpTagNewsroomSignup MailchimpTag = "Newsroom Signup"
-
-	// MailchimpTagTokenStorefront is the Mailchimp tag to indicate the user is signed up
-	// from the token storefront module
-	MailchimpTagTokenStorefront = "Token Storefront"
-)
-
-const (
 	// ErrTitleResourceNotFound is the error response from Mailchimp
 	ErrTitleResourceNotFound = "resource not found"
 	// ErrTitleMemberExists is the error response from Mailchimp
