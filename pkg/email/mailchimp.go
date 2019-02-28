@@ -15,8 +15,8 @@ import (
 
 // NOTE(PN): Mainly use this Mailchimp library to add addresses to mailing lists for.
 // Use the Emailer via Sendgrid for delivery of emails.
-// TODO(PN): Abstract away the services a bit more, this could just be an
-// implementation of a mailing list interface
+
+// Implements MailingListMemberManager
 
 // NewMailchimpAPI is a convenience function to instantiate a new MailChimpAPI
 // struct
@@ -42,13 +42,45 @@ type MailchimpAPI struct {
 }
 
 // GetListMember returns a Mailchimp mailing list member
-func (m *MailchimpAPI) GetListMember(listID string, email string) (*Member, error) {
+func (m *MailchimpAPI) GetListMember(listID string, email string) (*ListMember, error) {
 	err := mailchimp.SetKey(m.apiKey)
 	if err != nil {
 		return nil, err
 	}
 
-	return m.getMember(listID, m.mailchimpUserHash(email), nil)
+	mcMember, err := m.getMember(listID, m.mailchimpUserHash(email), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	var status Status
+
+	if mcMember.Status == members.StatusSubscribed {
+		status = StatusSubscribed
+	} else if mcMember.Status == members.StatusUnsubscribed {
+		status = StatusUnsubscribed
+	} else if mcMember.Status == members.StatusCleaned {
+		status = StatusInvalid
+	} else {
+		status = StatusPending
+	}
+
+	var tags []Tag
+	if len(mcMember.Tags) > 0 {
+		tags = make([]Tag, len(mcMember.Tags))
+		for ind, t := range mcMember.Tags {
+			tags[ind] = Tag(t.Name)
+		}
+	}
+
+	return &ListMember{
+		ServiceID:       mcMember.ID,
+		EmailAddress:    mcMember.EmailAddress,
+		Status:          status,
+		SignupDate:      mcMember.TimestampSignup,
+		LastUpdatedDate: mcMember.LastChanged,
+		Tags:            tags,
+	}, nil
 }
 
 // IsSubscribedToList returns true if an email is subscribed on a specified list
@@ -79,31 +111,41 @@ func (m *MailchimpAPI) IsSubscribedToList(listID string, email string) (bool, er
 
 // SubscribeToList adds an email address to a specified list. Only adds tags on
 // creation, not re-subscribes
-func (m *MailchimpAPI) SubscribeToList(listID string, email string, tags []MailchimpTag) error {
+func (m *MailchimpAPI) SubscribeToList(listID string, email string, params *SubscriptionParams) error {
 	err := mailchimp.SetKey(m.apiKey)
 	if err != nil {
 		return err
 	}
 
-	params := &NewMemberParams{
+	newParams := &NewMemberParams{
 		EmailAddress: strings.ToLower(email),
 		Status:       members.StatusSubscribed,
 	}
-	if len(tags) > 0 {
-		params.Tags = tags
+
+	var mcTags []MailchimpTag
+
+	if params != nil {
+		if len(params.Tags) > 0 {
+			mcTags = make([]MailchimpTag, len(params.Tags))
+			for ind, val := range params.Tags {
+				mcTags[ind] = MailchimpTag(val)
+			}
+
+			newParams.Tags = mcTags
+		}
 	}
 
-	member, err := m.newMember(listID, params)
+	member, err := m.newMember(listID, newParams)
 	if err != nil {
 		// If member is already on list, update user to subscribed
 		if !m.isMemberAlreadyOnListError(err) {
 			return err
 		}
 
-		params := &members.UpdateParams{
+		updateParams := &members.UpdateParams{
 			Status: members.StatusSubscribed,
 		}
-		member, err := members.Update(listID, m.mailchimpUserHash(email), params)
+		member, err := members.Update(listID, m.mailchimpUserHash(email), updateParams)
 		if err != nil {
 			return err
 		}

@@ -16,8 +16,23 @@ const (
 	testListId = "a02d21e80f" // Test User List in Mailchimp
 )
 
+func interfaceTest(test email.ListMemberManager) {
+}
+
 func getMailchimpKeyFromEnvVar() string {
 	return os.Getenv(mailchimpApiKeyEnvVar)
+}
+
+func TestInterface(t *testing.T) {
+	apiKey := getMailchimpKeyFromEnvVar()
+	if apiKey == "" {
+		t.Log("No MAILCHIMP_TEST_KEY set, skipping mailchimp test")
+		return
+	}
+
+	// Ensure we are properly honoring the ListMemberManager interface
+	mcAPI := email.NewMailchimpAPI(apiKey)
+	interfaceTest(mcAPI)
 }
 
 func TestMailchimpAddExistsRemove(t *testing.T) {
@@ -103,12 +118,12 @@ func TestMailchimpSubscriberWithTags(t *testing.T) {
 	// Ensure it is unsubscribed on the list
 	_ = mcAPI.UnsubscribeFromList(testListId, testEmail, true)
 
-	testTag := email.MailchimpTag("Test Tag")
-
-	tags := []email.MailchimpTag{testTag}
+	testTag := email.Tag("Test Tag")
+	tags := []email.Tag{testTag}
+	subParams := &email.SubscriptionParams{Tags: tags}
 
 	// Add it to the list
-	err := mcAPI.SubscribeToList(testListId, testEmail, tags)
+	err := mcAPI.SubscribeToList(testListId, testEmail, subParams)
 	if err != nil {
 		t.Errorf("Should not have gotten error for add to list: err: %v", err)
 	}
@@ -141,7 +156,7 @@ func TestMailchimpSubscriberWithTags(t *testing.T) {
 	}
 
 	// Add back it to the list
-	err = mcAPI.SubscribeToList(testListId, testEmail, tags)
+	err = mcAPI.SubscribeToList(testListId, testEmail, subParams)
 	if err != nil {
 		t.Errorf("Should not have gotten error for add to list: err: %v", err)
 	}
@@ -165,7 +180,7 @@ func TestMailchimpSubscriberWithTags(t *testing.T) {
 		t.Errorf("Should have gotten some tags")
 	}
 
-	if member.Tags[0].Name != string(testTag) {
+	if member.Tags[0] != testTag {
 		t.Errorf("Should have gotten the newsroom signup tag")
 	}
 
