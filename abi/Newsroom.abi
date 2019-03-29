@@ -1,0 +1,566 @@
+[
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "name",
+    "outputs": [
+      {
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "name": "role",
+        "type": "string"
+      }
+    ],
+    "name": "hasRole",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "user",
+        "type": "address"
+      }
+    ],
+    "name": "isOwner",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "contentCount",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "newsroomName",
+        "type": "string"
+      },
+      {
+        "name": "charterUri",
+        "type": "string"
+      },
+      {
+        "name": "charterHash",
+        "type": "bytes32"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "editor",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "name": "contentId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "name": "uri",
+        "type": "string"
+      }
+    ],
+    "name": "ContentPublished",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "contentId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "name": "revisionId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "name": "author",
+        "type": "address"
+      }
+    ],
+    "name": "RevisionSigned",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "editor",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "name": "contentId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "name": "revisionId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "name": "uri",
+        "type": "string"
+      }
+    ],
+    "name": "RevisionUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "newName",
+        "type": "string"
+      }
+    ],
+    "name": "NameChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "granter",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "name": "grantee",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "name": "role",
+        "type": "string"
+      }
+    ],
+    "name": "RoleAdded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "granter",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "name": "grantee",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "name": "role",
+        "type": "string"
+      }
+    ],
+    "name": "RoleRemoved",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "previousOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipRenounced",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "contentId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getContent",
+    "outputs": [
+      {
+        "name": "contentHash",
+        "type": "bytes32"
+      },
+      {
+        "name": "uri",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "uint256"
+      },
+      {
+        "name": "author",
+        "type": "address"
+      },
+      {
+        "name": "signature",
+        "type": "bytes"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "contentId",
+        "type": "uint256"
+      },
+      {
+        "name": "revisionId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getRevision",
+    "outputs": [
+      {
+        "name": "contentHash",
+        "type": "bytes32"
+      },
+      {
+        "name": "uri",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "uint256"
+      },
+      {
+        "name": "author",
+        "type": "address"
+      },
+      {
+        "name": "signature",
+        "type": "bytes"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "contentId",
+        "type": "uint256"
+      }
+    ],
+    "name": "revisionCount",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "contentId",
+        "type": "uint256"
+      }
+    ],
+    "name": "isContentSigned",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "contentId",
+        "type": "uint256"
+      },
+      {
+        "name": "revisionId",
+        "type": "uint256"
+      }
+    ],
+    "name": "isRevisionSigned",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "newName",
+        "type": "string"
+      }
+    ],
+    "name": "setName",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "who",
+        "type": "address"
+      },
+      {
+        "name": "role",
+        "type": "string"
+      }
+    ],
+    "name": "addRole",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "who",
+        "type": "address"
+      }
+    ],
+    "name": "addEditor",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "who",
+        "type": "address"
+      },
+      {
+        "name": "role",
+        "type": "string"
+      }
+    ],
+    "name": "removeRole",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "contentUri",
+        "type": "string"
+      },
+      {
+        "name": "contentHash",
+        "type": "bytes32"
+      },
+      {
+        "name": "author",
+        "type": "address"
+      },
+      {
+        "name": "signature",
+        "type": "bytes"
+      }
+    ],
+    "name": "publishContent",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "contentId",
+        "type": "uint256"
+      },
+      {
+        "name": "contentUri",
+        "type": "string"
+      },
+      {
+        "name": "contentHash",
+        "type": "bytes32"
+      },
+      {
+        "name": "signature",
+        "type": "bytes"
+      }
+    ],
+    "name": "updateRevision",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "contentId",
+        "type": "uint256"
+      },
+      {
+        "name": "revisionId",
+        "type": "uint256"
+      },
+      {
+        "name": "author",
+        "type": "address"
+      },
+      {
+        "name": "signature",
+        "type": "bytes"
+      }
+    ],
+    "name": "signRevision",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

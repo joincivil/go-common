@@ -1,0 +1,144 @@
+[
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "EMPTY_MESSAGE_ERROR",
+    "outputs": [
+      {
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "CODE_UNASSIGNED_ERROR",
+    "outputs": [
+      {
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "CODE_RESERVED_ERROR",
+    "outputs": [
+      {
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "self",
+        "type": "MessagesAndCodes.Data storage"
+      },
+      {
+        "name": "_code",
+        "type": "uint8"
+      },
+      {
+        "name": "_message",
+        "type": "string"
+      }
+    ],
+    "name": "addMessage",
+    "outputs": [
+      {
+        "name": "code",
+        "type": "uint8"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "self",
+        "type": "MessagesAndCodes.Data storage"
+      },
+      {
+        "name": "_message",
+        "type": "string"
+      }
+    ],
+    "name": "autoAddMessage",
+    "outputs": [
+      {
+        "name": "code",
+        "type": "uint8"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "self",
+        "type": "MessagesAndCodes.Data storage"
+      },
+      {
+        "name": "_code",
+        "type": "uint8"
+      }
+    ],
+    "name": "removeMessage",
+    "outputs": [
+      {
+        "name": "code",
+        "type": "uint8"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "self",
+        "type": "MessagesAndCodes.Data storage"
+      },
+      {
+        "name": "_code",
+        "type": "uint8"
+      },
+      {
+        "name": "_message",
+        "type": "string"
+      }
+    ],
+    "name": "updateMessage",
+    "outputs": [
+      {
+        "name": "code",
+        "type": "uint8"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

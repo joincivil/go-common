@@ -45,7 +45,10 @@ The latest generated code is checked into the repository, except for the contrac
 
 ### Contract .abi & .bin
 
-This project relies on artifacts from the main Civil repository [http://github.com/joincivil/Civil](http://github.com/joincivil/Civil).  Please clone the Civil repository into a directory accessible by this repository.
+This project relies on artifacts from the main Civil repository [http://github.com/joincivil/Civil](http://github.com/joincivil/Civil). **NOTE: The `.abi/.bin` is pre-generated and included in this repository in `/abi`, so this step can normally be skipped**.
+
+
+If re-generation of the `.abi/.bin` files is needed, please clone (or have cloned) the Civil repository into a directory accessible by this repository. 
 
 To build and copy the Civil contract .abi/.bin files, run the `scripts/abi_retrieval.sh` script:
 
@@ -54,6 +57,8 @@ scripts/abi_retrieval.sh /full/path/to/main/civil/repo /full/path/to/go-common/a
 ```
 
 The destination directory is generally the `go-common/abi` directory in this repository.  This will produce the `.abi` & `.bin` files from the artifacts in the `Civil` repository.
+
+If there are issues with dependencies while running `abi_retrieval.sh`, try running the `yarn install` in the `joincivil/Civil` repo directly before running `abi_retrieval.sh`.  More information can be found at [joincivil/Civil#dev-setup](https://github.com/joincivil/Civil#dev-setup)
 
 ### Solidity Wrappers
 

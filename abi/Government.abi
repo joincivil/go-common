@@ -1,0 +1,473 @@
+[
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "PROCESSBY",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "name": "proposals",
+    "outputs": [
+      {
+        "name": "pollID",
+        "type": "uint256"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "processBy",
+        "type": "uint256"
+      },
+      {
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "constitutionURI",
+    "outputs": [
+      {
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "constitutionHash",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "appellate",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "name": "params",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "governmentController",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "voting",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "appellateAddr",
+        "type": "address"
+      },
+      {
+        "name": "governmentControllerAddr",
+        "type": "address"
+      },
+      {
+        "name": "plcrAddr",
+        "type": "address"
+      },
+      {
+        "name": "appealFeeAmount",
+        "type": "uint256"
+      },
+      {
+        "name": "requestAppealLength",
+        "type": "uint256"
+      },
+      {
+        "name": "judgeAppealLength",
+        "type": "uint256"
+      },
+      {
+        "name": "appealSupermajorityPercentage",
+        "type": "uint256"
+      },
+      {
+        "name": "appealChallengeVoteDispensationPct",
+        "type": "uint256"
+      },
+      {
+        "name": "pDeposit",
+        "type": "uint256"
+      },
+      {
+        "name": "pCommitStageLength",
+        "type": "uint256"
+      },
+      {
+        "name": "pRevealStageLength",
+        "type": "uint256"
+      },
+      {
+        "name": "constHash",
+        "type": "bytes32"
+      },
+      {
+        "name": "constURI",
+        "type": "string"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "newAppellate",
+        "type": "address"
+      }
+    ],
+    "name": "_AppellateSet",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "_ParameterSet",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "name": "value",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "name": "propID",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "name": "pollID",
+        "type": "uint256"
+      }
+    ],
+    "name": "_GovtReparameterizationProposal",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "propId",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "name": "pollID",
+        "type": "uint256"
+      }
+    ],
+    "name": "_ProposalPassed",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "propId",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "name": "pollID",
+        "type": "uint256"
+      }
+    ],
+    "name": "_ProposalExpired",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "propId",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "name": "pollID",
+        "type": "uint256"
+      }
+    ],
+    "name": "_ProposalFailed",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "proposedHash",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "name": "proposedURI",
+        "type": "string"
+      }
+    ],
+    "name": "_NewConstSet",
+    "type": "event"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "getAppellate",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "getGovernmentController",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "name",
+        "type": "string"
+      }
+    ],
+    "name": "get",
+    "outputs": [
+      {
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_name",
+        "type": "string"
+      },
+      {
+        "name": "_value",
+        "type": "uint256"
+      }
+    ],
+    "name": "proposeReparameterization",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_newConstHash",
+        "type": "bytes32"
+      },
+      {
+        "name": "_newConstURI",
+        "type": "string"
+      }
+    ],
+    "name": "setNewConstitution",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_propID",
+        "type": "bytes32"
+      }
+    ],
+    "name": "processProposal",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_propID",
+        "type": "bytes32"
+      }
+    ],
+    "name": "propExists",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_propID",
+        "type": "bytes32"
+      }
+    ],
+    "name": "propCanBeResolved",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "newAppellate",
+        "type": "address"
+      }
+    ],
+    "name": "setAppellate",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

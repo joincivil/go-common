@@ -6,10 +6,6 @@ pids
 *.seed
 *.pid.lock
 
-# generated/
-*.abi
-*.bin
-
 build/
 
 *.DS_STORE
