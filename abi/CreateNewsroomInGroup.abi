@@ -1,0 +1,52 @@
+[
+  {
+    "inputs": [
+      {
+        "name": "_factory",
+        "type": "address"
+      },
+      {
+        "name": "_controller",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "charterUri",
+        "type": "string"
+      },
+      {
+        "name": "charterHash",
+        "type": "bytes32"
+      },
+      {
+        "name": "initialOwners",
+        "type": "address[]"
+      },
+      {
+        "name": "initialRequired",
+        "type": "uint256"
+      }
+    ],
+    "name": "create",
+    "outputs": [
+      {
+        "name": "newsroom",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]
