@@ -48,3 +48,7 @@
   [[prune.project]]
     name = "github.com/ethereum/go-ethereum"
     unused-packages = false
+
+[[constraint]]
+  name = "github.com/getsentry/raven-go"
+  version = "0.2.0"

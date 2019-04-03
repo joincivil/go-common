@@ -2,10 +2,12 @@
 
 
 [[projects]]
-  digest = "1:3663b5e9fe8e3fffe68c0d7bebc2823ddd7a9fbd01c51eea06a59ace9b900a20"
+  digest = "1:c98a29d4088336aa0ff6923426abf6bea429d512a1d9be780391f34b804ab475"
   name = "cloud.google.com/go"
   packages = [
     "compute/metadata",
+    "errorreporting",
+    "errorreporting/apiv1beta1",
     "iam",
     "internal/optional",
     "internal/version",
@@ -55,6 +57,14 @@
   packages = ["btcec"]
   pruneopts = "UT"
   revision = "7d2daa5bfef28c5e282571bc06416516936115ee"
+
+[[projects]]
+  digest = "1:fed1f537c2f1269fe475a8556c393fe466641682d73ef8fd0491cd3aa1e47bad"
+  name = "github.com/certifi/gocertifi"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "deb3ae2ef2610fde3330947281941c562861188b"
+  version = "2018.01.18"
 
 [[projects]]
   digest = "1:e47d51dab652d26c3fba6f8cba403f922d02757a82abdc77e90df7948daf296e"
@@ -119,6 +129,14 @@
   revision = "ba90a4aaa42428fc5f38c4869455db5a51565714"
 
 [[projects]]
+  digest = "1:d18f6f088d7d8365df47f49dfa24b6ff6701a941118ffda30c589d1bd954074b"
+  name = "github.com/getsentry/raven-go"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "f04e7487e9a6b9d9837d52743fb5f40576c56411"
+  version = "v0.2.0"
+
+[[projects]]
   digest = "1:586ea76dbd0374d6fb649a91d70d652b7fe0ccffb8910a77468e7702e7901f3d"
   name = "github.com/go-stack/stack"
   packages = ["."]
@@ -135,7 +153,7 @@
   revision = "23def4e6c14b4da8ac2ed8007337bc5eb5007998"
 
 [[projects]]
-  digest = "1:19e1717be26f549febea402e08b46db7919d164324a24ff67e0c81dfb11316b8"
+  digest = "1:ec0bde6dc8cf3cb9254f79603bd8489c366a0a8584949cac5a73fa10b9f47c21"
   name = "github.com/golang/protobuf"
   packages = [
     "proto",
@@ -144,6 +162,7 @@
     "ptypes/any",
     "ptypes/duration",
     "ptypes/empty",
+    "ptypes/struct",
     "ptypes/timestamp",
   ]
   pruneopts = "UT"
@@ -200,6 +219,14 @@
   pruneopts = "UT"
   revision = "adf5a7427709b9deb95d29d3fa8a2bf9cfd388f1"
   version = "v1.2"
+
+[[projects]]
+  digest = "1:cf31692c14422fa27c83a05292eb5cbe0fb2775972e8f1f8446a71549bd8980b"
+  name = "github.com/pkg/errors"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "ba968bfe8b2f7e042a574c888954fccecfa385b4"
+  version = "v0.8.1"
 
 [[projects]]
   digest = "1:31d83d1b1c288073c91abadee3caec87de2a1fb5dbe589039264a802e67a26b8"
@@ -412,10 +439,13 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:5cffeff3e13de303233d2f992e1d7ebf8ba89b061b63380adbb92d8710fc4c4e"
+  digest = "1:643818f117fbb5fe0247f23ce176a2334e7dd78f04e0b5644d836a9721c3bbfa"
   name = "google.golang.org/genproto"
   packages = [
     "googleapis/api/annotations",
+    "googleapis/api/label",
+    "googleapis/api/monitoredres",
+    "googleapis/devtools/clouderrorreporting/v1beta1",
     "googleapis/iam/v1",
     "googleapis/pubsub/v1",
     "googleapis/rpc/status",
@@ -477,6 +507,7 @@
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
+    "cloud.google.com/go/errorreporting",
     "cloud.google.com/go/pubsub",
     "github.com/beeker1121/mailchimp-go",
     "github.com/beeker1121/mailchimp-go/lists/members",
@@ -490,6 +521,7 @@
     "github.com/ethereum/go-ethereum/crypto",
     "github.com/ethereum/go-ethereum/ethclient",
     "github.com/ethereum/go-ethereum/event",
+    "github.com/getsentry/raven-go",
     "github.com/golang/glog",
     "github.com/kelseyhightower/envconfig",
     "github.com/sendgrid/sendgrid-go",
