@@ -17,6 +17,17 @@ const (
 	testGoogleCredsEnvVarName = "GOOGLE_APPLICATION_CREDENTIALS"
 )
 
+func testMe(reporter reporting.ErrorReporter) {
+}
+
+func TestErrorReporterInterface(t *testing.T) {
+	nullreporter := &reporting.NullErrorReporter{}
+	testMe(nullreporter)
+
+	metareporter := &reporting.MetaErrorReporter{}
+	testMe(metareporter)
+}
+
 func TestMetaErrorReportingErr(t *testing.T) {
 	config := &reporting.MetaErrorReporterConfig{
 		StackDriverProjectID:      "civil-media",

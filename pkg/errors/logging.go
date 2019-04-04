@@ -34,6 +34,19 @@ type ErrorReporter interface {
 	Error(err error, meta *ErrorMeta)
 }
 
+// NullErrorReporter is a reporter that does nothing.  Used for testing or
+// if an "empty" reporter that logs to nowhere.
+type NullErrorReporter struct {
+}
+
+// Msg does nothing here
+func (n *NullErrorReporter) Msg(msg string, meta *ErrorMeta) {
+}
+
+// Error does nothing here
+func (n *NullErrorReporter) Error(err error, meta *ErrorMeta) {
+}
+
 // MetaErrorReporterConfig configures the meta error reporting
 type MetaErrorReporterConfig struct {
 	StackDriverProjectID      string
