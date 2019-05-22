@@ -8,7 +8,9 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
-	// log "github.com/golang/glog"
+	"time"
+
+	log "github.com/golang/glog"
 )
 
 // RestHelper provides an easy interface to send requests to a REST endpoint
@@ -23,6 +25,43 @@ func NewRestHelper(baseURL string, authorizationHeader string) *RestHelper {
 		baseURL,
 		authorizationHeader,
 	}
+}
+
+// SendRequestWithRetry generates an HTTP request to the REST endpoint with retries
+func (h *RestHelper) SendRequestWithRetry(endpointName string, method string, params *url.Values,
+	payload interface{}, maxAttempts int, baseWaitMs int) ([]byte, error) {
+	url := fmt.Sprintf("%v/%v", h.baseURL, endpointName)
+	return h.SendRequestToURLWithRetry(url, method, params, payload, maxAttempts, baseWaitMs)
+}
+
+// SendRequestToURLWithRetry generates a HTTP request to a URL with retries
+func (h *RestHelper) SendRequestToURLWithRetry(url string, method string, params *url.Values,
+	payload interface{}, maxAttempts int, baseWaitMs int) ([]byte, error) {
+
+	attempt := 1
+	var err error
+	var bys []byte
+
+	for {
+		bys, err = h.SendRequestToURL(url, method, params, payload)
+		if err != nil {
+			log.Infof(
+				"err with request, sleep/attempt again, waiting %v ms...",
+				baseWaitMs*attempt,
+			)
+
+			// Take a break and retry
+			time.Sleep(time.Duration(baseWaitMs) * time.Duration(attempt) * time.Millisecond)
+			if attempt >= maxAttempts {
+				return nil, err
+			}
+
+			attempt++
+			continue
+		}
+		break
+	}
+	return bys, nil
 }
 
 // SendRequest generates an HTTP request to the REST endpoint
@@ -52,7 +91,6 @@ func (h *RestHelper) SendRequestToURL(url string, method string, params *url.Val
 
 	// Add the authorization header if given
 	if h.authorizationHeader != "" {
-		// log.Infof("Adding Authorization header: %v", h.authorizationHeader)
 		req.Header.Add("Authorization", h.authorizationHeader)
 	}
 
@@ -67,7 +105,7 @@ func (h *RestHelper) SendRequestToURL(url string, method string, params *url.Val
 	if err != nil {
 		return nil, err
 	}
-	// log.Infof("respBody = %v", string(rspBodyData))
+
 	if rsp.StatusCode != 200 && rsp.StatusCode != 201 {
 		return nil, fmt.Errorf("Request failed: %v, %v", rsp.StatusCode, string(rspBodyData))
 	}
@@ -85,7 +123,9 @@ func (h *RestHelper) buildPostPutRequest(method string, url string,
 			return nil, err
 		}
 		reqBody = bytes.NewBufferString(string(payloadData))
-		// log.Infof("reqBody = %v", reqBody.String())
+
+	} else {
+		reqBody = bytes.NewBufferString("")
 	}
 
 	// Build a new request
@@ -98,7 +138,7 @@ func (h *RestHelper) buildPostPutRequest(method string, url string,
 	if err != nil {
 		return nil, err
 	}
-	//log.Infof("%v -> %v", req.URL.String(), reqBody)
+
 	return req, nil
 }
 
@@ -115,7 +155,7 @@ func (h *RestHelper) buildGetDeleteRequest(method string, url string,
 	if params != nil {
 		req.URL.RawQuery = params.Encode()
 	}
-	// log.Infof("%v", req.URL.String())
+
 	return req, nil
 }
 
