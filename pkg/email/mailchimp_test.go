@@ -11,16 +11,16 @@ import (
 )
 
 const (
-	mailchimpApiKeyEnvVar = "MAILCHIMP_TEST_KEY"
+	mailchimpAPIKeyEnvVar = "MAILCHIMP_TEST_KEY"
 
-	testListId = "a02d21e80f" // Test User List in Mailchimp
+	testListID = "a02d21e80f" // Test User List in Mailchimp
 )
 
 func interfaceTest(test email.ListMemberManager) {
 }
 
 func getMailchimpKeyFromEnvVar() string {
-	return os.Getenv(mailchimpApiKeyEnvVar)
+	return os.Getenv(mailchimpAPIKeyEnvVar)
 }
 
 func TestInterface(t *testing.T) {
@@ -47,10 +47,10 @@ func TestMailchimpAddExistsRemove(t *testing.T) {
 	testEmail := fmt.Sprintf("testuser%d@civil.co", rand.Intn(500))
 
 	// Ensure it is unsubscribed on the list
-	_ = mcAPI.UnsubscribeFromList(testListId, testEmail, true)
+	_ = mcAPI.UnsubscribeFromList(testListID, testEmail, true)
 
 	// Should not have existed at first
-	subscribed, err := mcAPI.IsSubscribedToList(testListId, testEmail)
+	subscribed, err := mcAPI.IsSubscribedToList(testListID, testEmail)
 	if err != nil {
 		t.Errorf("Should not have gotten error for subscribed on list: err: %v", err)
 	}
@@ -60,13 +60,13 @@ func TestMailchimpAddExistsRemove(t *testing.T) {
 	}
 
 	// Add it to the list
-	err = mcAPI.SubscribeToList(testListId, testEmail, nil)
+	err = mcAPI.SubscribeToList(testListID, testEmail, nil)
 	if err != nil {
 		t.Errorf("Should not have gotten error for add to list: err: %v", err)
 	}
 
 	// Check to see that it in fact subscribed
-	subscribed, err = mcAPI.IsSubscribedToList(testListId, testEmail)
+	subscribed, err = mcAPI.IsSubscribedToList(testListID, testEmail)
 	if err != nil {
 		t.Errorf("Should not have gotten error for exists on list: err: %v", err)
 	}
@@ -77,19 +77,19 @@ func TestMailchimpAddExistsRemove(t *testing.T) {
 
 	// Try to subscribe this user again
 	// Will just update to subscribed for this user.
-	err = mcAPI.SubscribeToList(testListId, testEmail, nil)
+	err = mcAPI.SubscribeToList(testListID, testEmail, nil)
 	if err != nil {
 		t.Errorf("Should not have gotten error for add duplicate to list: err: %v", err)
 	}
 
 	// Remove it from the list
-	err = mcAPI.UnsubscribeFromList(testListId, testEmail, false)
+	err = mcAPI.UnsubscribeFromList(testListID, testEmail, false)
 	if err != nil {
 		t.Errorf("Should not have gotten error for unsubscribe from list: err: %v", err)
 	}
 
 	// Ensure it has been removed properly
-	subscribed, err = mcAPI.IsSubscribedToList(testListId, testEmail)
+	subscribed, err = mcAPI.IsSubscribedToList(testListID, testEmail)
 	if err != nil {
 		t.Errorf("Should not have gotten error for subscribed on list: err: %v", err)
 	}
@@ -98,7 +98,7 @@ func TestMailchimpAddExistsRemove(t *testing.T) {
 		t.Errorf("Email should not have existed")
 	}
 
-	err = mcAPI.UnsubscribeFromList(testListId, testEmail, true)
+	err = mcAPI.UnsubscribeFromList(testListID, testEmail, true)
 	if err != nil {
 		t.Errorf("Should not have gotten error for permanent remove from list: err: %v", err)
 	}
@@ -116,14 +116,14 @@ func TestMailchimpSubscriberWithTags(t *testing.T) {
 	testEmail := fmt.Sprintf("testuser%d@civil.co", rand.Intn(500))
 
 	// Ensure it is unsubscribed on the list
-	_ = mcAPI.UnsubscribeFromList(testListId, testEmail, true)
+	_ = mcAPI.UnsubscribeFromList(testListID, testEmail, true)
 
 	testTag := email.Tag("Test Tag")
 	tags := []email.Tag{testTag}
 	subParams := &email.SubscriptionParams{Tags: tags}
 
 	// Add it to the list
-	err := mcAPI.SubscribeToList(testListId, testEmail, subParams)
+	err := mcAPI.SubscribeToList(testListID, testEmail, subParams)
 	if err != nil {
 		t.Errorf("Should not have gotten error for add to list: err: %v", err)
 	}
@@ -131,7 +131,7 @@ func TestMailchimpSubscriberWithTags(t *testing.T) {
 	var subscribed bool
 
 	// Check to see that it in fact subscribed
-	subscribed, err = mcAPI.IsSubscribedToList(testListId, testEmail)
+	subscribed, err = mcAPI.IsSubscribedToList(testListID, testEmail)
 	if err != nil {
 		t.Errorf("Should not have gotten error for exists on list: err: %v", err)
 	}
@@ -140,13 +140,13 @@ func TestMailchimpSubscriberWithTags(t *testing.T) {
 		t.Errorf("Should not have still been subscribed")
 	}
 
-	err = mcAPI.UnsubscribeFromList(testListId, testEmail, false)
+	err = mcAPI.UnsubscribeFromList(testListID, testEmail, false)
 	if err != nil {
 		t.Errorf("Should not have gotten error for permanent remove from list: err: %v", err)
 	}
 
 	// Check to see that it in fact unsubscribed
-	subscribed, err = mcAPI.IsSubscribedToList(testListId, testEmail)
+	subscribed, err = mcAPI.IsSubscribedToList(testListID, testEmail)
 	if err != nil {
 		t.Errorf("Should not have gotten error for exists on list: err: %v", err)
 	}
@@ -156,13 +156,13 @@ func TestMailchimpSubscriberWithTags(t *testing.T) {
 	}
 
 	// Add back it to the list
-	err = mcAPI.SubscribeToList(testListId, testEmail, subParams)
+	err = mcAPI.SubscribeToList(testListID, testEmail, subParams)
 	if err != nil {
 		t.Errorf("Should not have gotten error for add to list: err: %v", err)
 	}
 
 	// Check to see that it in fact subscribed
-	subscribed, err = mcAPI.IsSubscribedToList(testListId, testEmail)
+	subscribed, err = mcAPI.IsSubscribedToList(testListID, testEmail)
 	if err != nil {
 		t.Errorf("Should not have gotten error for exists on list: err: %v", err)
 	}
@@ -171,7 +171,7 @@ func TestMailchimpSubscriberWithTags(t *testing.T) {
 		t.Errorf("Should have been subscribed")
 	}
 
-	member, err := mcAPI.GetListMember(testListId, testEmail)
+	member, err := mcAPI.GetListMember(testListID, testEmail)
 	if err != nil {
 		t.Errorf("Should not have gotten error for get subscriber: err: %v", err)
 	}
@@ -184,7 +184,7 @@ func TestMailchimpSubscriberWithTags(t *testing.T) {
 		t.Errorf("Should have gotten the newsroom signup tag")
 	}
 
-	err = mcAPI.UnsubscribeFromList(testListId, testEmail, true)
+	err = mcAPI.UnsubscribeFromList(testListID, testEmail, true)
 	if err != nil {
 		t.Errorf("Should not have gotten error for permanent remove from list: err: %v", err)
 	}

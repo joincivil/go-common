@@ -116,8 +116,8 @@ func TestInMemoryJobServiceSubscribeNoJob(t *testing.T) {
 		t.Fatalf("Should have started the job: err: %v", err)
 	}
 
-	badId := "id2"
-	_, err = jobsService.StartSubscription(badId)
+	badID := "id2"
+	_, err = jobsService.StartSubscription(badID)
 	if err == nil {
 		t.Fatalf("Should have failed to get subscription: err: %v", err)
 	}

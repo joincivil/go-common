@@ -200,7 +200,7 @@ func (m *MailchimpAPI) UnsubscribeFromList(listID string, email string, delete b
 func (m *MailchimpAPI) mailchimpUserHash(emailAddress string) string {
 	// md5 hash of lowercase version of the email address
 	h := md5.New()                                 // nolint: gosec
-	h.Write([]byte(strings.ToLower(emailAddress))) // nolint: gosec
+	h.Write([]byte(strings.ToLower(emailAddress))) // nolint: gosec, errcheck
 	return hex.EncodeToString(h.Sum(nil))
 }
 

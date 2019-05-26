@@ -10,11 +10,11 @@ import (
 )
 
 type testStruct struct {
-	field1        string `db:"field1"` // nolint: megacheck
-	field2        int    `db:"field2"` // nolint: megacheck
-	field4Ignored string `db:"-"`      // nolint: megacheck
-	field4        int    `db:"field4"` // nolint: megacheck
-	field5Ignored bool   `db:"-"`      // nolint: megacheck
+	field1        string `db:"field1"` // nolint: megacheck, structcheck
+	field2        int    `db:"field2"` // nolint: megacheck, structcheck
+	field4Ignored string `db:"-"`      // nolint: megacheck, structcheck
+	field4        int    `db:"field4"` // nolint: megacheck, structcheck
+	field5Ignored bool   `db:"-"`      // nolint: megacheck, structcheck
 }
 
 func TestStructFieldsForQuery(t *testing.T) {
