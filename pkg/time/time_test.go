@@ -8,7 +8,7 @@ import (
 	ctime "github.com/joincivil/go-common/pkg/time"
 )
 
-var EPSILON float64 = 0.999
+var EPSILON = 0.999
 
 func floatEquals(a float64, b float64) bool {
 	return (a-b) < EPSILON && (b-a) < EPSILON
@@ -31,7 +31,7 @@ func TestCurrentEpochSecsInInt64(t *testing.T) {
 		t.Error("Timestamp is <= 0, it should be greater than 0")
 	}
 	now := time.Now()
-	if now.Unix() != int64(ts) {
+	if now.Unix() != ts {
 		t.Error("Int64 timestamp is not equal to the calculated timestamp")
 	}
 }

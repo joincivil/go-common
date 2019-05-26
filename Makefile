@@ -25,8 +25,12 @@ ABI_DIR=abi
 GENERATED_DIR=pkg/generated
 GENERATED_CONTRACT_DIR=$(GENERATED_DIR)/contract
 
-GOMETALINTER_INSTALLER=scripts/gometalinter_install.sh
-GOMETALINTER_VERSION_TAG=v2.0.11
+# GOMETALINTER_INSTALLER=scripts/gometalinter_install.sh
+# GOMETALINTER_VERSION_TAG=v2.0.11
+
+# curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(go env GOPATH)/bin vX.Y.Z
+GOLANGCILINT_URL=https://install.goreleaser.com/github.com/golangci/golangci-lint.sh
+GOLANGCILINT_VERSION_TAG=v1.16.0
 
 
 GO:=$(shell command -v go 2> /dev/null)
@@ -65,7 +69,8 @@ install-dep: check-go-env ## Installs dep
 
 .PHONY: install-linter
 install-linter: check-go-env ## Installs linter
-	sh $(GOMETALINTER_INSTALLER) -b $(GOPATH)/bin $(GOMETALINTER_VERSION_TAG)
+	# sh $(GOMETALINTER_INSTALLER) -b $(GOPATH)/bin $(GOMETALINTER_VERSION_TAG)
+	@curl -sfL $(GOLANGCILINT_URL) | sh -s -- -b $(shell go env GOPATH)/bin $(GOLANGCILINT_VERSION_TAG)
 
 .PHONY: install-cover
 install-cover: check-go-env ## Installs code coverage tool
@@ -160,10 +165,10 @@ else
 	$(error No abi files found; copy them to /abi after generation)
 endif
 
-## gometalinter config in .gometalinter.json
+## golangci-lint config in .golangci.yml
 .PHONY: lint
 lint: ## Runs linting.
-	@gometalinter ./...
+	@golangci-lint run ./...
 
 .PHONY: build
 build: ## Builds the repo, mainly to ensure all the files will build properly

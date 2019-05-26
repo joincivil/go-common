@@ -10,7 +10,7 @@ import (
 
 func TestSendRequestWithRetry(t *testing.T) {
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("OK"))
+		w.Write([]byte("OK")) // nolint: errcheck
 	}))
 	defer ts.Close()
 
@@ -29,7 +29,7 @@ func TestSendRequestWithRetryErrors(t *testing.T) {
 	count := 0
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte("ERROR"))
+		w.Write([]byte("ERROR")) // nolint: errcheck
 		count++
 	}))
 	defer ts.Close()
@@ -47,7 +47,7 @@ func TestSendRequestWithRetryErrors(t *testing.T) {
 
 func TestSendPostRequestToURL(t *testing.T) {
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("OK"))
+		w.Write([]byte("OK")) // nolint: errcheck
 	}))
 	defer ts.Close()
 
