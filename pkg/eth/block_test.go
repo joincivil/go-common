@@ -1,7 +1,6 @@
 package eth_test
 
 import (
-	"math/big"
 	"testing"
 	"time"
 
@@ -18,7 +17,7 @@ func TestBlockHeaderCache(t *testing.T) {
 		t.Error("Should have failed to retrieve any headers")
 	}
 
-	ts := big.NewInt(ctime.CurrentEpochSecsInInt64())
+	ts := uint64(ctime.CurrentEpochSecsInInt64())
 	header1 := &types.Header{
 		Time: ts,
 	}
