@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 
 	chttp "github.com/joincivil/go-common/pkg/http"
 )
@@ -42,6 +43,33 @@ func TestSendRequestWithRetryErrors(t *testing.T) {
 
 	if count != 3 {
 		t.Errorf("Should have seen 3 attempts: %v", count)
+	}
+}
+
+func TestSendRequestWithTimeout(t *testing.T) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("OK")) // nolint: errcheck
+	}))
+	defer ts.Close()
+
+	rh := chttp.NewRestHelperWithTimeout(ts.URL, "", 3*time.Second)
+	_, err := rh.SendRequest("/", http.MethodGet, nil, nil)
+	if err != nil {
+		t.Errorf("Should not have received timeout or error")
+	}
+}
+
+func TestSendRequestWithTimeoutTimedOut(t *testing.T) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		time.Sleep(5 * time.Second)
+		w.Write([]byte("OK")) // nolint: errcheck
+	}))
+	defer ts.Close()
+
+	rh := chttp.NewRestHelperWithTimeout(ts.URL, "", 3*time.Second)
+	_, err := rh.SendRequest("/", http.MethodGet, nil, nil)
+	if err == nil {
+		t.Errorf("Should have received timeout")
 	}
 }
 

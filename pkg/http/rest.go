@@ -13,17 +13,32 @@ import (
 	log "github.com/golang/glog"
 )
 
+const (
+	defaultTimeout = 3 * time.Second
+)
+
 // RestHelper provides an easy interface to send requests to a REST endpoint
 type RestHelper struct {
 	baseURL             string
 	authorizationHeader string
+	timeout             time.Duration
 }
 
 // NewRestHelper returns an instance of RestHelper
 func NewRestHelper(baseURL string, authorizationHeader string) *RestHelper {
 	return &RestHelper{
-		baseURL,
-		authorizationHeader,
+		baseURL:             baseURL,
+		authorizationHeader: authorizationHeader,
+		timeout:             defaultTimeout,
+	}
+}
+
+func NewRestHelperWithTimeout(baseURL string, authorizationHeader string,
+	timeout time.Duration) *RestHelper {
+	return &RestHelper{
+		baseURL:             baseURL,
+		authorizationHeader: authorizationHeader,
+		timeout:             timeout,
 	}
 }
 
@@ -76,6 +91,13 @@ func (h *RestHelper) SendRequestToURL(url string, method string, params *url.Val
 	payload interface{}) ([]byte, error) {
 
 	client := &http.Client{}
+	// Make sure a timeout is set or this will hang forever when making
+	// request that fails to return
+	if h.timeout == 0 {
+		h.timeout = defaultTimeout
+	}
+	client.Timeout = h.timeout
+
 	var req *http.Request
 	var err error
 
