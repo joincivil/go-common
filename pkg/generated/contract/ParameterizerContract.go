@@ -15,6 +15,18 @@ import (
 	"github.com/ethereum/go-ethereum/event"
 )
 
+// Reference imports to suppress errors if they are not otherwise used.
+var (
+	_ = big.NewInt
+	_ = strings.NewReader
+	_ = ethereum.NotFound
+	_ = abi.U256
+	_ = bind.Bind
+	_ = common.Big1
+	_ = types.BloomLookup
+	_ = event.NewSubscription
+)
+
 // ParameterizerContractABI is the input ABI used to generate the binding from.
 const ParameterizerContractABI = "[{\"constant\":true,\"inputs\":[],\"name\":\"PROCESSBY\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"bytes32\"}],\"name\":\"proposals\",\"outputs\":[{\"name\":\"appExpiry\",\"type\":\"uint256\"},{\"name\":\"challengeID\",\"type\":\"uint256\"},{\"name\":\"deposit\",\"type\":\"uint256\"},{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"owner\",\"type\":\"address\"},{\"name\":\"processBy\",\"type\":\"uint256\"},{\"name\":\"value\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"challenges\",\"outputs\":[{\"name\":\"rewardPool\",\"type\":\"uint256\"},{\"name\":\"challenger\",\"type\":\"address\"},{\"name\":\"resolved\",\"type\":\"bool\"},{\"name\":\"stake\",\"type\":\"uint256\"},{\"name\":\"winningTokens\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"bytes32\"}],\"name\":\"params\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"token\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"voting\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"_token\",\"type\":\"address\"},{\"name\":\"_plcr\",\"type\":\"address\"},{\"name\":\"_parameters\",\"type\":\"uint256[]\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"name\",\"type\":\"string\"},{\"indexed\":false,\"name\":\"value\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"propID\",\"type\":\"bytes32\"},{\"indexed\":false,\"name\":\"deposit\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"appEndDate\",\"type\":\"uint256\"},{\"indexed\":true,\"name\":\"proposer\",\"type\":\"address\"}],\"name\":\"_ReparameterizationProposal\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"propID\",\"type\":\"bytes32\"},{\"indexed\":false,\"name\":\"challengeID\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"commitEndDate\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"revealEndDate\",\"type\":\"uint256\"},{\"indexed\":true,\"name\":\"challenger\",\"type\":\"address\"}],\"name\":\"_NewChallenge\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"propID\",\"type\":\"bytes32\"},{\"indexed\":false,\"name\":\"name\",\"type\":\"string\"},{\"indexed\":false,\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"_ProposalAccepted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"propID\",\"type\":\"bytes32\"}],\"name\":\"_ProposalExpired\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"propID\",\"type\":\"bytes32\"},{\"indexed\":true,\"name\":\"challengeID\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"rewardPool\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"totalTokens\",\"type\":\"uint256\"}],\"name\":\"_ChallengeSucceeded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"propID\",\"type\":\"bytes32\"},{\"indexed\":true,\"name\":\"challengeID\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"rewardPool\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"totalTokens\",\"type\":\"uint256\"}],\"name\":\"_ChallengeFailed\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"challengeID\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"reward\",\"type\":\"uint256\"},{\"indexed\":true,\"name\":\"voter\",\"type\":\"address\"}],\"name\":\"_RewardClaimed\",\"type\":\"event\"},{\"constant\":false,\"inputs\":[{\"name\":\"_name\",\"type\":\"string\"},{\"name\":\"_value\",\"type\":\"uint256\"}],\"name\":\"proposeReparameterization\",\"outputs\":[{\"name\":\"\",\"type\":\"bytes32\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_propID\",\"type\":\"bytes32\"}],\"name\":\"challengeReparameterization\",\"outputs\":[{\"name\":\"challengeID\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_propID\",\"type\":\"bytes32\"}],\"name\":\"processProposal\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_challengeID\",\"type\":\"uint256\"},{\"name\":\"_salt\",\"type\":\"uint256\"}],\"name\":\"claimReward\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_challengeIDs\",\"type\":\"uint256[]\"},{\"name\":\"_salts\",\"type\":\"uint256[]\"}],\"name\":\"claimRewards\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_voter\",\"type\":\"address\"},{\"name\":\"_challengeID\",\"type\":\"uint256\"},{\"name\":\"_salt\",\"type\":\"uint256\"}],\"name\":\"voterReward\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_propID\",\"type\":\"bytes32\"}],\"name\":\"canBeSet\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_propID\",\"type\":\"bytes32\"}],\"name\":\"propExists\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_propID\",\"type\":\"bytes32\"}],\"name\":\"challengeCanBeResolved\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_challengeID\",\"type\":\"uint256\"}],\"name\":\"challengeWinnerReward\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_name\",\"type\":\"string\"}],\"name\":\"get\",\"outputs\":[{\"name\":\"value\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_challengeID\",\"type\":\"uint256\"},{\"name\":\"_voter\",\"type\":\"address\"}],\"name\":\"tokenClaims\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}]"
 
@@ -204,7 +216,7 @@ func (_ParameterizerContract *ParameterizerContractCallerSession) PROCESSBY() (*
 
 // CanBeSet is a free data retrieval call binding the contract method 0xc51131fb.
 //
-// Solidity: function canBeSet(_propID bytes32) constant returns(bool)
+// Solidity: function canBeSet(bytes32 _propID) constant returns(bool)
 func (_ParameterizerContract *ParameterizerContractCaller) CanBeSet(opts *bind.CallOpts, _propID [32]byte) (bool, error) {
 	var (
 		ret0 = new(bool)
@@ -216,21 +228,21 @@ func (_ParameterizerContract *ParameterizerContractCaller) CanBeSet(opts *bind.C
 
 // CanBeSet is a free data retrieval call binding the contract method 0xc51131fb.
 //
-// Solidity: function canBeSet(_propID bytes32) constant returns(bool)
+// Solidity: function canBeSet(bytes32 _propID) constant returns(bool)
 func (_ParameterizerContract *ParameterizerContractSession) CanBeSet(_propID [32]byte) (bool, error) {
 	return _ParameterizerContract.Contract.CanBeSet(&_ParameterizerContract.CallOpts, _propID)
 }
 
 // CanBeSet is a free data retrieval call binding the contract method 0xc51131fb.
 //
-// Solidity: function canBeSet(_propID bytes32) constant returns(bool)
+// Solidity: function canBeSet(bytes32 _propID) constant returns(bool)
 func (_ParameterizerContract *ParameterizerContractCallerSession) CanBeSet(_propID [32]byte) (bool, error) {
 	return _ParameterizerContract.Contract.CanBeSet(&_ParameterizerContract.CallOpts, _propID)
 }
 
 // ChallengeCanBeResolved is a free data retrieval call binding the contract method 0x77609a41.
 //
-// Solidity: function challengeCanBeResolved(_propID bytes32) constant returns(bool)
+// Solidity: function challengeCanBeResolved(bytes32 _propID) constant returns(bool)
 func (_ParameterizerContract *ParameterizerContractCaller) ChallengeCanBeResolved(opts *bind.CallOpts, _propID [32]byte) (bool, error) {
 	var (
 		ret0 = new(bool)
@@ -242,21 +254,21 @@ func (_ParameterizerContract *ParameterizerContractCaller) ChallengeCanBeResolve
 
 // ChallengeCanBeResolved is a free data retrieval call binding the contract method 0x77609a41.
 //
-// Solidity: function challengeCanBeResolved(_propID bytes32) constant returns(bool)
+// Solidity: function challengeCanBeResolved(bytes32 _propID) constant returns(bool)
 func (_ParameterizerContract *ParameterizerContractSession) ChallengeCanBeResolved(_propID [32]byte) (bool, error) {
 	return _ParameterizerContract.Contract.ChallengeCanBeResolved(&_ParameterizerContract.CallOpts, _propID)
 }
 
 // ChallengeCanBeResolved is a free data retrieval call binding the contract method 0x77609a41.
 //
-// Solidity: function challengeCanBeResolved(_propID bytes32) constant returns(bool)
+// Solidity: function challengeCanBeResolved(bytes32 _propID) constant returns(bool)
 func (_ParameterizerContract *ParameterizerContractCallerSession) ChallengeCanBeResolved(_propID [32]byte) (bool, error) {
 	return _ParameterizerContract.Contract.ChallengeCanBeResolved(&_ParameterizerContract.CallOpts, _propID)
 }
 
 // ChallengeWinnerReward is a free data retrieval call binding the contract method 0x50411552.
 //
-// Solidity: function challengeWinnerReward(_challengeID uint256) constant returns(uint256)
+// Solidity: function challengeWinnerReward(uint256 _challengeID) constant returns(uint256)
 func (_ParameterizerContract *ParameterizerContractCaller) ChallengeWinnerReward(opts *bind.CallOpts, _challengeID *big.Int) (*big.Int, error) {
 	var (
 		ret0 = new(*big.Int)
@@ -268,21 +280,21 @@ func (_ParameterizerContract *ParameterizerContractCaller) ChallengeWinnerReward
 
 // ChallengeWinnerReward is a free data retrieval call binding the contract method 0x50411552.
 //
-// Solidity: function challengeWinnerReward(_challengeID uint256) constant returns(uint256)
+// Solidity: function challengeWinnerReward(uint256 _challengeID) constant returns(uint256)
 func (_ParameterizerContract *ParameterizerContractSession) ChallengeWinnerReward(_challengeID *big.Int) (*big.Int, error) {
 	return _ParameterizerContract.Contract.ChallengeWinnerReward(&_ParameterizerContract.CallOpts, _challengeID)
 }
 
 // ChallengeWinnerReward is a free data retrieval call binding the contract method 0x50411552.
 //
-// Solidity: function challengeWinnerReward(_challengeID uint256) constant returns(uint256)
+// Solidity: function challengeWinnerReward(uint256 _challengeID) constant returns(uint256)
 func (_ParameterizerContract *ParameterizerContractCallerSession) ChallengeWinnerReward(_challengeID *big.Int) (*big.Int, error) {
 	return _ParameterizerContract.Contract.ChallengeWinnerReward(&_ParameterizerContract.CallOpts, _challengeID)
 }
 
 // Challenges is a free data retrieval call binding the contract method 0x8f1d3776.
 //
-// Solidity: function challenges( uint256) constant returns(rewardPool uint256, challenger address, resolved bool, stake uint256, winningTokens uint256)
+// Solidity: function challenges(uint256 ) constant returns(uint256 rewardPool, address challenger, bool resolved, uint256 stake, uint256 winningTokens)
 func (_ParameterizerContract *ParameterizerContractCaller) Challenges(opts *bind.CallOpts, arg0 *big.Int) (struct {
 	RewardPool    *big.Int
 	Challenger    common.Address
@@ -304,7 +316,7 @@ func (_ParameterizerContract *ParameterizerContractCaller) Challenges(opts *bind
 
 // Challenges is a free data retrieval call binding the contract method 0x8f1d3776.
 //
-// Solidity: function challenges( uint256) constant returns(rewardPool uint256, challenger address, resolved bool, stake uint256, winningTokens uint256)
+// Solidity: function challenges(uint256 ) constant returns(uint256 rewardPool, address challenger, bool resolved, uint256 stake, uint256 winningTokens)
 func (_ParameterizerContract *ParameterizerContractSession) Challenges(arg0 *big.Int) (struct {
 	RewardPool    *big.Int
 	Challenger    common.Address
@@ -317,7 +329,7 @@ func (_ParameterizerContract *ParameterizerContractSession) Challenges(arg0 *big
 
 // Challenges is a free data retrieval call binding the contract method 0x8f1d3776.
 //
-// Solidity: function challenges( uint256) constant returns(rewardPool uint256, challenger address, resolved bool, stake uint256, winningTokens uint256)
+// Solidity: function challenges(uint256 ) constant returns(uint256 rewardPool, address challenger, bool resolved, uint256 stake, uint256 winningTokens)
 func (_ParameterizerContract *ParameterizerContractCallerSession) Challenges(arg0 *big.Int) (struct {
 	RewardPool    *big.Int
 	Challenger    common.Address
@@ -330,7 +342,7 @@ func (_ParameterizerContract *ParameterizerContractCallerSession) Challenges(arg
 
 // Get is a free data retrieval call binding the contract method 0x693ec85e.
 //
-// Solidity: function get(_name string) constant returns(value uint256)
+// Solidity: function get(string _name) constant returns(uint256 value)
 func (_ParameterizerContract *ParameterizerContractCaller) Get(opts *bind.CallOpts, _name string) (*big.Int, error) {
 	var (
 		ret0 = new(*big.Int)
@@ -342,21 +354,21 @@ func (_ParameterizerContract *ParameterizerContractCaller) Get(opts *bind.CallOp
 
 // Get is a free data retrieval call binding the contract method 0x693ec85e.
 //
-// Solidity: function get(_name string) constant returns(value uint256)
+// Solidity: function get(string _name) constant returns(uint256 value)
 func (_ParameterizerContract *ParameterizerContractSession) Get(_name string) (*big.Int, error) {
 	return _ParameterizerContract.Contract.Get(&_ParameterizerContract.CallOpts, _name)
 }
 
 // Get is a free data retrieval call binding the contract method 0x693ec85e.
 //
-// Solidity: function get(_name string) constant returns(value uint256)
+// Solidity: function get(string _name) constant returns(uint256 value)
 func (_ParameterizerContract *ParameterizerContractCallerSession) Get(_name string) (*big.Int, error) {
 	return _ParameterizerContract.Contract.Get(&_ParameterizerContract.CallOpts, _name)
 }
 
 // Params is a free data retrieval call binding the contract method 0xdc6ab527.
 //
-// Solidity: function params( bytes32) constant returns(uint256)
+// Solidity: function params(bytes32 ) constant returns(uint256)
 func (_ParameterizerContract *ParameterizerContractCaller) Params(opts *bind.CallOpts, arg0 [32]byte) (*big.Int, error) {
 	var (
 		ret0 = new(*big.Int)
@@ -368,21 +380,21 @@ func (_ParameterizerContract *ParameterizerContractCaller) Params(opts *bind.Cal
 
 // Params is a free data retrieval call binding the contract method 0xdc6ab527.
 //
-// Solidity: function params( bytes32) constant returns(uint256)
+// Solidity: function params(bytes32 ) constant returns(uint256)
 func (_ParameterizerContract *ParameterizerContractSession) Params(arg0 [32]byte) (*big.Int, error) {
 	return _ParameterizerContract.Contract.Params(&_ParameterizerContract.CallOpts, arg0)
 }
 
 // Params is a free data retrieval call binding the contract method 0xdc6ab527.
 //
-// Solidity: function params( bytes32) constant returns(uint256)
+// Solidity: function params(bytes32 ) constant returns(uint256)
 func (_ParameterizerContract *ParameterizerContractCallerSession) Params(arg0 [32]byte) (*big.Int, error) {
 	return _ParameterizerContract.Contract.Params(&_ParameterizerContract.CallOpts, arg0)
 }
 
 // PropExists is a free data retrieval call binding the contract method 0x35300990.
 //
-// Solidity: function propExists(_propID bytes32) constant returns(bool)
+// Solidity: function propExists(bytes32 _propID) constant returns(bool)
 func (_ParameterizerContract *ParameterizerContractCaller) PropExists(opts *bind.CallOpts, _propID [32]byte) (bool, error) {
 	var (
 		ret0 = new(bool)
@@ -394,21 +406,21 @@ func (_ParameterizerContract *ParameterizerContractCaller) PropExists(opts *bind
 
 // PropExists is a free data retrieval call binding the contract method 0x35300990.
 //
-// Solidity: function propExists(_propID bytes32) constant returns(bool)
+// Solidity: function propExists(bytes32 _propID) constant returns(bool)
 func (_ParameterizerContract *ParameterizerContractSession) PropExists(_propID [32]byte) (bool, error) {
 	return _ParameterizerContract.Contract.PropExists(&_ParameterizerContract.CallOpts, _propID)
 }
 
 // PropExists is a free data retrieval call binding the contract method 0x35300990.
 //
-// Solidity: function propExists(_propID bytes32) constant returns(bool)
+// Solidity: function propExists(bytes32 _propID) constant returns(bool)
 func (_ParameterizerContract *ParameterizerContractCallerSession) PropExists(_propID [32]byte) (bool, error) {
 	return _ParameterizerContract.Contract.PropExists(&_ParameterizerContract.CallOpts, _propID)
 }
 
 // Proposals is a free data retrieval call binding the contract method 0x32ed5b12.
 //
-// Solidity: function proposals( bytes32) constant returns(appExpiry uint256, challengeID uint256, deposit uint256, name string, owner address, processBy uint256, value uint256)
+// Solidity: function proposals(bytes32 ) constant returns(uint256 appExpiry, uint256 challengeID, uint256 deposit, string name, address owner, uint256 processBy, uint256 value)
 func (_ParameterizerContract *ParameterizerContractCaller) Proposals(opts *bind.CallOpts, arg0 [32]byte) (struct {
 	AppExpiry   *big.Int
 	ChallengeID *big.Int
@@ -434,7 +446,7 @@ func (_ParameterizerContract *ParameterizerContractCaller) Proposals(opts *bind.
 
 // Proposals is a free data retrieval call binding the contract method 0x32ed5b12.
 //
-// Solidity: function proposals( bytes32) constant returns(appExpiry uint256, challengeID uint256, deposit uint256, name string, owner address, processBy uint256, value uint256)
+// Solidity: function proposals(bytes32 ) constant returns(uint256 appExpiry, uint256 challengeID, uint256 deposit, string name, address owner, uint256 processBy, uint256 value)
 func (_ParameterizerContract *ParameterizerContractSession) Proposals(arg0 [32]byte) (struct {
 	AppExpiry   *big.Int
 	ChallengeID *big.Int
@@ -449,7 +461,7 @@ func (_ParameterizerContract *ParameterizerContractSession) Proposals(arg0 [32]b
 
 // Proposals is a free data retrieval call binding the contract method 0x32ed5b12.
 //
-// Solidity: function proposals( bytes32) constant returns(appExpiry uint256, challengeID uint256, deposit uint256, name string, owner address, processBy uint256, value uint256)
+// Solidity: function proposals(bytes32 ) constant returns(uint256 appExpiry, uint256 challengeID, uint256 deposit, string name, address owner, uint256 processBy, uint256 value)
 func (_ParameterizerContract *ParameterizerContractCallerSession) Proposals(arg0 [32]byte) (struct {
 	AppExpiry   *big.Int
 	ChallengeID *big.Int
@@ -490,7 +502,7 @@ func (_ParameterizerContract *ParameterizerContractCallerSession) Token() (commo
 
 // TokenClaims is a free data retrieval call binding the contract method 0xa5ba3b1e.
 //
-// Solidity: function tokenClaims(_challengeID uint256, _voter address) constant returns(bool)
+// Solidity: function tokenClaims(uint256 _challengeID, address _voter) constant returns(bool)
 func (_ParameterizerContract *ParameterizerContractCaller) TokenClaims(opts *bind.CallOpts, _challengeID *big.Int, _voter common.Address) (bool, error) {
 	var (
 		ret0 = new(bool)
@@ -502,21 +514,21 @@ func (_ParameterizerContract *ParameterizerContractCaller) TokenClaims(opts *bin
 
 // TokenClaims is a free data retrieval call binding the contract method 0xa5ba3b1e.
 //
-// Solidity: function tokenClaims(_challengeID uint256, _voter address) constant returns(bool)
+// Solidity: function tokenClaims(uint256 _challengeID, address _voter) constant returns(bool)
 func (_ParameterizerContract *ParameterizerContractSession) TokenClaims(_challengeID *big.Int, _voter common.Address) (bool, error) {
 	return _ParameterizerContract.Contract.TokenClaims(&_ParameterizerContract.CallOpts, _challengeID, _voter)
 }
 
 // TokenClaims is a free data retrieval call binding the contract method 0xa5ba3b1e.
 //
-// Solidity: function tokenClaims(_challengeID uint256, _voter address) constant returns(bool)
+// Solidity: function tokenClaims(uint256 _challengeID, address _voter) constant returns(bool)
 func (_ParameterizerContract *ParameterizerContractCallerSession) TokenClaims(_challengeID *big.Int, _voter common.Address) (bool, error) {
 	return _ParameterizerContract.Contract.TokenClaims(&_ParameterizerContract.CallOpts, _challengeID, _voter)
 }
 
 // VoterReward is a free data retrieval call binding the contract method 0xa7aad3db.
 //
-// Solidity: function voterReward(_voter address, _challengeID uint256, _salt uint256) constant returns(uint256)
+// Solidity: function voterReward(address _voter, uint256 _challengeID, uint256 _salt) constant returns(uint256)
 func (_ParameterizerContract *ParameterizerContractCaller) VoterReward(opts *bind.CallOpts, _voter common.Address, _challengeID *big.Int, _salt *big.Int) (*big.Int, error) {
 	var (
 		ret0 = new(*big.Int)
@@ -528,14 +540,14 @@ func (_ParameterizerContract *ParameterizerContractCaller) VoterReward(opts *bin
 
 // VoterReward is a free data retrieval call binding the contract method 0xa7aad3db.
 //
-// Solidity: function voterReward(_voter address, _challengeID uint256, _salt uint256) constant returns(uint256)
+// Solidity: function voterReward(address _voter, uint256 _challengeID, uint256 _salt) constant returns(uint256)
 func (_ParameterizerContract *ParameterizerContractSession) VoterReward(_voter common.Address, _challengeID *big.Int, _salt *big.Int) (*big.Int, error) {
 	return _ParameterizerContract.Contract.VoterReward(&_ParameterizerContract.CallOpts, _voter, _challengeID, _salt)
 }
 
 // VoterReward is a free data retrieval call binding the contract method 0xa7aad3db.
 //
-// Solidity: function voterReward(_voter address, _challengeID uint256, _salt uint256) constant returns(uint256)
+// Solidity: function voterReward(address _voter, uint256 _challengeID, uint256 _salt) constant returns(uint256)
 func (_ParameterizerContract *ParameterizerContractCallerSession) VoterReward(_voter common.Address, _challengeID *big.Int, _salt *big.Int) (*big.Int, error) {
 	return _ParameterizerContract.Contract.VoterReward(&_ParameterizerContract.CallOpts, _voter, _challengeID, _salt)
 }
@@ -568,105 +580,105 @@ func (_ParameterizerContract *ParameterizerContractCallerSession) Voting() (comm
 
 // ChallengeReparameterization is a paid mutator transaction binding the contract method 0x8240ae4b.
 //
-// Solidity: function challengeReparameterization(_propID bytes32) returns(challengeID uint256)
+// Solidity: function challengeReparameterization(bytes32 _propID) returns(uint256 challengeID)
 func (_ParameterizerContract *ParameterizerContractTransactor) ChallengeReparameterization(opts *bind.TransactOpts, _propID [32]byte) (*types.Transaction, error) {
 	return _ParameterizerContract.contract.Transact(opts, "challengeReparameterization", _propID)
 }
 
 // ChallengeReparameterization is a paid mutator transaction binding the contract method 0x8240ae4b.
 //
-// Solidity: function challengeReparameterization(_propID bytes32) returns(challengeID uint256)
+// Solidity: function challengeReparameterization(bytes32 _propID) returns(uint256 challengeID)
 func (_ParameterizerContract *ParameterizerContractSession) ChallengeReparameterization(_propID [32]byte) (*types.Transaction, error) {
 	return _ParameterizerContract.Contract.ChallengeReparameterization(&_ParameterizerContract.TransactOpts, _propID)
 }
 
 // ChallengeReparameterization is a paid mutator transaction binding the contract method 0x8240ae4b.
 //
-// Solidity: function challengeReparameterization(_propID bytes32) returns(challengeID uint256)
+// Solidity: function challengeReparameterization(bytes32 _propID) returns(uint256 challengeID)
 func (_ParameterizerContract *ParameterizerContractTransactorSession) ChallengeReparameterization(_propID [32]byte) (*types.Transaction, error) {
 	return _ParameterizerContract.Contract.ChallengeReparameterization(&_ParameterizerContract.TransactOpts, _propID)
 }
 
 // ClaimReward is a paid mutator transaction binding the contract method 0x86bb8f37.
 //
-// Solidity: function claimReward(_challengeID uint256, _salt uint256) returns()
+// Solidity: function claimReward(uint256 _challengeID, uint256 _salt) returns()
 func (_ParameterizerContract *ParameterizerContractTransactor) ClaimReward(opts *bind.TransactOpts, _challengeID *big.Int, _salt *big.Int) (*types.Transaction, error) {
 	return _ParameterizerContract.contract.Transact(opts, "claimReward", _challengeID, _salt)
 }
 
 // ClaimReward is a paid mutator transaction binding the contract method 0x86bb8f37.
 //
-// Solidity: function claimReward(_challengeID uint256, _salt uint256) returns()
+// Solidity: function claimReward(uint256 _challengeID, uint256 _salt) returns()
 func (_ParameterizerContract *ParameterizerContractSession) ClaimReward(_challengeID *big.Int, _salt *big.Int) (*types.Transaction, error) {
 	return _ParameterizerContract.Contract.ClaimReward(&_ParameterizerContract.TransactOpts, _challengeID, _salt)
 }
 
 // ClaimReward is a paid mutator transaction binding the contract method 0x86bb8f37.
 //
-// Solidity: function claimReward(_challengeID uint256, _salt uint256) returns()
+// Solidity: function claimReward(uint256 _challengeID, uint256 _salt) returns()
 func (_ParameterizerContract *ParameterizerContractTransactorSession) ClaimReward(_challengeID *big.Int, _salt *big.Int) (*types.Transaction, error) {
 	return _ParameterizerContract.Contract.ClaimReward(&_ParameterizerContract.TransactOpts, _challengeID, _salt)
 }
 
 // ClaimRewards is a paid mutator transaction binding the contract method 0x5f02116f.
 //
-// Solidity: function claimRewards(_challengeIDs uint256[], _salts uint256[]) returns()
+// Solidity: function claimRewards(uint256[] _challengeIDs, uint256[] _salts) returns()
 func (_ParameterizerContract *ParameterizerContractTransactor) ClaimRewards(opts *bind.TransactOpts, _challengeIDs []*big.Int, _salts []*big.Int) (*types.Transaction, error) {
 	return _ParameterizerContract.contract.Transact(opts, "claimRewards", _challengeIDs, _salts)
 }
 
 // ClaimRewards is a paid mutator transaction binding the contract method 0x5f02116f.
 //
-// Solidity: function claimRewards(_challengeIDs uint256[], _salts uint256[]) returns()
+// Solidity: function claimRewards(uint256[] _challengeIDs, uint256[] _salts) returns()
 func (_ParameterizerContract *ParameterizerContractSession) ClaimRewards(_challengeIDs []*big.Int, _salts []*big.Int) (*types.Transaction, error) {
 	return _ParameterizerContract.Contract.ClaimRewards(&_ParameterizerContract.TransactOpts, _challengeIDs, _salts)
 }
 
 // ClaimRewards is a paid mutator transaction binding the contract method 0x5f02116f.
 //
-// Solidity: function claimRewards(_challengeIDs uint256[], _salts uint256[]) returns()
+// Solidity: function claimRewards(uint256[] _challengeIDs, uint256[] _salts) returns()
 func (_ParameterizerContract *ParameterizerContractTransactorSession) ClaimRewards(_challengeIDs []*big.Int, _salts []*big.Int) (*types.Transaction, error) {
 	return _ParameterizerContract.Contract.ClaimRewards(&_ParameterizerContract.TransactOpts, _challengeIDs, _salts)
 }
 
 // ProcessProposal is a paid mutator transaction binding the contract method 0x30490e91.
 //
-// Solidity: function processProposal(_propID bytes32) returns()
+// Solidity: function processProposal(bytes32 _propID) returns()
 func (_ParameterizerContract *ParameterizerContractTransactor) ProcessProposal(opts *bind.TransactOpts, _propID [32]byte) (*types.Transaction, error) {
 	return _ParameterizerContract.contract.Transact(opts, "processProposal", _propID)
 }
 
 // ProcessProposal is a paid mutator transaction binding the contract method 0x30490e91.
 //
-// Solidity: function processProposal(_propID bytes32) returns()
+// Solidity: function processProposal(bytes32 _propID) returns()
 func (_ParameterizerContract *ParameterizerContractSession) ProcessProposal(_propID [32]byte) (*types.Transaction, error) {
 	return _ParameterizerContract.Contract.ProcessProposal(&_ParameterizerContract.TransactOpts, _propID)
 }
 
 // ProcessProposal is a paid mutator transaction binding the contract method 0x30490e91.
 //
-// Solidity: function processProposal(_propID bytes32) returns()
+// Solidity: function processProposal(bytes32 _propID) returns()
 func (_ParameterizerContract *ParameterizerContractTransactorSession) ProcessProposal(_propID [32]byte) (*types.Transaction, error) {
 	return _ParameterizerContract.Contract.ProcessProposal(&_ParameterizerContract.TransactOpts, _propID)
 }
 
 // ProposeReparameterization is a paid mutator transaction binding the contract method 0xbade1c54.
 //
-// Solidity: function proposeReparameterization(_name string, _value uint256) returns(bytes32)
+// Solidity: function proposeReparameterization(string _name, uint256 _value) returns(bytes32)
 func (_ParameterizerContract *ParameterizerContractTransactor) ProposeReparameterization(opts *bind.TransactOpts, _name string, _value *big.Int) (*types.Transaction, error) {
 	return _ParameterizerContract.contract.Transact(opts, "proposeReparameterization", _name, _value)
 }
 
 // ProposeReparameterization is a paid mutator transaction binding the contract method 0xbade1c54.
 //
-// Solidity: function proposeReparameterization(_name string, _value uint256) returns(bytes32)
+// Solidity: function proposeReparameterization(string _name, uint256 _value) returns(bytes32)
 func (_ParameterizerContract *ParameterizerContractSession) ProposeReparameterization(_name string, _value *big.Int) (*types.Transaction, error) {
 	return _ParameterizerContract.Contract.ProposeReparameterization(&_ParameterizerContract.TransactOpts, _name, _value)
 }
 
 // ProposeReparameterization is a paid mutator transaction binding the contract method 0xbade1c54.
 //
-// Solidity: function proposeReparameterization(_name string, _value uint256) returns(bytes32)
+// Solidity: function proposeReparameterization(string _name, uint256 _value) returns(bytes32)
 func (_ParameterizerContract *ParameterizerContractTransactorSession) ProposeReparameterization(_name string, _value *big.Int) (*types.Transaction, error) {
 	return _ParameterizerContract.Contract.ProposeReparameterization(&_ParameterizerContract.TransactOpts, _name, _value)
 }
@@ -749,7 +761,7 @@ type ParameterizerContractChallengeFailed struct {
 
 // FilterChallengeFailed is a free log retrieval operation binding the contract event 0xc4497224aa78dd50c9b3e344aab02596201ca1e6dca4057a91a6c02f83f4f6c1.
 //
-// Solidity: e _ChallengeFailed(propID indexed bytes32, challengeID indexed uint256, rewardPool uint256, totalTokens uint256)
+// Solidity: event _ChallengeFailed(bytes32 indexed propID, uint256 indexed challengeID, uint256 rewardPool, uint256 totalTokens)
 func (_ParameterizerContract *ParameterizerContractFilterer) FilterChallengeFailed(opts *bind.FilterOpts, propID [][32]byte, challengeID []*big.Int) (*ParameterizerContractChallengeFailedIterator, error) {
 
 	var propIDRule []interface{}
@@ -770,7 +782,7 @@ func (_ParameterizerContract *ParameterizerContractFilterer) FilterChallengeFail
 
 // WatchChallengeFailed is a free log subscription operation binding the contract event 0xc4497224aa78dd50c9b3e344aab02596201ca1e6dca4057a91a6c02f83f4f6c1.
 //
-// Solidity: e _ChallengeFailed(propID indexed bytes32, challengeID indexed uint256, rewardPool uint256, totalTokens uint256)
+// Solidity: event _ChallengeFailed(bytes32 indexed propID, uint256 indexed challengeID, uint256 rewardPool, uint256 totalTokens)
 func (_ParameterizerContract *ParameterizerContractFilterer) WatchChallengeFailed(opts *bind.WatchOpts, sink chan<- *ParameterizerContractChallengeFailed, propID [][32]byte, challengeID []*big.Int) (event.Subscription, error) {
 
 	var propIDRule []interface{}
@@ -892,7 +904,7 @@ type ParameterizerContractChallengeSucceeded struct {
 
 // FilterChallengeSucceeded is a free log retrieval operation binding the contract event 0x362a12431f779a2baff4f77f75ba7960ae993a5c41b425df11f7fd0af2b9cbe6.
 //
-// Solidity: e _ChallengeSucceeded(propID indexed bytes32, challengeID indexed uint256, rewardPool uint256, totalTokens uint256)
+// Solidity: event _ChallengeSucceeded(bytes32 indexed propID, uint256 indexed challengeID, uint256 rewardPool, uint256 totalTokens)
 func (_ParameterizerContract *ParameterizerContractFilterer) FilterChallengeSucceeded(opts *bind.FilterOpts, propID [][32]byte, challengeID []*big.Int) (*ParameterizerContractChallengeSucceededIterator, error) {
 
 	var propIDRule []interface{}
@@ -913,7 +925,7 @@ func (_ParameterizerContract *ParameterizerContractFilterer) FilterChallengeSucc
 
 // WatchChallengeSucceeded is a free log subscription operation binding the contract event 0x362a12431f779a2baff4f77f75ba7960ae993a5c41b425df11f7fd0af2b9cbe6.
 //
-// Solidity: e _ChallengeSucceeded(propID indexed bytes32, challengeID indexed uint256, rewardPool uint256, totalTokens uint256)
+// Solidity: event _ChallengeSucceeded(bytes32 indexed propID, uint256 indexed challengeID, uint256 rewardPool, uint256 totalTokens)
 func (_ParameterizerContract *ParameterizerContractFilterer) WatchChallengeSucceeded(opts *bind.WatchOpts, sink chan<- *ParameterizerContractChallengeSucceeded, propID [][32]byte, challengeID []*big.Int) (event.Subscription, error) {
 
 	var propIDRule []interface{}
@@ -1036,7 +1048,7 @@ type ParameterizerContractNewChallenge struct {
 
 // FilterNewChallenge is a free log retrieval operation binding the contract event 0xe94e3086c4bfe84acba4437b85a80fca3721dfc419d1f7afe4fa4e470e670b48.
 //
-// Solidity: e _NewChallenge(propID indexed bytes32, challengeID uint256, commitEndDate uint256, revealEndDate uint256, challenger indexed address)
+// Solidity: event _NewChallenge(bytes32 indexed propID, uint256 challengeID, uint256 commitEndDate, uint256 revealEndDate, address indexed challenger)
 func (_ParameterizerContract *ParameterizerContractFilterer) FilterNewChallenge(opts *bind.FilterOpts, propID [][32]byte, challenger []common.Address) (*ParameterizerContractNewChallengeIterator, error) {
 
 	var propIDRule []interface{}
@@ -1058,7 +1070,7 @@ func (_ParameterizerContract *ParameterizerContractFilterer) FilterNewChallenge(
 
 // WatchNewChallenge is a free log subscription operation binding the contract event 0xe94e3086c4bfe84acba4437b85a80fca3721dfc419d1f7afe4fa4e470e670b48.
 //
-// Solidity: e _NewChallenge(propID indexed bytes32, challengeID uint256, commitEndDate uint256, revealEndDate uint256, challenger indexed address)
+// Solidity: event _NewChallenge(bytes32 indexed propID, uint256 challengeID, uint256 commitEndDate, uint256 revealEndDate, address indexed challenger)
 func (_ParameterizerContract *ParameterizerContractFilterer) WatchNewChallenge(opts *bind.WatchOpts, sink chan<- *ParameterizerContractNewChallenge, propID [][32]byte, challenger []common.Address) (event.Subscription, error) {
 
 	var propIDRule []interface{}
@@ -1180,7 +1192,7 @@ type ParameterizerContractProposalAccepted struct {
 
 // FilterProposalAccepted is a free log retrieval operation binding the contract event 0x37f3986c71e1aa2c470cfc4a92af70820610c3065589d35ef1664ea27f3e73a5.
 //
-// Solidity: e _ProposalAccepted(propID indexed bytes32, name string, value uint256)
+// Solidity: event _ProposalAccepted(bytes32 indexed propID, string name, uint256 value)
 func (_ParameterizerContract *ParameterizerContractFilterer) FilterProposalAccepted(opts *bind.FilterOpts, propID [][32]byte) (*ParameterizerContractProposalAcceptedIterator, error) {
 
 	var propIDRule []interface{}
@@ -1197,7 +1209,7 @@ func (_ParameterizerContract *ParameterizerContractFilterer) FilterProposalAccep
 
 // WatchProposalAccepted is a free log subscription operation binding the contract event 0x37f3986c71e1aa2c470cfc4a92af70820610c3065589d35ef1664ea27f3e73a5.
 //
-// Solidity: e _ProposalAccepted(propID indexed bytes32, name string, value uint256)
+// Solidity: event _ProposalAccepted(bytes32 indexed propID, string name, uint256 value)
 func (_ParameterizerContract *ParameterizerContractFilterer) WatchProposalAccepted(opts *bind.WatchOpts, sink chan<- *ParameterizerContractProposalAccepted, propID [][32]byte) (event.Subscription, error) {
 
 	var propIDRule []interface{}
@@ -1312,7 +1324,7 @@ type ParameterizerContractProposalExpired struct {
 
 // FilterProposalExpired is a free log retrieval operation binding the contract event 0x29026cb2acebe6d0a4b6d593ccadf76e3fc6d0a02254e078b0c4a619608089d7.
 //
-// Solidity: e _ProposalExpired(propID indexed bytes32)
+// Solidity: event _ProposalExpired(bytes32 indexed propID)
 func (_ParameterizerContract *ParameterizerContractFilterer) FilterProposalExpired(opts *bind.FilterOpts, propID [][32]byte) (*ParameterizerContractProposalExpiredIterator, error) {
 
 	var propIDRule []interface{}
@@ -1329,7 +1341,7 @@ func (_ParameterizerContract *ParameterizerContractFilterer) FilterProposalExpir
 
 // WatchProposalExpired is a free log subscription operation binding the contract event 0x29026cb2acebe6d0a4b6d593ccadf76e3fc6d0a02254e078b0c4a619608089d7.
 //
-// Solidity: e _ProposalExpired(propID indexed bytes32)
+// Solidity: event _ProposalExpired(bytes32 indexed propID)
 func (_ParameterizerContract *ParameterizerContractFilterer) WatchProposalExpired(opts *bind.WatchOpts, sink chan<- *ParameterizerContractProposalExpired, propID [][32]byte) (event.Subscription, error) {
 
 	var propIDRule []interface{}
@@ -1449,7 +1461,7 @@ type ParameterizerContractReparameterizationProposal struct {
 
 // FilterReparameterizationProposal is a free log retrieval operation binding the contract event 0xb25bdef16105f099e5c185f9c7fd969571e8e0caa3f7bd75409512fe0a41a60b.
 //
-// Solidity: e _ReparameterizationProposal(name string, value uint256, propID bytes32, deposit uint256, appEndDate uint256, proposer indexed address)
+// Solidity: event _ReparameterizationProposal(string name, uint256 value, bytes32 propID, uint256 deposit, uint256 appEndDate, address indexed proposer)
 func (_ParameterizerContract *ParameterizerContractFilterer) FilterReparameterizationProposal(opts *bind.FilterOpts, proposer []common.Address) (*ParameterizerContractReparameterizationProposalIterator, error) {
 
 	var proposerRule []interface{}
@@ -1466,7 +1478,7 @@ func (_ParameterizerContract *ParameterizerContractFilterer) FilterReparameteriz
 
 // WatchReparameterizationProposal is a free log subscription operation binding the contract event 0xb25bdef16105f099e5c185f9c7fd969571e8e0caa3f7bd75409512fe0a41a60b.
 //
-// Solidity: e _ReparameterizationProposal(name string, value uint256, propID bytes32, deposit uint256, appEndDate uint256, proposer indexed address)
+// Solidity: event _ReparameterizationProposal(string name, uint256 value, bytes32 propID, uint256 deposit, uint256 appEndDate, address indexed proposer)
 func (_ParameterizerContract *ParameterizerContractFilterer) WatchReparameterizationProposal(opts *bind.WatchOpts, sink chan<- *ParameterizerContractReparameterizationProposal, proposer []common.Address) (event.Subscription, error) {
 
 	var proposerRule []interface{}
@@ -1583,7 +1595,7 @@ type ParameterizerContractRewardClaimed struct {
 
 // FilterRewardClaimed is a free log retrieval operation binding the contract event 0x6f4c982acc31b0af2cf1dc1556f21c0325d893782d65e83c68a5534a33f59957.
 //
-// Solidity: e _RewardClaimed(challengeID indexed uint256, reward uint256, voter indexed address)
+// Solidity: event _RewardClaimed(uint256 indexed challengeID, uint256 reward, address indexed voter)
 func (_ParameterizerContract *ParameterizerContractFilterer) FilterRewardClaimed(opts *bind.FilterOpts, challengeID []*big.Int, voter []common.Address) (*ParameterizerContractRewardClaimedIterator, error) {
 
 	var challengeIDRule []interface{}
@@ -1605,7 +1617,7 @@ func (_ParameterizerContract *ParameterizerContractFilterer) FilterRewardClaimed
 
 // WatchRewardClaimed is a free log subscription operation binding the contract event 0x6f4c982acc31b0af2cf1dc1556f21c0325d893782d65e83c68a5534a33f59957.
 //
-// Solidity: e _RewardClaimed(challengeID indexed uint256, reward uint256, voter indexed address)
+// Solidity: event _RewardClaimed(uint256 indexed challengeID, uint256 reward, address indexed voter)
 func (_ParameterizerContract *ParameterizerContractFilterer) WatchRewardClaimed(opts *bind.WatchOpts, sink chan<- *ParameterizerContractRewardClaimed, challengeID []*big.Int, voter []common.Address) (event.Subscription, error) {
 
 	var challengeIDRule []interface{}

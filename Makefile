@@ -141,6 +141,11 @@ ifneq ("$(wildcard $(ABI_DIR)/*.abi)", "")
 	@$(ABIGEN) -abi ./$(ABI_DIR)/DummyTokenTelemetry.abi -bin ./$(ABI_DIR)/DummyTokenTelemetry.bin -type DummyTokenTelemetryContract -out ./$(GENERATED_CONTRACT_DIR)/DummyTokenTelemetry.go -pkg contract
 	@$(ABIGEN) -abi ./$(ABI_DIR)/CivilTokenController.abi -bin ./$(ABI_DIR)/CivilTokenController.bin -type CivilTokenControllerContract -out ./$(GENERATED_CONTRACT_DIR)/CivilTokenController.go -pkg contract
 	@$(ABIGEN) -abi ./$(ABI_DIR)/NoOpTokenController.abi -bin ./$(ABI_DIR)/NoOpTokenController.bin -type NoOpTokenControllerContract -out ./$(GENERATED_CONTRACT_DIR)/NoOpTokenController.go -pkg contract
+	@$(ABIGEN) -abi ./$(ABI_DIR)/NewsroomFactory.abi -bin ./$(ABI_DIR)/NewsroomFactory.bin -type NewsroomFactory -out ./$(GENERATED_CONTRACT_DIR)/NewsroomFactory.go -pkg contract
+	@$(ABIGEN) -abi ./$(ABI_DIR)/CreateNewsroomInGroup.abi -bin ./$(ABI_DIR)/CreateNewsroomInGroup.bin -type CreateNewsroomInGroupContract -out ./$(GENERATED_CONTRACT_DIR)/CreateNewsroomInGroup.go -pkg contract
+	@$(ABIGEN) -abi ./$(ABI_DIR)/MultiSigWalletFactory.abi -bin ./$(ABI_DIR)/MultiSigWalletFactory.bin -type MultiSigWalletFactoryContract -out ./$(GENERATED_CONTRACT_DIR)/MultiSigWalletFactory.go -pkg contract
+	@$(ABIGEN) -abi ./$(ABI_DIR)/MultiSigWallet.abi -bin ./$(ABI_DIR)/MultiSigWallet.bin -type MultiSigWalletContract -out ./$(GENERATED_CONTRACT_DIR)/MultiSigWallet.go -pkg contract
+	@$(ABIGEN) -abi ./$(ABI_DIR)/ECRecovery.abi -bin ./$(ABI_DIR)/ECRecovery.bin -type ECRecoveryContract -out ./$(GENERATED_CONTRACT_DIR)/ECRecovery.go -pkg contract
 
 	@# Produce the bin/abi files
 	@# NOTE(PN): The ABIs for these need to have the Data types replaced with "string" before this will successfully work.

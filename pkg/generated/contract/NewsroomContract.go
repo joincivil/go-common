@@ -15,6 +15,18 @@ import (
 	"github.com/ethereum/go-ethereum/event"
 )
 
+// Reference imports to suppress errors if they are not otherwise used.
+var (
+	_ = big.NewInt
+	_ = strings.NewReader
+	_ = ethereum.NotFound
+	_ = abi.U256
+	_ = bind.Bind
+	_ = common.Big1
+	_ = types.BloomLookup
+	_ = event.NewSubscription
+)
+
 // NewsroomContractABI is the input ABI used to generate the binding from.
 const NewsroomContractABI = "[{\"constant\":true,\"inputs\":[],\"name\":\"name\",\"outputs\":[{\"name\":\"\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"user\",\"type\":\"address\"},{\"name\":\"role\",\"type\":\"string\"}],\"name\":\"hasRole\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"user\",\"type\":\"address\"}],\"name\":\"isOwner\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"contentCount\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"newsroomName\",\"type\":\"string\"},{\"name\":\"charterUri\",\"type\":\"string\"},{\"name\":\"charterHash\",\"type\":\"bytes32\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"editor\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"contentId\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"uri\",\"type\":\"string\"}],\"name\":\"ContentPublished\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"contentId\",\"type\":\"uint256\"},{\"indexed\":true,\"name\":\"revisionId\",\"type\":\"uint256\"},{\"indexed\":true,\"name\":\"author\",\"type\":\"address\"}],\"name\":\"RevisionSigned\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"editor\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"contentId\",\"type\":\"uint256\"},{\"indexed\":true,\"name\":\"revisionId\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"uri\",\"type\":\"string\"}],\"name\":\"RevisionUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"newName\",\"type\":\"string\"}],\"name\":\"NameChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"granter\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"grantee\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"role\",\"type\":\"string\"}],\"name\":\"RoleAdded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"granter\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"grantee\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"role\",\"type\":\"string\"}],\"name\":\"RoleRemoved\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"previousOwner\",\"type\":\"address\"}],\"name\":\"OwnershipRenounced\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"constant\":true,\"inputs\":[{\"name\":\"contentId\",\"type\":\"uint256\"}],\"name\":\"getContent\",\"outputs\":[{\"name\":\"contentHash\",\"type\":\"bytes32\"},{\"name\":\"uri\",\"type\":\"string\"},{\"name\":\"timestamp\",\"type\":\"uint256\"},{\"name\":\"author\",\"type\":\"address\"},{\"name\":\"signature\",\"type\":\"bytes\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"contentId\",\"type\":\"uint256\"},{\"name\":\"revisionId\",\"type\":\"uint256\"}],\"name\":\"getRevision\",\"outputs\":[{\"name\":\"contentHash\",\"type\":\"bytes32\"},{\"name\":\"uri\",\"type\":\"string\"},{\"name\":\"timestamp\",\"type\":\"uint256\"},{\"name\":\"author\",\"type\":\"address\"},{\"name\":\"signature\",\"type\":\"bytes\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"contentId\",\"type\":\"uint256\"}],\"name\":\"revisionCount\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"contentId\",\"type\":\"uint256\"}],\"name\":\"isContentSigned\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"contentId\",\"type\":\"uint256\"},{\"name\":\"revisionId\",\"type\":\"uint256\"}],\"name\":\"isRevisionSigned\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"newName\",\"type\":\"string\"}],\"name\":\"setName\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"who\",\"type\":\"address\"},{\"name\":\"role\",\"type\":\"string\"}],\"name\":\"addRole\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"who\",\"type\":\"address\"}],\"name\":\"addEditor\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"who\",\"type\":\"address\"},{\"name\":\"role\",\"type\":\"string\"}],\"name\":\"removeRole\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"contentUri\",\"type\":\"string\"},{\"name\":\"contentHash\",\"type\":\"bytes32\"},{\"name\":\"author\",\"type\":\"address\"},{\"name\":\"signature\",\"type\":\"bytes\"}],\"name\":\"publishContent\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"contentId\",\"type\":\"uint256\"},{\"name\":\"contentUri\",\"type\":\"string\"},{\"name\":\"contentHash\",\"type\":\"bytes32\"},{\"name\":\"signature\",\"type\":\"bytes\"}],\"name\":\"updateRevision\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"contentId\",\"type\":\"uint256\"},{\"name\":\"revisionId\",\"type\":\"uint256\"},{\"name\":\"author\",\"type\":\"address\"},{\"name\":\"signature\",\"type\":\"bytes\"}],\"name\":\"signRevision\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]"
 
@@ -204,7 +216,7 @@ func (_NewsroomContract *NewsroomContractCallerSession) ContentCount() (*big.Int
 
 // GetContent is a free data retrieval call binding the contract method 0x0b7ad54c.
 //
-// Solidity: function getContent(contentId uint256) constant returns(contentHash bytes32, uri string, timestamp uint256, author address, signature bytes)
+// Solidity: function getContent(uint256 contentId) constant returns(bytes32 contentHash, string uri, uint256 timestamp, address author, bytes signature)
 func (_NewsroomContract *NewsroomContractCaller) GetContent(opts *bind.CallOpts, contentId *big.Int) (struct {
 	ContentHash [32]byte
 	Uri         string
@@ -226,7 +238,7 @@ func (_NewsroomContract *NewsroomContractCaller) GetContent(opts *bind.CallOpts,
 
 // GetContent is a free data retrieval call binding the contract method 0x0b7ad54c.
 //
-// Solidity: function getContent(contentId uint256) constant returns(contentHash bytes32, uri string, timestamp uint256, author address, signature bytes)
+// Solidity: function getContent(uint256 contentId) constant returns(bytes32 contentHash, string uri, uint256 timestamp, address author, bytes signature)
 func (_NewsroomContract *NewsroomContractSession) GetContent(contentId *big.Int) (struct {
 	ContentHash [32]byte
 	Uri         string
@@ -239,7 +251,7 @@ func (_NewsroomContract *NewsroomContractSession) GetContent(contentId *big.Int)
 
 // GetContent is a free data retrieval call binding the contract method 0x0b7ad54c.
 //
-// Solidity: function getContent(contentId uint256) constant returns(contentHash bytes32, uri string, timestamp uint256, author address, signature bytes)
+// Solidity: function getContent(uint256 contentId) constant returns(bytes32 contentHash, string uri, uint256 timestamp, address author, bytes signature)
 func (_NewsroomContract *NewsroomContractCallerSession) GetContent(contentId *big.Int) (struct {
 	ContentHash [32]byte
 	Uri         string
@@ -252,7 +264,7 @@ func (_NewsroomContract *NewsroomContractCallerSession) GetContent(contentId *bi
 
 // GetRevision is a free data retrieval call binding the contract method 0x6192e3e8.
 //
-// Solidity: function getRevision(contentId uint256, revisionId uint256) constant returns(contentHash bytes32, uri string, timestamp uint256, author address, signature bytes)
+// Solidity: function getRevision(uint256 contentId, uint256 revisionId) constant returns(bytes32 contentHash, string uri, uint256 timestamp, address author, bytes signature)
 func (_NewsroomContract *NewsroomContractCaller) GetRevision(opts *bind.CallOpts, contentId *big.Int, revisionId *big.Int) (struct {
 	ContentHash [32]byte
 	Uri         string
@@ -274,7 +286,7 @@ func (_NewsroomContract *NewsroomContractCaller) GetRevision(opts *bind.CallOpts
 
 // GetRevision is a free data retrieval call binding the contract method 0x6192e3e8.
 //
-// Solidity: function getRevision(contentId uint256, revisionId uint256) constant returns(contentHash bytes32, uri string, timestamp uint256, author address, signature bytes)
+// Solidity: function getRevision(uint256 contentId, uint256 revisionId) constant returns(bytes32 contentHash, string uri, uint256 timestamp, address author, bytes signature)
 func (_NewsroomContract *NewsroomContractSession) GetRevision(contentId *big.Int, revisionId *big.Int) (struct {
 	ContentHash [32]byte
 	Uri         string
@@ -287,7 +299,7 @@ func (_NewsroomContract *NewsroomContractSession) GetRevision(contentId *big.Int
 
 // GetRevision is a free data retrieval call binding the contract method 0x6192e3e8.
 //
-// Solidity: function getRevision(contentId uint256, revisionId uint256) constant returns(contentHash bytes32, uri string, timestamp uint256, author address, signature bytes)
+// Solidity: function getRevision(uint256 contentId, uint256 revisionId) constant returns(bytes32 contentHash, string uri, uint256 timestamp, address author, bytes signature)
 func (_NewsroomContract *NewsroomContractCallerSession) GetRevision(contentId *big.Int, revisionId *big.Int) (struct {
 	ContentHash [32]byte
 	Uri         string
@@ -300,7 +312,7 @@ func (_NewsroomContract *NewsroomContractCallerSession) GetRevision(contentId *b
 
 // HasRole is a free data retrieval call binding the contract method 0x217fe6c6.
 //
-// Solidity: function hasRole(user address, role string) constant returns(bool)
+// Solidity: function hasRole(address user, string role) constant returns(bool)
 func (_NewsroomContract *NewsroomContractCaller) HasRole(opts *bind.CallOpts, user common.Address, role string) (bool, error) {
 	var (
 		ret0 = new(bool)
@@ -312,21 +324,21 @@ func (_NewsroomContract *NewsroomContractCaller) HasRole(opts *bind.CallOpts, us
 
 // HasRole is a free data retrieval call binding the contract method 0x217fe6c6.
 //
-// Solidity: function hasRole(user address, role string) constant returns(bool)
+// Solidity: function hasRole(address user, string role) constant returns(bool)
 func (_NewsroomContract *NewsroomContractSession) HasRole(user common.Address, role string) (bool, error) {
 	return _NewsroomContract.Contract.HasRole(&_NewsroomContract.CallOpts, user, role)
 }
 
 // HasRole is a free data retrieval call binding the contract method 0x217fe6c6.
 //
-// Solidity: function hasRole(user address, role string) constant returns(bool)
+// Solidity: function hasRole(address user, string role) constant returns(bool)
 func (_NewsroomContract *NewsroomContractCallerSession) HasRole(user common.Address, role string) (bool, error) {
 	return _NewsroomContract.Contract.HasRole(&_NewsroomContract.CallOpts, user, role)
 }
 
 // IsContentSigned is a free data retrieval call binding the contract method 0xefc97390.
 //
-// Solidity: function isContentSigned(contentId uint256) constant returns(bool)
+// Solidity: function isContentSigned(uint256 contentId) constant returns(bool)
 func (_NewsroomContract *NewsroomContractCaller) IsContentSigned(opts *bind.CallOpts, contentId *big.Int) (bool, error) {
 	var (
 		ret0 = new(bool)
@@ -338,21 +350,21 @@ func (_NewsroomContract *NewsroomContractCaller) IsContentSigned(opts *bind.Call
 
 // IsContentSigned is a free data retrieval call binding the contract method 0xefc97390.
 //
-// Solidity: function isContentSigned(contentId uint256) constant returns(bool)
+// Solidity: function isContentSigned(uint256 contentId) constant returns(bool)
 func (_NewsroomContract *NewsroomContractSession) IsContentSigned(contentId *big.Int) (bool, error) {
 	return _NewsroomContract.Contract.IsContentSigned(&_NewsroomContract.CallOpts, contentId)
 }
 
 // IsContentSigned is a free data retrieval call binding the contract method 0xefc97390.
 //
-// Solidity: function isContentSigned(contentId uint256) constant returns(bool)
+// Solidity: function isContentSigned(uint256 contentId) constant returns(bool)
 func (_NewsroomContract *NewsroomContractCallerSession) IsContentSigned(contentId *big.Int) (bool, error) {
 	return _NewsroomContract.Contract.IsContentSigned(&_NewsroomContract.CallOpts, contentId)
 }
 
 // IsOwner is a free data retrieval call binding the contract method 0x2f54bf6e.
 //
-// Solidity: function isOwner(user address) constant returns(bool)
+// Solidity: function isOwner(address user) constant returns(bool)
 func (_NewsroomContract *NewsroomContractCaller) IsOwner(opts *bind.CallOpts, user common.Address) (bool, error) {
 	var (
 		ret0 = new(bool)
@@ -364,21 +376,21 @@ func (_NewsroomContract *NewsroomContractCaller) IsOwner(opts *bind.CallOpts, us
 
 // IsOwner is a free data retrieval call binding the contract method 0x2f54bf6e.
 //
-// Solidity: function isOwner(user address) constant returns(bool)
+// Solidity: function isOwner(address user) constant returns(bool)
 func (_NewsroomContract *NewsroomContractSession) IsOwner(user common.Address) (bool, error) {
 	return _NewsroomContract.Contract.IsOwner(&_NewsroomContract.CallOpts, user)
 }
 
 // IsOwner is a free data retrieval call binding the contract method 0x2f54bf6e.
 //
-// Solidity: function isOwner(user address) constant returns(bool)
+// Solidity: function isOwner(address user) constant returns(bool)
 func (_NewsroomContract *NewsroomContractCallerSession) IsOwner(user common.Address) (bool, error) {
 	return _NewsroomContract.Contract.IsOwner(&_NewsroomContract.CallOpts, user)
 }
 
 // IsRevisionSigned is a free data retrieval call binding the contract method 0xa54d1988.
 //
-// Solidity: function isRevisionSigned(contentId uint256, revisionId uint256) constant returns(bool)
+// Solidity: function isRevisionSigned(uint256 contentId, uint256 revisionId) constant returns(bool)
 func (_NewsroomContract *NewsroomContractCaller) IsRevisionSigned(opts *bind.CallOpts, contentId *big.Int, revisionId *big.Int) (bool, error) {
 	var (
 		ret0 = new(bool)
@@ -390,14 +402,14 @@ func (_NewsroomContract *NewsroomContractCaller) IsRevisionSigned(opts *bind.Cal
 
 // IsRevisionSigned is a free data retrieval call binding the contract method 0xa54d1988.
 //
-// Solidity: function isRevisionSigned(contentId uint256, revisionId uint256) constant returns(bool)
+// Solidity: function isRevisionSigned(uint256 contentId, uint256 revisionId) constant returns(bool)
 func (_NewsroomContract *NewsroomContractSession) IsRevisionSigned(contentId *big.Int, revisionId *big.Int) (bool, error) {
 	return _NewsroomContract.Contract.IsRevisionSigned(&_NewsroomContract.CallOpts, contentId, revisionId)
 }
 
 // IsRevisionSigned is a free data retrieval call binding the contract method 0xa54d1988.
 //
-// Solidity: function isRevisionSigned(contentId uint256, revisionId uint256) constant returns(bool)
+// Solidity: function isRevisionSigned(uint256 contentId, uint256 revisionId) constant returns(bool)
 func (_NewsroomContract *NewsroomContractCallerSession) IsRevisionSigned(contentId *big.Int, revisionId *big.Int) (bool, error) {
 	return _NewsroomContract.Contract.IsRevisionSigned(&_NewsroomContract.CallOpts, contentId, revisionId)
 }
@@ -456,7 +468,7 @@ func (_NewsroomContract *NewsroomContractCallerSession) Owner() (common.Address,
 
 // RevisionCount is a free data retrieval call binding the contract method 0x5614bdc8.
 //
-// Solidity: function revisionCount(contentId uint256) constant returns(uint256)
+// Solidity: function revisionCount(uint256 contentId) constant returns(uint256)
 func (_NewsroomContract *NewsroomContractCaller) RevisionCount(opts *bind.CallOpts, contentId *big.Int) (*big.Int, error) {
 	var (
 		ret0 = new(*big.Int)
@@ -468,98 +480,98 @@ func (_NewsroomContract *NewsroomContractCaller) RevisionCount(opts *bind.CallOp
 
 // RevisionCount is a free data retrieval call binding the contract method 0x5614bdc8.
 //
-// Solidity: function revisionCount(contentId uint256) constant returns(uint256)
+// Solidity: function revisionCount(uint256 contentId) constant returns(uint256)
 func (_NewsroomContract *NewsroomContractSession) RevisionCount(contentId *big.Int) (*big.Int, error) {
 	return _NewsroomContract.Contract.RevisionCount(&_NewsroomContract.CallOpts, contentId)
 }
 
 // RevisionCount is a free data retrieval call binding the contract method 0x5614bdc8.
 //
-// Solidity: function revisionCount(contentId uint256) constant returns(uint256)
+// Solidity: function revisionCount(uint256 contentId) constant returns(uint256)
 func (_NewsroomContract *NewsroomContractCallerSession) RevisionCount(contentId *big.Int) (*big.Int, error) {
 	return _NewsroomContract.Contract.RevisionCount(&_NewsroomContract.CallOpts, contentId)
 }
 
 // AddEditor is a paid mutator transaction binding the contract method 0xe5975bdc.
 //
-// Solidity: function addEditor(who address) returns()
+// Solidity: function addEditor(address who) returns()
 func (_NewsroomContract *NewsroomContractTransactor) AddEditor(opts *bind.TransactOpts, who common.Address) (*types.Transaction, error) {
 	return _NewsroomContract.contract.Transact(opts, "addEditor", who)
 }
 
 // AddEditor is a paid mutator transaction binding the contract method 0xe5975bdc.
 //
-// Solidity: function addEditor(who address) returns()
+// Solidity: function addEditor(address who) returns()
 func (_NewsroomContract *NewsroomContractSession) AddEditor(who common.Address) (*types.Transaction, error) {
 	return _NewsroomContract.Contract.AddEditor(&_NewsroomContract.TransactOpts, who)
 }
 
 // AddEditor is a paid mutator transaction binding the contract method 0xe5975bdc.
 //
-// Solidity: function addEditor(who address) returns()
+// Solidity: function addEditor(address who) returns()
 func (_NewsroomContract *NewsroomContractTransactorSession) AddEditor(who common.Address) (*types.Transaction, error) {
 	return _NewsroomContract.Contract.AddEditor(&_NewsroomContract.TransactOpts, who)
 }
 
 // AddRole is a paid mutator transaction binding the contract method 0x7d72aa65.
 //
-// Solidity: function addRole(who address, role string) returns()
+// Solidity: function addRole(address who, string role) returns()
 func (_NewsroomContract *NewsroomContractTransactor) AddRole(opts *bind.TransactOpts, who common.Address, role string) (*types.Transaction, error) {
 	return _NewsroomContract.contract.Transact(opts, "addRole", who, role)
 }
 
 // AddRole is a paid mutator transaction binding the contract method 0x7d72aa65.
 //
-// Solidity: function addRole(who address, role string) returns()
+// Solidity: function addRole(address who, string role) returns()
 func (_NewsroomContract *NewsroomContractSession) AddRole(who common.Address, role string) (*types.Transaction, error) {
 	return _NewsroomContract.Contract.AddRole(&_NewsroomContract.TransactOpts, who, role)
 }
 
 // AddRole is a paid mutator transaction binding the contract method 0x7d72aa65.
 //
-// Solidity: function addRole(who address, role string) returns()
+// Solidity: function addRole(address who, string role) returns()
 func (_NewsroomContract *NewsroomContractTransactorSession) AddRole(who common.Address, role string) (*types.Transaction, error) {
 	return _NewsroomContract.Contract.AddRole(&_NewsroomContract.TransactOpts, who, role)
 }
 
 // PublishContent is a paid mutator transaction binding the contract method 0x84a1176c.
 //
-// Solidity: function publishContent(contentUri string, contentHash bytes32, author address, signature bytes) returns(uint256)
+// Solidity: function publishContent(string contentUri, bytes32 contentHash, address author, bytes signature) returns(uint256)
 func (_NewsroomContract *NewsroomContractTransactor) PublishContent(opts *bind.TransactOpts, contentUri string, contentHash [32]byte, author common.Address, signature []byte) (*types.Transaction, error) {
 	return _NewsroomContract.contract.Transact(opts, "publishContent", contentUri, contentHash, author, signature)
 }
 
 // PublishContent is a paid mutator transaction binding the contract method 0x84a1176c.
 //
-// Solidity: function publishContent(contentUri string, contentHash bytes32, author address, signature bytes) returns(uint256)
+// Solidity: function publishContent(string contentUri, bytes32 contentHash, address author, bytes signature) returns(uint256)
 func (_NewsroomContract *NewsroomContractSession) PublishContent(contentUri string, contentHash [32]byte, author common.Address, signature []byte) (*types.Transaction, error) {
 	return _NewsroomContract.Contract.PublishContent(&_NewsroomContract.TransactOpts, contentUri, contentHash, author, signature)
 }
 
 // PublishContent is a paid mutator transaction binding the contract method 0x84a1176c.
 //
-// Solidity: function publishContent(contentUri string, contentHash bytes32, author address, signature bytes) returns(uint256)
+// Solidity: function publishContent(string contentUri, bytes32 contentHash, address author, bytes signature) returns(uint256)
 func (_NewsroomContract *NewsroomContractTransactorSession) PublishContent(contentUri string, contentHash [32]byte, author common.Address, signature []byte) (*types.Transaction, error) {
 	return _NewsroomContract.Contract.PublishContent(&_NewsroomContract.TransactOpts, contentUri, contentHash, author, signature)
 }
 
 // RemoveRole is a paid mutator transaction binding the contract method 0x1bfe0308.
 //
-// Solidity: function removeRole(who address, role string) returns()
+// Solidity: function removeRole(address who, string role) returns()
 func (_NewsroomContract *NewsroomContractTransactor) RemoveRole(opts *bind.TransactOpts, who common.Address, role string) (*types.Transaction, error) {
 	return _NewsroomContract.contract.Transact(opts, "removeRole", who, role)
 }
 
 // RemoveRole is a paid mutator transaction binding the contract method 0x1bfe0308.
 //
-// Solidity: function removeRole(who address, role string) returns()
+// Solidity: function removeRole(address who, string role) returns()
 func (_NewsroomContract *NewsroomContractSession) RemoveRole(who common.Address, role string) (*types.Transaction, error) {
 	return _NewsroomContract.Contract.RemoveRole(&_NewsroomContract.TransactOpts, who, role)
 }
 
 // RemoveRole is a paid mutator transaction binding the contract method 0x1bfe0308.
 //
-// Solidity: function removeRole(who address, role string) returns()
+// Solidity: function removeRole(address who, string role) returns()
 func (_NewsroomContract *NewsroomContractTransactorSession) RemoveRole(who common.Address, role string) (*types.Transaction, error) {
 	return _NewsroomContract.Contract.RemoveRole(&_NewsroomContract.TransactOpts, who, role)
 }
@@ -587,84 +599,84 @@ func (_NewsroomContract *NewsroomContractTransactorSession) RenounceOwnership() 
 
 // SetName is a paid mutator transaction binding the contract method 0xc47f0027.
 //
-// Solidity: function setName(newName string) returns()
+// Solidity: function setName(string newName) returns()
 func (_NewsroomContract *NewsroomContractTransactor) SetName(opts *bind.TransactOpts, newName string) (*types.Transaction, error) {
 	return _NewsroomContract.contract.Transact(opts, "setName", newName)
 }
 
 // SetName is a paid mutator transaction binding the contract method 0xc47f0027.
 //
-// Solidity: function setName(newName string) returns()
+// Solidity: function setName(string newName) returns()
 func (_NewsroomContract *NewsroomContractSession) SetName(newName string) (*types.Transaction, error) {
 	return _NewsroomContract.Contract.SetName(&_NewsroomContract.TransactOpts, newName)
 }
 
 // SetName is a paid mutator transaction binding the contract method 0xc47f0027.
 //
-// Solidity: function setName(newName string) returns()
+// Solidity: function setName(string newName) returns()
 func (_NewsroomContract *NewsroomContractTransactorSession) SetName(newName string) (*types.Transaction, error) {
 	return _NewsroomContract.Contract.SetName(&_NewsroomContract.TransactOpts, newName)
 }
 
 // SignRevision is a paid mutator transaction binding the contract method 0x65462d96.
 //
-// Solidity: function signRevision(contentId uint256, revisionId uint256, author address, signature bytes) returns()
+// Solidity: function signRevision(uint256 contentId, uint256 revisionId, address author, bytes signature) returns()
 func (_NewsroomContract *NewsroomContractTransactor) SignRevision(opts *bind.TransactOpts, contentId *big.Int, revisionId *big.Int, author common.Address, signature []byte) (*types.Transaction, error) {
 	return _NewsroomContract.contract.Transact(opts, "signRevision", contentId, revisionId, author, signature)
 }
 
 // SignRevision is a paid mutator transaction binding the contract method 0x65462d96.
 //
-// Solidity: function signRevision(contentId uint256, revisionId uint256, author address, signature bytes) returns()
+// Solidity: function signRevision(uint256 contentId, uint256 revisionId, address author, bytes signature) returns()
 func (_NewsroomContract *NewsroomContractSession) SignRevision(contentId *big.Int, revisionId *big.Int, author common.Address, signature []byte) (*types.Transaction, error) {
 	return _NewsroomContract.Contract.SignRevision(&_NewsroomContract.TransactOpts, contentId, revisionId, author, signature)
 }
 
 // SignRevision is a paid mutator transaction binding the contract method 0x65462d96.
 //
-// Solidity: function signRevision(contentId uint256, revisionId uint256, author address, signature bytes) returns()
+// Solidity: function signRevision(uint256 contentId, uint256 revisionId, address author, bytes signature) returns()
 func (_NewsroomContract *NewsroomContractTransactorSession) SignRevision(contentId *big.Int, revisionId *big.Int, author common.Address, signature []byte) (*types.Transaction, error) {
 	return _NewsroomContract.Contract.SignRevision(&_NewsroomContract.TransactOpts, contentId, revisionId, author, signature)
 }
 
 // TransferOwnership is a paid mutator transaction binding the contract method 0xf2fde38b.
 //
-// Solidity: function transferOwnership(_newOwner address) returns()
+// Solidity: function transferOwnership(address _newOwner) returns()
 func (_NewsroomContract *NewsroomContractTransactor) TransferOwnership(opts *bind.TransactOpts, _newOwner common.Address) (*types.Transaction, error) {
 	return _NewsroomContract.contract.Transact(opts, "transferOwnership", _newOwner)
 }
 
 // TransferOwnership is a paid mutator transaction binding the contract method 0xf2fde38b.
 //
-// Solidity: function transferOwnership(_newOwner address) returns()
+// Solidity: function transferOwnership(address _newOwner) returns()
 func (_NewsroomContract *NewsroomContractSession) TransferOwnership(_newOwner common.Address) (*types.Transaction, error) {
 	return _NewsroomContract.Contract.TransferOwnership(&_NewsroomContract.TransactOpts, _newOwner)
 }
 
 // TransferOwnership is a paid mutator transaction binding the contract method 0xf2fde38b.
 //
-// Solidity: function transferOwnership(_newOwner address) returns()
+// Solidity: function transferOwnership(address _newOwner) returns()
 func (_NewsroomContract *NewsroomContractTransactorSession) TransferOwnership(_newOwner common.Address) (*types.Transaction, error) {
 	return _NewsroomContract.Contract.TransferOwnership(&_NewsroomContract.TransactOpts, _newOwner)
 }
 
 // UpdateRevision is a paid mutator transaction binding the contract method 0xe45e1c7d.
 //
-// Solidity: function updateRevision(contentId uint256, contentUri string, contentHash bytes32, signature bytes) returns()
+// Solidity: function updateRevision(uint256 contentId, string contentUri, bytes32 contentHash, bytes signature) returns()
 func (_NewsroomContract *NewsroomContractTransactor) UpdateRevision(opts *bind.TransactOpts, contentId *big.Int, contentUri string, contentHash [32]byte, signature []byte) (*types.Transaction, error) {
 	return _NewsroomContract.contract.Transact(opts, "updateRevision", contentId, contentUri, contentHash, signature)
 }
 
 // UpdateRevision is a paid mutator transaction binding the contract method 0xe45e1c7d.
 //
-// Solidity: function updateRevision(contentId uint256, contentUri string, contentHash bytes32, signature bytes) returns()
+// Solidity: function updateRevision(uint256 contentId, string contentUri, bytes32 contentHash, bytes signature) returns()
 func (_NewsroomContract *NewsroomContractSession) UpdateRevision(contentId *big.Int, contentUri string, contentHash [32]byte, signature []byte) (*types.Transaction, error) {
 	return _NewsroomContract.Contract.UpdateRevision(&_NewsroomContract.TransactOpts, contentId, contentUri, contentHash, signature)
 }
 
 // UpdateRevision is a paid mutator transaction binding the contract method 0xe45e1c7d.
 //
-// Solidity: function updateRevision(contentId uint256, contentUri string, contentHash bytes32, signature bytes) returns()
+// Solidity: function updateRevision(uint256 contentId, string contentUri, bytes32 contentHash, bytes signature) returns()
 func (_NewsroomContract *NewsroomContractTransactorSession) UpdateRevision(contentId *big.Int, contentUri string, contentHash [32]byte, signature []byte) (*types.Transaction, error) {
 	return _NewsroomContract.Contract.UpdateRevision(&_NewsroomContract.TransactOpts, contentId, contentUri, contentHash, signature)
 }
@@ -746,7 +758,7 @@ type NewsroomContractContentPublished struct {
 
 // FilterContentPublished is a free log retrieval operation binding the contract event 0x1ede735f9b446d8014022fed176848ac3894c54942bef9ff452f7ae42b50d5ae.
 //
-// Solidity: e ContentPublished(editor indexed address, contentId indexed uint256, uri string)
+// Solidity: event ContentPublished(address indexed editor, uint256 indexed contentId, string uri)
 func (_NewsroomContract *NewsroomContractFilterer) FilterContentPublished(opts *bind.FilterOpts, editor []common.Address, contentId []*big.Int) (*NewsroomContractContentPublishedIterator, error) {
 
 	var editorRule []interface{}
@@ -767,7 +779,7 @@ func (_NewsroomContract *NewsroomContractFilterer) FilterContentPublished(opts *
 
 // WatchContentPublished is a free log subscription operation binding the contract event 0x1ede735f9b446d8014022fed176848ac3894c54942bef9ff452f7ae42b50d5ae.
 //
-// Solidity: e ContentPublished(editor indexed address, contentId indexed uint256, uri string)
+// Solidity: event ContentPublished(address indexed editor, uint256 indexed contentId, string uri)
 func (_NewsroomContract *NewsroomContractFilterer) WatchContentPublished(opts *bind.WatchOpts, sink chan<- *NewsroomContractContentPublished, editor []common.Address, contentId []*big.Int) (event.Subscription, error) {
 
 	var editorRule []interface{}
@@ -886,7 +898,7 @@ type NewsroomContractNameChanged struct {
 
 // FilterNameChanged is a free log retrieval operation binding the contract event 0x4737457377f528cc8afd815f73ecb8b05df80d047dbffc41c17750a4033592bc.
 //
-// Solidity: e NameChanged(newName string)
+// Solidity: event NameChanged(string newName)
 func (_NewsroomContract *NewsroomContractFilterer) FilterNameChanged(opts *bind.FilterOpts) (*NewsroomContractNameChangedIterator, error) {
 
 	logs, sub, err := _NewsroomContract.contract.FilterLogs(opts, "NameChanged")
@@ -898,7 +910,7 @@ func (_NewsroomContract *NewsroomContractFilterer) FilterNameChanged(opts *bind.
 
 // WatchNameChanged is a free log subscription operation binding the contract event 0x4737457377f528cc8afd815f73ecb8b05df80d047dbffc41c17750a4033592bc.
 //
-// Solidity: e NameChanged(newName string)
+// Solidity: event NameChanged(string newName)
 func (_NewsroomContract *NewsroomContractFilterer) WatchNameChanged(opts *bind.WatchOpts, sink chan<- *NewsroomContractNameChanged) (event.Subscription, error) {
 
 	logs, sub, err := _NewsroomContract.contract.WatchLogs(opts, "NameChanged")
@@ -1008,7 +1020,7 @@ type NewsroomContractOwnershipRenounced struct {
 
 // FilterOwnershipRenounced is a free log retrieval operation binding the contract event 0xf8df31144d9c2f0f6b59d69b8b98abd5459d07f2742c4df920b25aae33c64820.
 //
-// Solidity: e OwnershipRenounced(previousOwner indexed address)
+// Solidity: event OwnershipRenounced(address indexed previousOwner)
 func (_NewsroomContract *NewsroomContractFilterer) FilterOwnershipRenounced(opts *bind.FilterOpts, previousOwner []common.Address) (*NewsroomContractOwnershipRenouncedIterator, error) {
 
 	var previousOwnerRule []interface{}
@@ -1025,7 +1037,7 @@ func (_NewsroomContract *NewsroomContractFilterer) FilterOwnershipRenounced(opts
 
 // WatchOwnershipRenounced is a free log subscription operation binding the contract event 0xf8df31144d9c2f0f6b59d69b8b98abd5459d07f2742c4df920b25aae33c64820.
 //
-// Solidity: e OwnershipRenounced(previousOwner indexed address)
+// Solidity: event OwnershipRenounced(address indexed previousOwner)
 func (_NewsroomContract *NewsroomContractFilterer) WatchOwnershipRenounced(opts *bind.WatchOpts, sink chan<- *NewsroomContractOwnershipRenounced, previousOwner []common.Address) (event.Subscription, error) {
 
 	var previousOwnerRule []interface{}
@@ -1141,7 +1153,7 @@ type NewsroomContractOwnershipTransferred struct {
 
 // FilterOwnershipTransferred is a free log retrieval operation binding the contract event 0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0.
 //
-// Solidity: e OwnershipTransferred(previousOwner indexed address, newOwner indexed address)
+// Solidity: event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)
 func (_NewsroomContract *NewsroomContractFilterer) FilterOwnershipTransferred(opts *bind.FilterOpts, previousOwner []common.Address, newOwner []common.Address) (*NewsroomContractOwnershipTransferredIterator, error) {
 
 	var previousOwnerRule []interface{}
@@ -1162,7 +1174,7 @@ func (_NewsroomContract *NewsroomContractFilterer) FilterOwnershipTransferred(op
 
 // WatchOwnershipTransferred is a free log subscription operation binding the contract event 0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0.
 //
-// Solidity: e OwnershipTransferred(previousOwner indexed address, newOwner indexed address)
+// Solidity: event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)
 func (_NewsroomContract *NewsroomContractFilterer) WatchOwnershipTransferred(opts *bind.WatchOpts, sink chan<- *NewsroomContractOwnershipTransferred, previousOwner []common.Address, newOwner []common.Address) (event.Subscription, error) {
 
 	var previousOwnerRule []interface{}
@@ -1283,7 +1295,7 @@ type NewsroomContractRevisionSigned struct {
 
 // FilterRevisionSigned is a free log retrieval operation binding the contract event 0x605611fc50d3effbe4af88e82f5daebfcffe0fb8f3b34ed32f1a746290ccbc61.
 //
-// Solidity: e RevisionSigned(contentId indexed uint256, revisionId indexed uint256, author indexed address)
+// Solidity: event RevisionSigned(uint256 indexed contentId, uint256 indexed revisionId, address indexed author)
 func (_NewsroomContract *NewsroomContractFilterer) FilterRevisionSigned(opts *bind.FilterOpts, contentId []*big.Int, revisionId []*big.Int, author []common.Address) (*NewsroomContractRevisionSignedIterator, error) {
 
 	var contentIdRule []interface{}
@@ -1308,7 +1320,7 @@ func (_NewsroomContract *NewsroomContractFilterer) FilterRevisionSigned(opts *bi
 
 // WatchRevisionSigned is a free log subscription operation binding the contract event 0x605611fc50d3effbe4af88e82f5daebfcffe0fb8f3b34ed32f1a746290ccbc61.
 //
-// Solidity: e RevisionSigned(contentId indexed uint256, revisionId indexed uint256, author indexed address)
+// Solidity: event RevisionSigned(uint256 indexed contentId, uint256 indexed revisionId, address indexed author)
 func (_NewsroomContract *NewsroomContractFilterer) WatchRevisionSigned(opts *bind.WatchOpts, sink chan<- *NewsroomContractRevisionSigned, contentId []*big.Int, revisionId []*big.Int, author []common.Address) (event.Subscription, error) {
 
 	var contentIdRule []interface{}
@@ -1434,7 +1446,7 @@ type NewsroomContractRevisionUpdated struct {
 
 // FilterRevisionUpdated is a free log retrieval operation binding the contract event 0x18b6b5c485f8822a270464dd544d0715597dc8f1a007ee2b0252b62b8b9fb390.
 //
-// Solidity: e RevisionUpdated(editor indexed address, contentId indexed uint256, revisionId indexed uint256, uri string)
+// Solidity: event RevisionUpdated(address indexed editor, uint256 indexed contentId, uint256 indexed revisionId, string uri)
 func (_NewsroomContract *NewsroomContractFilterer) FilterRevisionUpdated(opts *bind.FilterOpts, editor []common.Address, contentId []*big.Int, revisionId []*big.Int) (*NewsroomContractRevisionUpdatedIterator, error) {
 
 	var editorRule []interface{}
@@ -1459,7 +1471,7 @@ func (_NewsroomContract *NewsroomContractFilterer) FilterRevisionUpdated(opts *b
 
 // WatchRevisionUpdated is a free log subscription operation binding the contract event 0x18b6b5c485f8822a270464dd544d0715597dc8f1a007ee2b0252b62b8b9fb390.
 //
-// Solidity: e RevisionUpdated(editor indexed address, contentId indexed uint256, revisionId indexed uint256, uri string)
+// Solidity: event RevisionUpdated(address indexed editor, uint256 indexed contentId, uint256 indexed revisionId, string uri)
 func (_NewsroomContract *NewsroomContractFilterer) WatchRevisionUpdated(opts *bind.WatchOpts, sink chan<- *NewsroomContractRevisionUpdated, editor []common.Address, contentId []*big.Int, revisionId []*big.Int) (event.Subscription, error) {
 
 	var editorRule []interface{}
@@ -1584,7 +1596,7 @@ type NewsroomContractRoleAdded struct {
 
 // FilterRoleAdded is a free log retrieval operation binding the contract event 0xa40c1dc2b34f6b51c3ea614b688f243e50047ed9fa3ea19010303d70dac781ed.
 //
-// Solidity: e RoleAdded(granter indexed address, grantee indexed address, role string)
+// Solidity: event RoleAdded(address indexed granter, address indexed grantee, string role)
 func (_NewsroomContract *NewsroomContractFilterer) FilterRoleAdded(opts *bind.FilterOpts, granter []common.Address, grantee []common.Address) (*NewsroomContractRoleAddedIterator, error) {
 
 	var granterRule []interface{}
@@ -1605,7 +1617,7 @@ func (_NewsroomContract *NewsroomContractFilterer) FilterRoleAdded(opts *bind.Fi
 
 // WatchRoleAdded is a free log subscription operation binding the contract event 0xa40c1dc2b34f6b51c3ea614b688f243e50047ed9fa3ea19010303d70dac781ed.
 //
-// Solidity: e RoleAdded(granter indexed address, grantee indexed address, role string)
+// Solidity: event RoleAdded(address indexed granter, address indexed grantee, string role)
 func (_NewsroomContract *NewsroomContractFilterer) WatchRoleAdded(opts *bind.WatchOpts, sink chan<- *NewsroomContractRoleAdded, granter []common.Address, grantee []common.Address) (event.Subscription, error) {
 
 	var granterRule []interface{}
@@ -1726,7 +1738,7 @@ type NewsroomContractRoleRemoved struct {
 
 // FilterRoleRemoved is a free log retrieval operation binding the contract event 0x6a52fb0cb0e75e6a6721483d2e539b38273ec6fe95b648a41e1a901594aeccb8.
 //
-// Solidity: e RoleRemoved(granter indexed address, grantee indexed address, role string)
+// Solidity: event RoleRemoved(address indexed granter, address indexed grantee, string role)
 func (_NewsroomContract *NewsroomContractFilterer) FilterRoleRemoved(opts *bind.FilterOpts, granter []common.Address, grantee []common.Address) (*NewsroomContractRoleRemovedIterator, error) {
 
 	var granterRule []interface{}
@@ -1747,7 +1759,7 @@ func (_NewsroomContract *NewsroomContractFilterer) FilterRoleRemoved(opts *bind.
 
 // WatchRoleRemoved is a free log subscription operation binding the contract event 0x6a52fb0cb0e75e6a6721483d2e539b38273ec6fe95b648a41e1a901594aeccb8.
 //
-// Solidity: e RoleRemoved(granter indexed address, grantee indexed address, role string)
+// Solidity: event RoleRemoved(address indexed granter, address indexed grantee, string role)
 func (_NewsroomContract *NewsroomContractFilterer) WatchRoleRemoved(opts *bind.WatchOpts, sink chan<- *NewsroomContractRoleRemoved, granter []common.Address, grantee []common.Address) (event.Subscription, error) {
 
 	var granterRule []interface{}

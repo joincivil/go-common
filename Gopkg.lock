@@ -146,6 +146,14 @@
   version = "v1.8.0"
 
 [[projects]]
+  digest = "1:48092bf6632f55839850666c33469f546f6d45fdbd59a66759ec12e84d853dc2"
+  name = "github.com/gogo/protobuf"
+  packages = ["proto"]
+  pruneopts = "UT"
+  revision = "ba06b47c162d49f2af050fb4c75bcbc86a159d5c"
+  version = "v1.2.1"
+
+[[projects]]
   branch = "master"
   digest = "1:1ba1d79f2810270045c328ae5d674321db34e3aae468eb4233883b473c5c0467"
   name = "github.com/golang/glog"
@@ -206,6 +214,25 @@
   version = "v0.5.0"
 
 [[projects]]
+  digest = "1:ff5efd305539134b77d7448b078ac998d1cfecd1d8ffd49cb5842cc62a68d482"
+  name = "github.com/ipfs/go-ipfs-api"
+  packages = [
+    ".",
+    "options",
+  ]
+  pruneopts = "UT"
+  revision = "e5e713c8462a420efcefa1b458560a704ee99090"
+  version = "v0.0.1"
+
+[[projects]]
+  digest = "1:2f4c34c23f57eadaea0a620386dcc691e83f44cc52fb8163f53695e7aa3fbae4"
+  name = "github.com/ipfs/go-ipfs-files"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "cf8456081cd5fd17ae1716c5fdff7d4cfba1bbb2"
+  version = "v0.0.3"
+
+[[projects]]
   digest = "1:ecd9aa82687cf31d1585d4ac61d0ba180e42e8a6182b85bd785fcca8dfeefc1b"
   name = "github.com/joho/godotenv"
   packages = ["."]
@@ -222,12 +249,122 @@
   version = "v1.3.0"
 
 [[projects]]
+  digest = "1:83d3d59c84ff3da342ab63011d79750ccb987bda399eb64db3abd3e2fd32c18f"
+  name = "github.com/libp2p/go-flow-metrics"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "1f5b3acc846b2c8ce4c4e713296af74f5c24df55"
+  version = "v0.0.1"
+
+[[projects]]
+  digest = "1:07c95e6b3ef3685429abca7e25ac443c50fde14cb708ca24e794dfe8ef19e032"
+  name = "github.com/libp2p/go-libp2p-core"
+  packages = [
+    "crypto",
+    "crypto/pb",
+    "metrics",
+    "peer",
+    "protocol",
+  ]
+  pruneopts = "UT"
+  revision = "786c4f4e0f0af96fb69223268da4d0bf123841d8"
+  version = "v0.0.6"
+
+[[projects]]
+  digest = "1:35caf66f415bddda628d9410a20a6bcd8ac3deebbda33de1220d3f7ee3a14ccd"
+  name = "github.com/libp2p/go-libp2p-crypto"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "ddb6d72b5ad0ae81bf1ee77b628eac1d7237536a"
+  version = "v0.1.0"
+
+[[projects]]
+  digest = "1:7e1b4ffde934416cc6a0473b24b674e2ff9f7c0d4e8b9fe386dc387510459aec"
+  name = "github.com/libp2p/go-libp2p-metrics"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "2551ab4747111d6c216a06d963c575cebdfd5c9f"
+  version = "v0.1.0"
+
+[[projects]]
+  digest = "1:79d1cf3e88f9ae667c30039cc37a6ad0be8bf0fa9b5359b572253de74b24c644"
+  name = "github.com/libp2p/go-libp2p-peer"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "62676d8fb785a8fc279878cbe8e03b878f005910"
+  version = "v0.2.0"
+
+[[projects]]
   digest = "1:0356f3312c9bd1cbeda81505b7fd437501d8e778ab66998ef69f00d7f9b3a0d7"
   name = "github.com/mattn/go-runewidth"
   packages = ["."]
   pruneopts = "UT"
   revision = "3ee7d812e62a0804a7d0a324e0249ca2db3476d3"
   version = "v0.0.4"
+
+[[projects]]
+  branch = "master"
+  digest = "1:130cefe87d7eeefc824978dcb78e35672d4c49a11f25c153fbf0cfd952756fa3"
+  name = "github.com/minio/blake2b-simd"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "3f5f724cb5b182a5c278d6d3d55b40e7f8c2efb4"
+
+[[projects]]
+  digest = "1:d69117243f58a0d320c2889872d8c14d323d865277dc49fc85bfcf48b2846b8f"
+  name = "github.com/minio/sha256-simd"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "05b4dd3047e5d6e86cb4e0477164b850cd896261"
+  version = "v0.1.0"
+
+[[projects]]
+  digest = "1:5d231480e1c64a726869bc4142d270184c419749d34f167646baa21008eb0a79"
+  name = "github.com/mitchellh/go-homedir"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "af06845cf3004701891bf4fdb884bfe4920b3727"
+  version = "v1.1.0"
+
+[[projects]]
+  digest = "1:b6299badabd66eaede0651e2eaede106d8298b25564e4a7f23e335471d3e5a35"
+  name = "github.com/mr-tron/base58"
+  packages = ["base58"]
+  pruneopts = "UT"
+  revision = "d504ab2e22d97cb9f10b1d146a1e6a063f4a5f43"
+  version = "v1.1.2"
+
+[[projects]]
+  digest = "1:c95537699dfc9ecc62c2bb273fd2fdf5810ce23ed50f25529c17f755a052a7c3"
+  name = "github.com/multiformats/go-multiaddr"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "5b1de2f51ff2368d5ce94a659f15ef26be273cd0"
+  version = "v0.0.4"
+
+[[projects]]
+  digest = "1:e7b7007612b49b368d5b505b624b399a1de5fe2764271b92145aa9ca0440ab4e"
+  name = "github.com/multiformats/go-multiaddr-dns"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "e7c544d7a325c57bdbd7e9ba9c035a6701c5c7d2"
+  version = "v0.0.2"
+
+[[projects]]
+  digest = "1:ccb950e76138c70abe765c3b9c0e6cad0e55fc66ff53318cea8b651df9f892c7"
+  name = "github.com/multiformats/go-multiaddr-net"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "bd61b0499a3cfc893a8eb109c5669342b1671881"
+  version = "v0.0.1"
+
+[[projects]]
+  digest = "1:83c4c7eef11b74d0dfacdd9464e4d694ebc3d2012c7f295a92551bb1b3a1b32a"
+  name = "github.com/multiformats/go-multihash"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "0e239d8fa37b597bd150660e5b6845570aa5b833"
+  version = "v0.0.6"
 
 [[projects]]
   digest = "1:abcdbf03ca6ca13d3697e2186edc1f33863bbdac2b3a44dfa39015e8903f7409"
@@ -296,6 +433,33 @@
   revision = "8cb43f4ca4f5a26bb75861eaf5ee58c3302eacb1"
 
 [[projects]]
+  branch = "master"
+  digest = "1:74aa99ef18406ebfdedfb2a07b9a01f9ff2b6d2547b27b33fcdf1007223d75cc"
+  name = "github.com/spacemonkeygo/openssl"
+  packages = [
+    ".",
+    "utils",
+  ]
+  pruneopts = "UT"
+  revision = "c2dcc5cca94ac8f7f3f0c20e20050d4cce9d9730"
+
+[[projects]]
+  branch = "master"
+  digest = "1:d6956eb95db39859627c18e1dd425b2ddd1a0d6000b643a4d4ada8fc887c1e09"
+  name = "github.com/spacemonkeygo/spacelog"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "2296661a0572a51438413369004fa931c2641923"
+
+[[projects]]
+  digest = "1:919bb3aa6d9d0b67648c219fa4925312bc3c2872da19e818fa769e9c97a2b643"
+  name = "github.com/spaolacci/murmur3"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "9f5d223c60793748f04a9d5b4b4eacddfc1f755d"
+  version = "v1.1"
+
+[[projects]]
   digest = "1:266e2f508feb9a9a765bfeb74d116a88514248b2f8428788dcce574bd026b9c0"
   name = "github.com/steakknife/bloomfilter"
   packages = ["."]
@@ -333,6 +497,14 @@
   revision = "b001fa50d6b27f3f0bb175a87d0cb55426d0a0ae"
 
 [[projects]]
+  branch = "master"
+  digest = "1:e2599924072678810fe41b00dead8e11e95fa55be2dbc01b5309c4bf04f2209c"
+  name = "github.com/whyrusleeping/tar-utils"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "8c6c8ba81d5c71fd69c0f48dbde4b2fb422b6dfc"
+
+[[projects]]
   digest = "1:381ccafa5e013a0e3f9b54604ae522a73b9533a375a6a714b483c634d5e927ab"
   name = "go.opencensus.io"
   packages = [
@@ -358,9 +530,12 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:a6f85d6d31c8c1185cf138cc82144c101e828472009bd8479425a011fd321e77"
+  digest = "1:e3a30b90271464226f60cbb9ec5f3973047d97513c3bbf450d4412a76b03adc0"
   name = "golang.org/x/crypto"
   packages = [
+    "blake2s",
+    "ed25519",
+    "ed25519/internal/edwards25519",
     "pbkdf2",
     "ripemd160",
     "scrypt",
@@ -572,6 +747,7 @@
     "github.com/ethereum/go-ethereum/event",
     "github.com/getsentry/raven-go",
     "github.com/golang/glog",
+    "github.com/ipfs/go-ipfs-api",
     "github.com/joho/godotenv",
     "github.com/kelseyhightower/envconfig",
     "github.com/sendgrid/sendgrid-go",
