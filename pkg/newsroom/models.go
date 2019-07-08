@@ -14,19 +14,20 @@ type Charter struct {
 
 // RosterItem contains a member of the newsroom roster
 type RosterItem struct {
-	Name       string      `json:"name"`
-	Role       string      `json:"role"`
-	Bio        string      `json:"bio"`
-	EthAddress string      `json:"ethAddress"`
-	SocialUrls []SocialURL `json:"socialUrls"`
-	AvatarURL  string      `json:"avatarUrl"`
-	Signature  string      `json:"signature"`
+	Name       string    `json:"name"`
+	Role       string    `json:"role"`
+	Bio        string    `json:"bio"`
+	EthAddress string    `json:"ethAddress,omitempty"`
+	SocialUrls SocialURL `json:"socialUrls"`
+	AvatarURL  string    `json:"avatarUrl,omitempty"`
+	Signature  string    `json:"signature"`
 }
 
 // SocialURL contains social urls
 type SocialURL struct {
-	Twitter  string `json:"twitter"`
-	Facebook string `json:"facebook"`
+	Twitter  string `json:"twitter,omitempty"`
+	Facebook string `json:"facebook,omitempty"`
+	Email    string `json:"email,omitempty"`
 }
 
 // Signature contains the charter signature
@@ -38,9 +39,9 @@ type Signature struct {
 
 // MissionFields contains fields for the newsroom's mission
 type MissionFields struct {
-	Purpose       string `json:"purpose"`
-	Structure     string `json:"structure"`
-	Revenue       string `json:"revenue"`
-	Encumbrances  string `json:"encumbrances"`
-	Miscellaneous string `json:"miscellaneous"`
+	Purpose       string `json:"purpose,omitempty"`
+	Structure     string `json:"structure,omitempty"`
+	Revenue       string `json:"revenue,omitempty"`
+	Encumbrances  string `json:"encumbrances,omitempty"`
+	Miscellaneous string `json:"miscellaneous,omitempty"`
 }
