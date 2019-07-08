@@ -278,7 +278,54 @@ func TestNewsroomService(t *testing.T) {
 	})
 
 	t.Run("AdminRemoveMember", func(t *testing.T) {
-		t.Skip("AdminRemoveMember not implemented")
+
+		newsroomAddress := createNewsroom("test")
+		// just a random address
+		owner1 := common.HexToAddress("0x34CB3f586187eB930E17f5c45F607ac78bbce6ae")
+		owner2 := common.HexToAddress("0x8c29E088ddd8233C2B2A35b77ff94f8B208b79b7")
+		_, err := svc.AdminAddMultisigOwner(newsroomAddress, owner1)
+		if err != nil {
+			t.Fatalf("not expecting error with AdminAddMultisigOwner %v", err)
+		}
+		_, err = svc.AdminAddMultisigOwner(newsroomAddress, owner2)
+		if err != nil {
+			t.Fatalf("not expecting error with AdminAddMultisigOwner %v", err)
+		}
+
+		blockchain.Commit()
+
+		members, err := svc.GetMultisigMembers(newsroomAddress)
+		if err != nil {
+			t.Fatalf("not expecting an error but received: %v", err)
+		}
+		if len(members) != 3 {
+			t.Fatalf("expected multisig to have 3 members")
+		}
+
+		txHash, err := svc.AdminRemoveMultisigOwner(newsroomAddress, owner2)
+		if err != nil {
+			t.Fatalf("not expecting error with AdminRemoveMultisigOwner %v", err)
+		}
+		blockchain.Commit()
+
+		receipt, err := ethHelper.Blockchain.(ethereum.TransactionReader).TransactionReceipt(context.Background(), txHash)
+		if err != nil {
+			t.Fatalf("not expecting an error but received: %v", err)
+		}
+		if receipt.Status != 1 {
+			t.Fatalf("RemoveMember transaction failed: %v", receipt.Status)
+		}
+
+		members, err = svc.GetMultisigMembers(newsroomAddress)
+		if err != nil {
+			t.Fatalf("not expecting an error but received: %v", err)
+		}
+		if len(members) != 2 {
+			t.Fatalf("expected multisig to have 2 members")
+		}
+		if members[1] != owner1 {
+			t.Fatalf("expected to find the added address as a member")
+		}
 	})
 
 }

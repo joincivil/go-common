@@ -243,6 +243,32 @@ func (s *Service) AdminAddMultisigOwner(newsroomAddress common.Address, newOwner
 	return tx.Hash(), nil
 }
 
+// AdminRemoveMultisigOwner removes the address from the multisig
+func (s *Service) AdminRemoveMultisigOwner(newsroomAddress common.Address, owner common.Address) (common.Hash, error) {
+	multisig, multisigAddr, err := s.getMultisigForNewsroom(newsroomAddress)
+	if err != nil {
+		return common.Hash{}, err
+	}
+
+	// we can't use `multisig.RemoveOwner` directly, since the function requires it comes from the multisig
+	// instead, we build the []byte for the tx data and then use `multisig.SubmitTransaction` to execute it
+	data, err := s.multisigABI.Pack("removeOwner", owner)
+	if err != nil {
+		return common.Hash{}, err
+	}
+
+	// amounf of ETH to send with the tx
+	value := big.NewInt(0)
+
+	// submit the tx to the multisig
+	tx, err := multisig.SubmitTransaction(s.eth.Transact(), multisigAddr, value, data)
+	if err != nil {
+		return common.Hash{}, err
+	}
+
+	return tx.Hash(), nil
+}
+
 // AdminApproveTCRTokenTransfer approves the specified number of tokens to be transferred by the TCR contract
 // this needs to be called before `AdminApplyToTCR` otherwise the tx will fail
 func (s *Service) AdminApproveTCRTokenTransfer(newsroomAddress common.Address, tokens *big.Int) (common.Hash, error) {
