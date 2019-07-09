@@ -164,6 +164,37 @@ func (s *Service) GetNewsroomAddressFromTransaction(tx common.Hash) (common.Addr
 	return newsroomContract, nil
 }
 
+// RenameNewsroom sets a new name for the Newsroom
+func (s *Service) RenameNewsroom(newsroomAddress common.Address, newName string) (common.Hash, error) {
+	multisig, _, err := s.getMultisigForNewsroom(newsroomAddress)
+	if err != nil {
+		return common.Hash{}, err
+	}
+
+	newsroomABI, err := abi.JSON(strings.NewReader(contract.NewsroomContractABI))
+	if err != nil {
+		return common.Hash{}, err
+	}
+
+	// we can't use `newsroom.SetName` directly, since the function requires it comes from the multisig
+	// instead, we build the []byte for the tx data and then use `multisig.SubmitTransaction` to execute it
+	data, err := newsroomABI.Pack("setName", newName)
+	if err != nil {
+		return common.Hash{}, err
+	}
+
+	// amounf of ETH to send with the tx
+	value := big.NewInt(0)
+
+	// submit the tx to the multisig
+	tx, err := multisig.SubmitTransaction(s.eth.Transact(), newsroomAddress, value, data)
+	if err != nil {
+		return common.Hash{}, err
+	}
+
+	return tx.Hash(), nil
+}
+
 // GetNewsroomName retrieves the name of the newsroom at the provided address
 func (s *Service) GetNewsroomName(newsroomAddress common.Address) (string, error) {
 	newsroom, err := contract.NewNewsroomContract(newsroomAddress, s.eth.Blockchain)

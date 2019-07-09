@@ -71,13 +71,15 @@ func deployContracts(t *testing.T, helper *eth.Helper) *eth.DeployerContractAddr
 	if err != nil {
 		t.Fatal("error with DeployPLCR")
 	}
-	err = deployer.DeployParameterizer(eth.DefaultParameterizerConfig())
+	pConfig := eth.NewDefaultParameterizerConfig()
+	err = deployer.DeployParameterizer(pConfig.AsArray())
 	if err != nil {
 		t.Fatalf("error with DeployParameterizer: %v", err)
 	}
 
 	// deploy government
-	err = deployer.DeployGovernment(eth.DefaultGovernmentConfig(), helper.Auth.From, helper.Auth.From)
+	gConfig := eth.NewDefaultGovernmentConfig()
+	err = deployer.DeployGovernment(gConfig.AsArray(), helper.Auth.From, helper.Auth.From)
 	if err != nil {
 		t.Fatalf("error with DeployGovernment: %v", err)
 	}
@@ -326,6 +328,26 @@ func TestNewsroomService(t *testing.T) {
 		if members[1] != owner1 {
 			t.Fatalf("expected to find the added address as a member")
 		}
+	})
+
+	t.Run("RenameNewsroom", func(t *testing.T) {
+
+		newsroomAddress := createNewsroom("foo")
+
+		_, err := svc.RenameNewsroom(newsroomAddress, "bar")
+		if err != nil {
+			t.Fatalf("not expecting an error but received: %v", err)
+		}
+		blockchain.Commit()
+
+		name, err := svc.GetNewsroomName(newsroomAddress)
+		if err != nil {
+			t.Fatalf("not expecting an error but received: %v", err)
+		}
+		if name != "bar" {
+			t.Fatalf("did not receive the expected newsroom name")
+		}
+
 	})
 
 }

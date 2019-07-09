@@ -227,27 +227,69 @@ func (d *Deployer) DeployPLCR() error {
 	return nil
 }
 
-// DefaultParameterizerConfig returns default values to use when creating the Parameterizer contract
-func DefaultParameterizerConfig() []*big.Int {
+// ParameterizerConfig contains the attributes needed to instantiate the Parameterizer contract
+type ParameterizerConfig struct {
+	MinDeposit                       *big.Int
+	PMinDeposit                      *big.Int
+	ApplyStageLength                 *big.Int
+	PApplyStageLength                *big.Int
+	CommitStageLength                *big.Int
+	PCommitStageLength               *big.Int
+	RevealStageLength                *big.Int
+	PRevealStageLength               *big.Int
+	DispensationPct                  *big.Int
+	PDispensationPct                 *big.Int
+	VoteQuorum                       *big.Int
+	PVoteQuorum                      *big.Int
+	PProcessBy                       *big.Int
+	ChallengeAppealLength            *big.Int
+	AppealChallengeCommitStageLength *big.Int
+	AppealChallengeRevealStageLength *big.Int
+}
+
+// NewDefaultParameterizerConfig returns default values to use when creating the Parameterizer contract
+func NewDefaultParameterizerConfig() *ParameterizerConfig {
 	// values copied from civil-event-crawler
 	// https://github.com/joincivil/go-common/blob/master/pkg/token/cvl_token_service_test.go
+	return &ParameterizerConfig{
+		MinDeposit:                       big.NewInt(10),    // minDeposit
+		PMinDeposit:                      big.NewInt(100),   // pMinDeposit
+		ApplyStageLength:                 big.NewInt(0),     // applyStageLength
+		PApplyStageLength:                big.NewInt(120),   // pApplyStageLength
+		CommitStageLength:                big.NewInt(18000), // commitStageLength
+		PCommitStageLength:               big.NewInt(120),   // pCommitStageLength
+		RevealStageLength:                big.NewInt(18000), // revealStageLength
+		PRevealStageLength:               big.NewInt(120),   // pRevealStageLength
+		DispensationPct:                  big.NewInt(50),    // dispensationPct
+		PDispensationPct:                 big.NewInt(50),    // pDispensationPct
+		VoteQuorum:                       big.NewInt(50),    // voteQuorum
+		PVoteQuorum:                      big.NewInt(50),    // pVoteQuorum
+		PProcessBy:                       big.NewInt(18000), // pProcessBy
+		ChallengeAppealLength:            big.NewInt(18000), // challengeAppealLength
+		AppealChallengeCommitStageLength: big.NewInt(16000), // appealChallengeCommitStageLength
+		AppealChallengeRevealStageLength: big.NewInt(16000), // appealChallengeRevealStageLength
+	}
+}
+
+// AsArray returns the ParameterizerConfig as an IntArray needed for the contract parameter
+func (p *ParameterizerConfig) AsArray() []*big.Int {
 	return []*big.Int{
-		big.NewInt(10),    // minDeposit
-		big.NewInt(100),   // pMinDeposit
-		big.NewInt(0),     // applyStageLength
-		big.NewInt(120),   // pApplyStageLength
-		big.NewInt(18000), // commitStageLength
-		big.NewInt(120),   // pCommitStageLength
-		big.NewInt(18000), // revealStageLength
-		big.NewInt(120),   // pRevealStageLength
-		big.NewInt(50),    // dispensationPct
-		big.NewInt(50),    // pDispensationPct
-		big.NewInt(50),    // voteQuorum
-		big.NewInt(50),    // pVoteQuorum
-		big.NewInt(18000), // pProcessBy
-		big.NewInt(18000), // challengeAppealLength
-		big.NewInt(16000), // appealChallengeCommitStageLength
-		big.NewInt(16000), // appealChallengeRevealStageLength
+		p.MinDeposit,
+		p.PMinDeposit,
+		p.ApplyStageLength,
+		p.PApplyStageLength,
+		p.CommitStageLength,
+		p.PCommitStageLength,
+		p.RevealStageLength,
+		p.PRevealStageLength,
+		p.DispensationPct,
+		p.PDispensationPct,
+		p.VoteQuorum,
+		p.PVoteQuorum,
+		p.PProcessBy,
+		p.ChallengeAppealLength,
+		p.AppealChallengeCommitStageLength,
+		p.AppealChallengeRevealStageLength,
 	}
 }
 
@@ -280,21 +322,51 @@ func (d *Deployer) DeployParameterizer(config []*big.Int) error {
 	return nil
 }
 
-// DefaultGovernmentConfig returns default values to use when creating the Parameterizer contract
-func DefaultGovernmentConfig() []interface{} {
+// GovernmentConfig contains the fields needed to instatiate the Government contract
+type GovernmentConfig struct {
+	AppealFeeAmount                    *big.Int
+	RequestAppealPhaseLength           *big.Int
+	JudgeAppealPhaseLength             *big.Int
+	AppealSupermajorityPercentage      *big.Int
+	AppealChallengeVoteDispensationPct *big.Int
+	PDeposit                           *big.Int
+	PCommitStageLength                 *big.Int
+	PRevealStageLength                 *big.Int
+	ConstitutionHash                   [32]byte
+	ConstitutionURI                    string
+}
+
+// NewDefaultGovernmentConfig returns default values to use when creating the Government contract
+func NewDefaultGovernmentConfig() *GovernmentConfig {
 	// values copied from civil-event-crawler
 	// https://github.com/joincivil/civil-events-crawler/blob/a7754bc767a7c0f09ef1ace4dd67b86b0b322326/pkg/contractutils/contractutils.go#L487
+	return &GovernmentConfig{
+		AppealFeeAmount:                    big.NewInt(1000),       // appealFeeAmount
+		RequestAppealPhaseLength:           big.NewInt(36000),      // requestAppealPhaseLength
+		JudgeAppealPhaseLength:             big.NewInt(36000),      // judgeAppealPhaseLength
+		AppealSupermajorityPercentage:      big.NewInt(66),         // appealSupermajorityPercentage
+		AppealChallengeVoteDispensationPct: big.NewInt(66),         // appealChallengeVoteDispensationPct
+		PDeposit:                           big.NewInt(150),        // pDeposit
+		PCommitStageLength:                 big.NewInt(120),        // pCommitStageLength
+		PRevealStageLength:                 big.NewInt(120),        // pRevealStageLength
+		ConstitutionHash:                   [32]byte{},             // constitutionHash
+		ConstitutionURI:                    "http://madeupURL.com", // constitutionURI
+	}
+}
+
+// AsArray returns a config fields as an array needed for the contract parameter
+func (g *GovernmentConfig) AsArray() []interface{} {
 	return []interface{}{
-		big.NewInt(1000),       // appealFeeAmount
-		big.NewInt(36000),      // requestAppealPhaseLength
-		big.NewInt(36000),      // judgeAppealPhaseLength
-		big.NewInt(66),         // appealSupermajorityPercentage
-		big.NewInt(66),         // appealChallengeVoteDispensationPct
-		big.NewInt(150),        // pDeposit
-		big.NewInt(120),        // pCommitStageLength
-		big.NewInt(120),        // pRevealStageLength
-		[32]byte{},             // constitutionHash
-		"http://madeupURL.com", // constitutionURI
+		g.AppealFeeAmount,
+		g.RequestAppealPhaseLength,
+		g.JudgeAppealPhaseLength,
+		g.AppealSupermajorityPercentage,
+		g.AppealChallengeVoteDispensationPct,
+		g.PDeposit,
+		g.PCommitStageLength,
+		g.PRevealStageLength,
+		g.ConstitutionHash,
+		g.ConstitutionURI,
 	}
 }
 
