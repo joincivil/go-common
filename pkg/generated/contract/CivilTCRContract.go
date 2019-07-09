@@ -15,6 +15,18 @@ import (
 	"github.com/ethereum/go-ethereum/event"
 )
 
+// Reference imports to suppress errors if they are not otherwise used.
+var (
+	_ = big.NewInt
+	_ = strings.NewReader
+	_ = ethereum.NotFound
+	_ = abi.U256
+	_ = bind.Bind
+	_ = common.Big1
+	_ = types.BloomLookup
+	_ = event.NewSubscription
+)
+
 // CivilTCRContractABI is the input ABI used to generate the binding from.
 const CivilTCRContractABI = "[{\"constant\":true,\"inputs\":[],\"name\":\"name\",\"outputs\":[{\"name\":\"\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"civilVoting\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"government\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"listingAddress\",\"type\":\"address\"}],\"name\":\"isWhitelisted\",\"outputs\":[{\"name\":\"whitelisted\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"listingAddress\",\"type\":\"address\"},{\"name\":\"_amount\",\"type\":\"uint256\"}],\"name\":\"deposit\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_challengeIDs\",\"type\":\"uint256[]\"},{\"name\":\"_salts\",\"type\":\"uint256[]\"}],\"name\":\"claimRewards\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"listingAddress\",\"type\":\"address\"}],\"name\":\"appWasMade\",\"outputs\":[{\"name\":\"exists\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"challengeRequestAppealExpiries\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"listings\",\"outputs\":[{\"name\":\"applicationExpiry\",\"type\":\"uint256\"},{\"name\":\"whitelisted\",\"type\":\"bool\"},{\"name\":\"owner\",\"type\":\"address\"},{\"name\":\"unstakedDeposit\",\"type\":\"uint256\"},{\"name\":\"challengeID\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"listingAddress\",\"type\":\"address\"}],\"name\":\"challengeExists\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"challenges\",\"outputs\":[{\"name\":\"rewardPool\",\"type\":\"uint256\"},{\"name\":\"challenger\",\"type\":\"address\"},{\"name\":\"resolved\",\"type\":\"bool\"},{\"name\":\"stake\",\"type\":\"uint256\"},{\"name\":\"totalTokens\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_challengeID\",\"type\":\"uint256\"},{\"name\":\"_voter\",\"type\":\"address\"}],\"name\":\"tokenClaims\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"appeals\",\"outputs\":[{\"name\":\"requester\",\"type\":\"address\"},{\"name\":\"appealFeePaid\",\"type\":\"uint256\"},{\"name\":\"appealPhaseExpiry\",\"type\":\"uint256\"},{\"name\":\"appealGranted\",\"type\":\"bool\"},{\"name\":\"appealOpenToChallengeExpiry\",\"type\":\"uint256\"},{\"name\":\"appealChallengeID\",\"type\":\"uint256\"},{\"name\":\"overturned\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"listingAddress\",\"type\":\"address\"}],\"name\":\"exit\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"listingAddress\",\"type\":\"address\"}],\"name\":\"canBeWhitelisted\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"parameterizer\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"listingAddress\",\"type\":\"address\"},{\"name\":\"_amount\",\"type\":\"uint256\"}],\"name\":\"withdraw\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"listingAddresses\",\"type\":\"address[]\"}],\"name\":\"updateStatuses\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"token\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"voting\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"token\",\"type\":\"address\"},{\"name\":\"plcr\",\"type\":\"address\"},{\"name\":\"param\",\"type\":\"address\"},{\"name\":\"govt\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"listingAddress\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"challengeID\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"appealFeePaid\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"requester\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"data\",\"type\":\"string\"}],\"name\":\"_AppealRequested\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"listingAddress\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"challengeID\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"data\",\"type\":\"string\"}],\"name\":\"_AppealGranted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"listingAddress\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"challengeID\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"rewardPool\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"totalTokens\",\"type\":\"uint256\"}],\"name\":\"_FailedChallengeOverturned\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"listingAddress\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"challengeID\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"rewardPool\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"totalTokens\",\"type\":\"uint256\"}],\"name\":\"_SuccessfulChallengeOverturned\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"listingAddress\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"challengeID\",\"type\":\"uint256\"},{\"indexed\":true,\"name\":\"appealChallengeID\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"data\",\"type\":\"string\"}],\"name\":\"_GrantedAppealChallenged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"listingAddress\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"challengeID\",\"type\":\"uint256\"},{\"indexed\":true,\"name\":\"appealChallengeID\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"rewardPool\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"totalTokens\",\"type\":\"uint256\"}],\"name\":\"_GrantedAppealOverturned\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"listingAddress\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"challengeID\",\"type\":\"uint256\"},{\"indexed\":true,\"name\":\"appealChallengeID\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"rewardPool\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"totalTokens\",\"type\":\"uint256\"}],\"name\":\"_GrantedAppealConfirmed\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"newGovernment\",\"type\":\"address\"}],\"name\":\"_GovernmentTransfered\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"listingAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"deposit\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"appEndDate\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"data\",\"type\":\"string\"},{\"indexed\":true,\"name\":\"applicant\",\"type\":\"address\"}],\"name\":\"_Application\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"listingAddress\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"challengeID\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"data\",\"type\":\"string\"},{\"indexed\":false,\"name\":\"commitEndDate\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"revealEndDate\",\"type\":\"uint256\"},{\"indexed\":true,\"name\":\"challenger\",\"type\":\"address\"}],\"name\":\"_Challenge\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"listingAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"added\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"newTotal\",\"type\":\"uint256\"},{\"indexed\":true,\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"_Deposit\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"listingAddress\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"withdrew\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"newTotal\",\"type\":\"uint256\"},{\"indexed\":true,\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"_Withdrawal\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"listingAddress\",\"type\":\"address\"}],\"name\":\"_ApplicationWhitelisted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"listingAddress\",\"type\":\"address\"}],\"name\":\"_ApplicationRemoved\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"listingAddress\",\"type\":\"address\"}],\"name\":\"_ListingRemoved\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"listingAddress\",\"type\":\"address\"}],\"name\":\"_ListingWithdrawn\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"listingAddress\",\"type\":\"address\"}],\"name\":\"_TouchAndRemoved\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"listingAddress\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"challengeID\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"rewardPool\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"totalTokens\",\"type\":\"uint256\"}],\"name\":\"_ChallengeFailed\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"listingAddress\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"challengeID\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"rewardPool\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"totalTokens\",\"type\":\"uint256\"}],\"name\":\"_ChallengeSucceeded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"challengeID\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"reward\",\"type\":\"uint256\"},{\"indexed\":true,\"name\":\"voter\",\"type\":\"address\"}],\"name\":\"_RewardClaimed\",\"type\":\"event\"},{\"constant\":false,\"inputs\":[{\"name\":\"listingAddress\",\"type\":\"address\"},{\"name\":\"amount\",\"type\":\"uint256\"},{\"name\":\"data\",\"type\":\"string\"}],\"name\":\"apply\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"listingAddress\",\"type\":\"address\"},{\"name\":\"data\",\"type\":\"string\"}],\"name\":\"requestAppeal\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"listingAddress\",\"type\":\"address\"},{\"name\":\"data\",\"type\":\"string\"}],\"name\":\"grantAppeal\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"newGovernment\",\"type\":\"address\"}],\"name\":\"transferGovernment\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"listingAddress\",\"type\":\"address\"}],\"name\":\"updateStatus\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"listingAddress\",\"type\":\"address\"},{\"name\":\"data\",\"type\":\"string\"}],\"name\":\"challenge\",\"outputs\":[{\"name\":\"challengeID\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"listingAddress\",\"type\":\"address\"},{\"name\":\"data\",\"type\":\"string\"}],\"name\":\"challengeGrantedAppeal\",\"outputs\":[{\"name\":\"challengeID\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_challengeID\",\"type\":\"uint256\"},{\"name\":\"_salt\",\"type\":\"uint256\"}],\"name\":\"claimReward\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"challengeID\",\"type\":\"uint256\"}],\"name\":\"determineReward\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"voter\",\"type\":\"address\"},{\"name\":\"challengeID\",\"type\":\"uint256\"},{\"name\":\"salt\",\"type\":\"uint256\"}],\"name\":\"voterReward\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"listingAddress\",\"type\":\"address\"}],\"name\":\"challengeCanBeResolved\",\"outputs\":[{\"name\":\"canBeResolved\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"listingAddress\",\"type\":\"address\"}],\"name\":\"appealCanBeResolved\",\"outputs\":[{\"name\":\"canBeResolved\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"listingAddress\",\"type\":\"address\"}],\"name\":\"appealChallengeCanBeResolved\",\"outputs\":[{\"name\":\"canBeResolved\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}]"
 
@@ -178,7 +190,7 @@ func (_CivilTCRContract *CivilTCRContractTransactorRaw) Transact(opts *bind.Tran
 
 // AppWasMade is a free data retrieval call binding the contract method 0x61a9a8ca.
 //
-// Solidity: function appWasMade(listingAddress address) constant returns(exists bool)
+// Solidity: function appWasMade(address listingAddress) constant returns(bool exists)
 func (_CivilTCRContract *CivilTCRContractCaller) AppWasMade(opts *bind.CallOpts, listingAddress common.Address) (bool, error) {
 	var (
 		ret0 = new(bool)
@@ -190,21 +202,21 @@ func (_CivilTCRContract *CivilTCRContractCaller) AppWasMade(opts *bind.CallOpts,
 
 // AppWasMade is a free data retrieval call binding the contract method 0x61a9a8ca.
 //
-// Solidity: function appWasMade(listingAddress address) constant returns(exists bool)
+// Solidity: function appWasMade(address listingAddress) constant returns(bool exists)
 func (_CivilTCRContract *CivilTCRContractSession) AppWasMade(listingAddress common.Address) (bool, error) {
 	return _CivilTCRContract.Contract.AppWasMade(&_CivilTCRContract.CallOpts, listingAddress)
 }
 
 // AppWasMade is a free data retrieval call binding the contract method 0x61a9a8ca.
 //
-// Solidity: function appWasMade(listingAddress address) constant returns(exists bool)
+// Solidity: function appWasMade(address listingAddress) constant returns(bool exists)
 func (_CivilTCRContract *CivilTCRContractCallerSession) AppWasMade(listingAddress common.Address) (bool, error) {
 	return _CivilTCRContract.Contract.AppWasMade(&_CivilTCRContract.CallOpts, listingAddress)
 }
 
 // AppealCanBeResolved is a free data retrieval call binding the contract method 0x25ecef04.
 //
-// Solidity: function appealCanBeResolved(listingAddress address) constant returns(canBeResolved bool)
+// Solidity: function appealCanBeResolved(address listingAddress) constant returns(bool canBeResolved)
 func (_CivilTCRContract *CivilTCRContractCaller) AppealCanBeResolved(opts *bind.CallOpts, listingAddress common.Address) (bool, error) {
 	var (
 		ret0 = new(bool)
@@ -216,21 +228,21 @@ func (_CivilTCRContract *CivilTCRContractCaller) AppealCanBeResolved(opts *bind.
 
 // AppealCanBeResolved is a free data retrieval call binding the contract method 0x25ecef04.
 //
-// Solidity: function appealCanBeResolved(listingAddress address) constant returns(canBeResolved bool)
+// Solidity: function appealCanBeResolved(address listingAddress) constant returns(bool canBeResolved)
 func (_CivilTCRContract *CivilTCRContractSession) AppealCanBeResolved(listingAddress common.Address) (bool, error) {
 	return _CivilTCRContract.Contract.AppealCanBeResolved(&_CivilTCRContract.CallOpts, listingAddress)
 }
 
 // AppealCanBeResolved is a free data retrieval call binding the contract method 0x25ecef04.
 //
-// Solidity: function appealCanBeResolved(listingAddress address) constant returns(canBeResolved bool)
+// Solidity: function appealCanBeResolved(address listingAddress) constant returns(bool canBeResolved)
 func (_CivilTCRContract *CivilTCRContractCallerSession) AppealCanBeResolved(listingAddress common.Address) (bool, error) {
 	return _CivilTCRContract.Contract.AppealCanBeResolved(&_CivilTCRContract.CallOpts, listingAddress)
 }
 
 // AppealChallengeCanBeResolved is a free data retrieval call binding the contract method 0x0aac4543.
 //
-// Solidity: function appealChallengeCanBeResolved(listingAddress address) constant returns(canBeResolved bool)
+// Solidity: function appealChallengeCanBeResolved(address listingAddress) constant returns(bool canBeResolved)
 func (_CivilTCRContract *CivilTCRContractCaller) AppealChallengeCanBeResolved(opts *bind.CallOpts, listingAddress common.Address) (bool, error) {
 	var (
 		ret0 = new(bool)
@@ -242,21 +254,21 @@ func (_CivilTCRContract *CivilTCRContractCaller) AppealChallengeCanBeResolved(op
 
 // AppealChallengeCanBeResolved is a free data retrieval call binding the contract method 0x0aac4543.
 //
-// Solidity: function appealChallengeCanBeResolved(listingAddress address) constant returns(canBeResolved bool)
+// Solidity: function appealChallengeCanBeResolved(address listingAddress) constant returns(bool canBeResolved)
 func (_CivilTCRContract *CivilTCRContractSession) AppealChallengeCanBeResolved(listingAddress common.Address) (bool, error) {
 	return _CivilTCRContract.Contract.AppealChallengeCanBeResolved(&_CivilTCRContract.CallOpts, listingAddress)
 }
 
 // AppealChallengeCanBeResolved is a free data retrieval call binding the contract method 0x0aac4543.
 //
-// Solidity: function appealChallengeCanBeResolved(listingAddress address) constant returns(canBeResolved bool)
+// Solidity: function appealChallengeCanBeResolved(address listingAddress) constant returns(bool canBeResolved)
 func (_CivilTCRContract *CivilTCRContractCallerSession) AppealChallengeCanBeResolved(listingAddress common.Address) (bool, error) {
 	return _CivilTCRContract.Contract.AppealChallengeCanBeResolved(&_CivilTCRContract.CallOpts, listingAddress)
 }
 
 // Appeals is a free data retrieval call binding the contract method 0xacff8687.
 //
-// Solidity: function appeals( uint256) constant returns(requester address, appealFeePaid uint256, appealPhaseExpiry uint256, appealGranted bool, appealOpenToChallengeExpiry uint256, appealChallengeID uint256, overturned bool)
+// Solidity: function appeals(uint256 ) constant returns(address requester, uint256 appealFeePaid, uint256 appealPhaseExpiry, bool appealGranted, uint256 appealOpenToChallengeExpiry, uint256 appealChallengeID, bool overturned)
 func (_CivilTCRContract *CivilTCRContractCaller) Appeals(opts *bind.CallOpts, arg0 *big.Int) (struct {
 	Requester                   common.Address
 	AppealFeePaid               *big.Int
@@ -282,7 +294,7 @@ func (_CivilTCRContract *CivilTCRContractCaller) Appeals(opts *bind.CallOpts, ar
 
 // Appeals is a free data retrieval call binding the contract method 0xacff8687.
 //
-// Solidity: function appeals( uint256) constant returns(requester address, appealFeePaid uint256, appealPhaseExpiry uint256, appealGranted bool, appealOpenToChallengeExpiry uint256, appealChallengeID uint256, overturned bool)
+// Solidity: function appeals(uint256 ) constant returns(address requester, uint256 appealFeePaid, uint256 appealPhaseExpiry, bool appealGranted, uint256 appealOpenToChallengeExpiry, uint256 appealChallengeID, bool overturned)
 func (_CivilTCRContract *CivilTCRContractSession) Appeals(arg0 *big.Int) (struct {
 	Requester                   common.Address
 	AppealFeePaid               *big.Int
@@ -297,7 +309,7 @@ func (_CivilTCRContract *CivilTCRContractSession) Appeals(arg0 *big.Int) (struct
 
 // Appeals is a free data retrieval call binding the contract method 0xacff8687.
 //
-// Solidity: function appeals( uint256) constant returns(requester address, appealFeePaid uint256, appealPhaseExpiry uint256, appealGranted bool, appealOpenToChallengeExpiry uint256, appealChallengeID uint256, overturned bool)
+// Solidity: function appeals(uint256 ) constant returns(address requester, uint256 appealFeePaid, uint256 appealPhaseExpiry, bool appealGranted, uint256 appealOpenToChallengeExpiry, uint256 appealChallengeID, bool overturned)
 func (_CivilTCRContract *CivilTCRContractCallerSession) Appeals(arg0 *big.Int) (struct {
 	Requester                   common.Address
 	AppealFeePaid               *big.Int
@@ -312,7 +324,7 @@ func (_CivilTCRContract *CivilTCRContractCallerSession) Appeals(arg0 *big.Int) (
 
 // CanBeWhitelisted is a free data retrieval call binding the contract method 0xdd4e7cfd.
 //
-// Solidity: function canBeWhitelisted(listingAddress address) constant returns(bool)
+// Solidity: function canBeWhitelisted(address listingAddress) constant returns(bool)
 func (_CivilTCRContract *CivilTCRContractCaller) CanBeWhitelisted(opts *bind.CallOpts, listingAddress common.Address) (bool, error) {
 	var (
 		ret0 = new(bool)
@@ -324,21 +336,21 @@ func (_CivilTCRContract *CivilTCRContractCaller) CanBeWhitelisted(opts *bind.Cal
 
 // CanBeWhitelisted is a free data retrieval call binding the contract method 0xdd4e7cfd.
 //
-// Solidity: function canBeWhitelisted(listingAddress address) constant returns(bool)
+// Solidity: function canBeWhitelisted(address listingAddress) constant returns(bool)
 func (_CivilTCRContract *CivilTCRContractSession) CanBeWhitelisted(listingAddress common.Address) (bool, error) {
 	return _CivilTCRContract.Contract.CanBeWhitelisted(&_CivilTCRContract.CallOpts, listingAddress)
 }
 
 // CanBeWhitelisted is a free data retrieval call binding the contract method 0xdd4e7cfd.
 //
-// Solidity: function canBeWhitelisted(listingAddress address) constant returns(bool)
+// Solidity: function canBeWhitelisted(address listingAddress) constant returns(bool)
 func (_CivilTCRContract *CivilTCRContractCallerSession) CanBeWhitelisted(listingAddress common.Address) (bool, error) {
 	return _CivilTCRContract.Contract.CanBeWhitelisted(&_CivilTCRContract.CallOpts, listingAddress)
 }
 
 // ChallengeCanBeResolved is a free data retrieval call binding the contract method 0x2ea9b696.
 //
-// Solidity: function challengeCanBeResolved(listingAddress address) constant returns(canBeResolved bool)
+// Solidity: function challengeCanBeResolved(address listingAddress) constant returns(bool canBeResolved)
 func (_CivilTCRContract *CivilTCRContractCaller) ChallengeCanBeResolved(opts *bind.CallOpts, listingAddress common.Address) (bool, error) {
 	var (
 		ret0 = new(bool)
@@ -350,21 +362,21 @@ func (_CivilTCRContract *CivilTCRContractCaller) ChallengeCanBeResolved(opts *bi
 
 // ChallengeCanBeResolved is a free data retrieval call binding the contract method 0x2ea9b696.
 //
-// Solidity: function challengeCanBeResolved(listingAddress address) constant returns(canBeResolved bool)
+// Solidity: function challengeCanBeResolved(address listingAddress) constant returns(bool canBeResolved)
 func (_CivilTCRContract *CivilTCRContractSession) ChallengeCanBeResolved(listingAddress common.Address) (bool, error) {
 	return _CivilTCRContract.Contract.ChallengeCanBeResolved(&_CivilTCRContract.CallOpts, listingAddress)
 }
 
 // ChallengeCanBeResolved is a free data retrieval call binding the contract method 0x2ea9b696.
 //
-// Solidity: function challengeCanBeResolved(listingAddress address) constant returns(canBeResolved bool)
+// Solidity: function challengeCanBeResolved(address listingAddress) constant returns(bool canBeResolved)
 func (_CivilTCRContract *CivilTCRContractCallerSession) ChallengeCanBeResolved(listingAddress common.Address) (bool, error) {
 	return _CivilTCRContract.Contract.ChallengeCanBeResolved(&_CivilTCRContract.CallOpts, listingAddress)
 }
 
 // ChallengeExists is a free data retrieval call binding the contract method 0x6eefcab9.
 //
-// Solidity: function challengeExists(listingAddress address) constant returns(bool)
+// Solidity: function challengeExists(address listingAddress) constant returns(bool)
 func (_CivilTCRContract *CivilTCRContractCaller) ChallengeExists(opts *bind.CallOpts, listingAddress common.Address) (bool, error) {
 	var (
 		ret0 = new(bool)
@@ -376,21 +388,21 @@ func (_CivilTCRContract *CivilTCRContractCaller) ChallengeExists(opts *bind.Call
 
 // ChallengeExists is a free data retrieval call binding the contract method 0x6eefcab9.
 //
-// Solidity: function challengeExists(listingAddress address) constant returns(bool)
+// Solidity: function challengeExists(address listingAddress) constant returns(bool)
 func (_CivilTCRContract *CivilTCRContractSession) ChallengeExists(listingAddress common.Address) (bool, error) {
 	return _CivilTCRContract.Contract.ChallengeExists(&_CivilTCRContract.CallOpts, listingAddress)
 }
 
 // ChallengeExists is a free data retrieval call binding the contract method 0x6eefcab9.
 //
-// Solidity: function challengeExists(listingAddress address) constant returns(bool)
+// Solidity: function challengeExists(address listingAddress) constant returns(bool)
 func (_CivilTCRContract *CivilTCRContractCallerSession) ChallengeExists(listingAddress common.Address) (bool, error) {
 	return _CivilTCRContract.Contract.ChallengeExists(&_CivilTCRContract.CallOpts, listingAddress)
 }
 
 // ChallengeRequestAppealExpiries is a free data retrieval call binding the contract method 0x64c37318.
 //
-// Solidity: function challengeRequestAppealExpiries( uint256) constant returns(uint256)
+// Solidity: function challengeRequestAppealExpiries(uint256 ) constant returns(uint256)
 func (_CivilTCRContract *CivilTCRContractCaller) ChallengeRequestAppealExpiries(opts *bind.CallOpts, arg0 *big.Int) (*big.Int, error) {
 	var (
 		ret0 = new(*big.Int)
@@ -402,21 +414,21 @@ func (_CivilTCRContract *CivilTCRContractCaller) ChallengeRequestAppealExpiries(
 
 // ChallengeRequestAppealExpiries is a free data retrieval call binding the contract method 0x64c37318.
 //
-// Solidity: function challengeRequestAppealExpiries( uint256) constant returns(uint256)
+// Solidity: function challengeRequestAppealExpiries(uint256 ) constant returns(uint256)
 func (_CivilTCRContract *CivilTCRContractSession) ChallengeRequestAppealExpiries(arg0 *big.Int) (*big.Int, error) {
 	return _CivilTCRContract.Contract.ChallengeRequestAppealExpiries(&_CivilTCRContract.CallOpts, arg0)
 }
 
 // ChallengeRequestAppealExpiries is a free data retrieval call binding the contract method 0x64c37318.
 //
-// Solidity: function challengeRequestAppealExpiries( uint256) constant returns(uint256)
+// Solidity: function challengeRequestAppealExpiries(uint256 ) constant returns(uint256)
 func (_CivilTCRContract *CivilTCRContractCallerSession) ChallengeRequestAppealExpiries(arg0 *big.Int) (*big.Int, error) {
 	return _CivilTCRContract.Contract.ChallengeRequestAppealExpiries(&_CivilTCRContract.CallOpts, arg0)
 }
 
 // Challenges is a free data retrieval call binding the contract method 0x8f1d3776.
 //
-// Solidity: function challenges( uint256) constant returns(rewardPool uint256, challenger address, resolved bool, stake uint256, totalTokens uint256)
+// Solidity: function challenges(uint256 ) constant returns(uint256 rewardPool, address challenger, bool resolved, uint256 stake, uint256 totalTokens)
 func (_CivilTCRContract *CivilTCRContractCaller) Challenges(opts *bind.CallOpts, arg0 *big.Int) (struct {
 	RewardPool  *big.Int
 	Challenger  common.Address
@@ -438,7 +450,7 @@ func (_CivilTCRContract *CivilTCRContractCaller) Challenges(opts *bind.CallOpts,
 
 // Challenges is a free data retrieval call binding the contract method 0x8f1d3776.
 //
-// Solidity: function challenges( uint256) constant returns(rewardPool uint256, challenger address, resolved bool, stake uint256, totalTokens uint256)
+// Solidity: function challenges(uint256 ) constant returns(uint256 rewardPool, address challenger, bool resolved, uint256 stake, uint256 totalTokens)
 func (_CivilTCRContract *CivilTCRContractSession) Challenges(arg0 *big.Int) (struct {
 	RewardPool  *big.Int
 	Challenger  common.Address
@@ -451,7 +463,7 @@ func (_CivilTCRContract *CivilTCRContractSession) Challenges(arg0 *big.Int) (str
 
 // Challenges is a free data retrieval call binding the contract method 0x8f1d3776.
 //
-// Solidity: function challenges( uint256) constant returns(rewardPool uint256, challenger address, resolved bool, stake uint256, totalTokens uint256)
+// Solidity: function challenges(uint256 ) constant returns(uint256 rewardPool, address challenger, bool resolved, uint256 stake, uint256 totalTokens)
 func (_CivilTCRContract *CivilTCRContractCallerSession) Challenges(arg0 *big.Int) (struct {
 	RewardPool  *big.Int
 	Challenger  common.Address
@@ -490,7 +502,7 @@ func (_CivilTCRContract *CivilTCRContractCallerSession) CivilVoting() (common.Ad
 
 // DetermineReward is a free data retrieval call binding the contract method 0xc8187cf1.
 //
-// Solidity: function determineReward(challengeID uint256) constant returns(uint256)
+// Solidity: function determineReward(uint256 challengeID) constant returns(uint256)
 func (_CivilTCRContract *CivilTCRContractCaller) DetermineReward(opts *bind.CallOpts, challengeID *big.Int) (*big.Int, error) {
 	var (
 		ret0 = new(*big.Int)
@@ -502,14 +514,14 @@ func (_CivilTCRContract *CivilTCRContractCaller) DetermineReward(opts *bind.Call
 
 // DetermineReward is a free data retrieval call binding the contract method 0xc8187cf1.
 //
-// Solidity: function determineReward(challengeID uint256) constant returns(uint256)
+// Solidity: function determineReward(uint256 challengeID) constant returns(uint256)
 func (_CivilTCRContract *CivilTCRContractSession) DetermineReward(challengeID *big.Int) (*big.Int, error) {
 	return _CivilTCRContract.Contract.DetermineReward(&_CivilTCRContract.CallOpts, challengeID)
 }
 
 // DetermineReward is a free data retrieval call binding the contract method 0xc8187cf1.
 //
-// Solidity: function determineReward(challengeID uint256) constant returns(uint256)
+// Solidity: function determineReward(uint256 challengeID) constant returns(uint256)
 func (_CivilTCRContract *CivilTCRContractCallerSession) DetermineReward(challengeID *big.Int) (*big.Int, error) {
 	return _CivilTCRContract.Contract.DetermineReward(&_CivilTCRContract.CallOpts, challengeID)
 }
@@ -542,7 +554,7 @@ func (_CivilTCRContract *CivilTCRContractCallerSession) Government() (common.Add
 
 // IsWhitelisted is a free data retrieval call binding the contract method 0x3af32abf.
 //
-// Solidity: function isWhitelisted(listingAddress address) constant returns(whitelisted bool)
+// Solidity: function isWhitelisted(address listingAddress) constant returns(bool whitelisted)
 func (_CivilTCRContract *CivilTCRContractCaller) IsWhitelisted(opts *bind.CallOpts, listingAddress common.Address) (bool, error) {
 	var (
 		ret0 = new(bool)
@@ -554,21 +566,21 @@ func (_CivilTCRContract *CivilTCRContractCaller) IsWhitelisted(opts *bind.CallOp
 
 // IsWhitelisted is a free data retrieval call binding the contract method 0x3af32abf.
 //
-// Solidity: function isWhitelisted(listingAddress address) constant returns(whitelisted bool)
+// Solidity: function isWhitelisted(address listingAddress) constant returns(bool whitelisted)
 func (_CivilTCRContract *CivilTCRContractSession) IsWhitelisted(listingAddress common.Address) (bool, error) {
 	return _CivilTCRContract.Contract.IsWhitelisted(&_CivilTCRContract.CallOpts, listingAddress)
 }
 
 // IsWhitelisted is a free data retrieval call binding the contract method 0x3af32abf.
 //
-// Solidity: function isWhitelisted(listingAddress address) constant returns(whitelisted bool)
+// Solidity: function isWhitelisted(address listingAddress) constant returns(bool whitelisted)
 func (_CivilTCRContract *CivilTCRContractCallerSession) IsWhitelisted(listingAddress common.Address) (bool, error) {
 	return _CivilTCRContract.Contract.IsWhitelisted(&_CivilTCRContract.CallOpts, listingAddress)
 }
 
 // Listings is a free data retrieval call binding the contract method 0x65d96c82.
 //
-// Solidity: function listings( address) constant returns(applicationExpiry uint256, whitelisted bool, owner address, unstakedDeposit uint256, challengeID uint256)
+// Solidity: function listings(address ) constant returns(uint256 applicationExpiry, bool whitelisted, address owner, uint256 unstakedDeposit, uint256 challengeID)
 func (_CivilTCRContract *CivilTCRContractCaller) Listings(opts *bind.CallOpts, arg0 common.Address) (struct {
 	ApplicationExpiry *big.Int
 	Whitelisted       bool
@@ -590,7 +602,7 @@ func (_CivilTCRContract *CivilTCRContractCaller) Listings(opts *bind.CallOpts, a
 
 // Listings is a free data retrieval call binding the contract method 0x65d96c82.
 //
-// Solidity: function listings( address) constant returns(applicationExpiry uint256, whitelisted bool, owner address, unstakedDeposit uint256, challengeID uint256)
+// Solidity: function listings(address ) constant returns(uint256 applicationExpiry, bool whitelisted, address owner, uint256 unstakedDeposit, uint256 challengeID)
 func (_CivilTCRContract *CivilTCRContractSession) Listings(arg0 common.Address) (struct {
 	ApplicationExpiry *big.Int
 	Whitelisted       bool
@@ -603,7 +615,7 @@ func (_CivilTCRContract *CivilTCRContractSession) Listings(arg0 common.Address) 
 
 // Listings is a free data retrieval call binding the contract method 0x65d96c82.
 //
-// Solidity: function listings( address) constant returns(applicationExpiry uint256, whitelisted bool, owner address, unstakedDeposit uint256, challengeID uint256)
+// Solidity: function listings(address ) constant returns(uint256 applicationExpiry, bool whitelisted, address owner, uint256 unstakedDeposit, uint256 challengeID)
 func (_CivilTCRContract *CivilTCRContractCallerSession) Listings(arg0 common.Address) (struct {
 	ApplicationExpiry *big.Int
 	Whitelisted       bool
@@ -694,7 +706,7 @@ func (_CivilTCRContract *CivilTCRContractCallerSession) Token() (common.Address,
 
 // TokenClaims is a free data retrieval call binding the contract method 0xa5ba3b1e.
 //
-// Solidity: function tokenClaims(_challengeID uint256, _voter address) constant returns(bool)
+// Solidity: function tokenClaims(uint256 _challengeID, address _voter) constant returns(bool)
 func (_CivilTCRContract *CivilTCRContractCaller) TokenClaims(opts *bind.CallOpts, _challengeID *big.Int, _voter common.Address) (bool, error) {
 	var (
 		ret0 = new(bool)
@@ -706,21 +718,21 @@ func (_CivilTCRContract *CivilTCRContractCaller) TokenClaims(opts *bind.CallOpts
 
 // TokenClaims is a free data retrieval call binding the contract method 0xa5ba3b1e.
 //
-// Solidity: function tokenClaims(_challengeID uint256, _voter address) constant returns(bool)
+// Solidity: function tokenClaims(uint256 _challengeID, address _voter) constant returns(bool)
 func (_CivilTCRContract *CivilTCRContractSession) TokenClaims(_challengeID *big.Int, _voter common.Address) (bool, error) {
 	return _CivilTCRContract.Contract.TokenClaims(&_CivilTCRContract.CallOpts, _challengeID, _voter)
 }
 
 // TokenClaims is a free data retrieval call binding the contract method 0xa5ba3b1e.
 //
-// Solidity: function tokenClaims(_challengeID uint256, _voter address) constant returns(bool)
+// Solidity: function tokenClaims(uint256 _challengeID, address _voter) constant returns(bool)
 func (_CivilTCRContract *CivilTCRContractCallerSession) TokenClaims(_challengeID *big.Int, _voter common.Address) (bool, error) {
 	return _CivilTCRContract.Contract.TokenClaims(&_CivilTCRContract.CallOpts, _challengeID, _voter)
 }
 
 // VoterReward is a free data retrieval call binding the contract method 0xa7aad3db.
 //
-// Solidity: function voterReward(voter address, challengeID uint256, salt uint256) constant returns(uint256)
+// Solidity: function voterReward(address voter, uint256 challengeID, uint256 salt) constant returns(uint256)
 func (_CivilTCRContract *CivilTCRContractCaller) VoterReward(opts *bind.CallOpts, voter common.Address, challengeID *big.Int, salt *big.Int) (*big.Int, error) {
 	var (
 		ret0 = new(*big.Int)
@@ -732,14 +744,14 @@ func (_CivilTCRContract *CivilTCRContractCaller) VoterReward(opts *bind.CallOpts
 
 // VoterReward is a free data retrieval call binding the contract method 0xa7aad3db.
 //
-// Solidity: function voterReward(voter address, challengeID uint256, salt uint256) constant returns(uint256)
+// Solidity: function voterReward(address voter, uint256 challengeID, uint256 salt) constant returns(uint256)
 func (_CivilTCRContract *CivilTCRContractSession) VoterReward(voter common.Address, challengeID *big.Int, salt *big.Int) (*big.Int, error) {
 	return _CivilTCRContract.Contract.VoterReward(&_CivilTCRContract.CallOpts, voter, challengeID, salt)
 }
 
 // VoterReward is a free data retrieval call binding the contract method 0xa7aad3db.
 //
-// Solidity: function voterReward(voter address, challengeID uint256, salt uint256) constant returns(uint256)
+// Solidity: function voterReward(address voter, uint256 challengeID, uint256 salt) constant returns(uint256)
 func (_CivilTCRContract *CivilTCRContractCallerSession) VoterReward(voter common.Address, challengeID *big.Int, salt *big.Int) (*big.Int, error) {
 	return _CivilTCRContract.Contract.VoterReward(&_CivilTCRContract.CallOpts, voter, challengeID, salt)
 }
@@ -772,273 +784,273 @@ func (_CivilTCRContract *CivilTCRContractCallerSession) Voting() (common.Address
 
 // Apply is a paid mutator transaction binding the contract method 0x55246b9c.
 //
-// Solidity: function apply(listingAddress address, amount uint256, data string) returns()
+// Solidity: function apply(address listingAddress, uint256 amount, string data) returns()
 func (_CivilTCRContract *CivilTCRContractTransactor) Apply(opts *bind.TransactOpts, listingAddress common.Address, amount *big.Int, data string) (*types.Transaction, error) {
 	return _CivilTCRContract.contract.Transact(opts, "apply", listingAddress, amount, data)
 }
 
 // Apply is a paid mutator transaction binding the contract method 0x55246b9c.
 //
-// Solidity: function apply(listingAddress address, amount uint256, data string) returns()
+// Solidity: function apply(address listingAddress, uint256 amount, string data) returns()
 func (_CivilTCRContract *CivilTCRContractSession) Apply(listingAddress common.Address, amount *big.Int, data string) (*types.Transaction, error) {
 	return _CivilTCRContract.Contract.Apply(&_CivilTCRContract.TransactOpts, listingAddress, amount, data)
 }
 
 // Apply is a paid mutator transaction binding the contract method 0x55246b9c.
 //
-// Solidity: function apply(listingAddress address, amount uint256, data string) returns()
+// Solidity: function apply(address listingAddress, uint256 amount, string data) returns()
 func (_CivilTCRContract *CivilTCRContractTransactorSession) Apply(listingAddress common.Address, amount *big.Int, data string) (*types.Transaction, error) {
 	return _CivilTCRContract.Contract.Apply(&_CivilTCRContract.TransactOpts, listingAddress, amount, data)
 }
 
 // Challenge is a paid mutator transaction binding the contract method 0xbc4b010f.
 //
-// Solidity: function challenge(listingAddress address, data string) returns(challengeID uint256)
+// Solidity: function challenge(address listingAddress, string data) returns(uint256 challengeID)
 func (_CivilTCRContract *CivilTCRContractTransactor) Challenge(opts *bind.TransactOpts, listingAddress common.Address, data string) (*types.Transaction, error) {
 	return _CivilTCRContract.contract.Transact(opts, "challenge", listingAddress, data)
 }
 
 // Challenge is a paid mutator transaction binding the contract method 0xbc4b010f.
 //
-// Solidity: function challenge(listingAddress address, data string) returns(challengeID uint256)
+// Solidity: function challenge(address listingAddress, string data) returns(uint256 challengeID)
 func (_CivilTCRContract *CivilTCRContractSession) Challenge(listingAddress common.Address, data string) (*types.Transaction, error) {
 	return _CivilTCRContract.Contract.Challenge(&_CivilTCRContract.TransactOpts, listingAddress, data)
 }
 
 // Challenge is a paid mutator transaction binding the contract method 0xbc4b010f.
 //
-// Solidity: function challenge(listingAddress address, data string) returns(challengeID uint256)
+// Solidity: function challenge(address listingAddress, string data) returns(uint256 challengeID)
 func (_CivilTCRContract *CivilTCRContractTransactorSession) Challenge(listingAddress common.Address, data string) (*types.Transaction, error) {
 	return _CivilTCRContract.Contract.Challenge(&_CivilTCRContract.TransactOpts, listingAddress, data)
 }
 
 // ChallengeGrantedAppeal is a paid mutator transaction binding the contract method 0x120c40c6.
 //
-// Solidity: function challengeGrantedAppeal(listingAddress address, data string) returns(challengeID uint256)
+// Solidity: function challengeGrantedAppeal(address listingAddress, string data) returns(uint256 challengeID)
 func (_CivilTCRContract *CivilTCRContractTransactor) ChallengeGrantedAppeal(opts *bind.TransactOpts, listingAddress common.Address, data string) (*types.Transaction, error) {
 	return _CivilTCRContract.contract.Transact(opts, "challengeGrantedAppeal", listingAddress, data)
 }
 
 // ChallengeGrantedAppeal is a paid mutator transaction binding the contract method 0x120c40c6.
 //
-// Solidity: function challengeGrantedAppeal(listingAddress address, data string) returns(challengeID uint256)
+// Solidity: function challengeGrantedAppeal(address listingAddress, string data) returns(uint256 challengeID)
 func (_CivilTCRContract *CivilTCRContractSession) ChallengeGrantedAppeal(listingAddress common.Address, data string) (*types.Transaction, error) {
 	return _CivilTCRContract.Contract.ChallengeGrantedAppeal(&_CivilTCRContract.TransactOpts, listingAddress, data)
 }
 
 // ChallengeGrantedAppeal is a paid mutator transaction binding the contract method 0x120c40c6.
 //
-// Solidity: function challengeGrantedAppeal(listingAddress address, data string) returns(challengeID uint256)
+// Solidity: function challengeGrantedAppeal(address listingAddress, string data) returns(uint256 challengeID)
 func (_CivilTCRContract *CivilTCRContractTransactorSession) ChallengeGrantedAppeal(listingAddress common.Address, data string) (*types.Transaction, error) {
 	return _CivilTCRContract.Contract.ChallengeGrantedAppeal(&_CivilTCRContract.TransactOpts, listingAddress, data)
 }
 
 // ClaimReward is a paid mutator transaction binding the contract method 0x86bb8f37.
 //
-// Solidity: function claimReward(_challengeID uint256, _salt uint256) returns()
+// Solidity: function claimReward(uint256 _challengeID, uint256 _salt) returns()
 func (_CivilTCRContract *CivilTCRContractTransactor) ClaimReward(opts *bind.TransactOpts, _challengeID *big.Int, _salt *big.Int) (*types.Transaction, error) {
 	return _CivilTCRContract.contract.Transact(opts, "claimReward", _challengeID, _salt)
 }
 
 // ClaimReward is a paid mutator transaction binding the contract method 0x86bb8f37.
 //
-// Solidity: function claimReward(_challengeID uint256, _salt uint256) returns()
+// Solidity: function claimReward(uint256 _challengeID, uint256 _salt) returns()
 func (_CivilTCRContract *CivilTCRContractSession) ClaimReward(_challengeID *big.Int, _salt *big.Int) (*types.Transaction, error) {
 	return _CivilTCRContract.Contract.ClaimReward(&_CivilTCRContract.TransactOpts, _challengeID, _salt)
 }
 
 // ClaimReward is a paid mutator transaction binding the contract method 0x86bb8f37.
 //
-// Solidity: function claimReward(_challengeID uint256, _salt uint256) returns()
+// Solidity: function claimReward(uint256 _challengeID, uint256 _salt) returns()
 func (_CivilTCRContract *CivilTCRContractTransactorSession) ClaimReward(_challengeID *big.Int, _salt *big.Int) (*types.Transaction, error) {
 	return _CivilTCRContract.Contract.ClaimReward(&_CivilTCRContract.TransactOpts, _challengeID, _salt)
 }
 
 // ClaimRewards is a paid mutator transaction binding the contract method 0x5f02116f.
 //
-// Solidity: function claimRewards(_challengeIDs uint256[], _salts uint256[]) returns()
+// Solidity: function claimRewards(uint256[] _challengeIDs, uint256[] _salts) returns()
 func (_CivilTCRContract *CivilTCRContractTransactor) ClaimRewards(opts *bind.TransactOpts, _challengeIDs []*big.Int, _salts []*big.Int) (*types.Transaction, error) {
 	return _CivilTCRContract.contract.Transact(opts, "claimRewards", _challengeIDs, _salts)
 }
 
 // ClaimRewards is a paid mutator transaction binding the contract method 0x5f02116f.
 //
-// Solidity: function claimRewards(_challengeIDs uint256[], _salts uint256[]) returns()
+// Solidity: function claimRewards(uint256[] _challengeIDs, uint256[] _salts) returns()
 func (_CivilTCRContract *CivilTCRContractSession) ClaimRewards(_challengeIDs []*big.Int, _salts []*big.Int) (*types.Transaction, error) {
 	return _CivilTCRContract.Contract.ClaimRewards(&_CivilTCRContract.TransactOpts, _challengeIDs, _salts)
 }
 
 // ClaimRewards is a paid mutator transaction binding the contract method 0x5f02116f.
 //
-// Solidity: function claimRewards(_challengeIDs uint256[], _salts uint256[]) returns()
+// Solidity: function claimRewards(uint256[] _challengeIDs, uint256[] _salts) returns()
 func (_CivilTCRContract *CivilTCRContractTransactorSession) ClaimRewards(_challengeIDs []*big.Int, _salts []*big.Int) (*types.Transaction, error) {
 	return _CivilTCRContract.Contract.ClaimRewards(&_CivilTCRContract.TransactOpts, _challengeIDs, _salts)
 }
 
 // Deposit is a paid mutator transaction binding the contract method 0x47e7ef24.
 //
-// Solidity: function deposit(listingAddress address, _amount uint256) returns()
+// Solidity: function deposit(address listingAddress, uint256 _amount) returns()
 func (_CivilTCRContract *CivilTCRContractTransactor) Deposit(opts *bind.TransactOpts, listingAddress common.Address, _amount *big.Int) (*types.Transaction, error) {
 	return _CivilTCRContract.contract.Transact(opts, "deposit", listingAddress, _amount)
 }
 
 // Deposit is a paid mutator transaction binding the contract method 0x47e7ef24.
 //
-// Solidity: function deposit(listingAddress address, _amount uint256) returns()
+// Solidity: function deposit(address listingAddress, uint256 _amount) returns()
 func (_CivilTCRContract *CivilTCRContractSession) Deposit(listingAddress common.Address, _amount *big.Int) (*types.Transaction, error) {
 	return _CivilTCRContract.Contract.Deposit(&_CivilTCRContract.TransactOpts, listingAddress, _amount)
 }
 
 // Deposit is a paid mutator transaction binding the contract method 0x47e7ef24.
 //
-// Solidity: function deposit(listingAddress address, _amount uint256) returns()
+// Solidity: function deposit(address listingAddress, uint256 _amount) returns()
 func (_CivilTCRContract *CivilTCRContractTransactorSession) Deposit(listingAddress common.Address, _amount *big.Int) (*types.Transaction, error) {
 	return _CivilTCRContract.Contract.Deposit(&_CivilTCRContract.TransactOpts, listingAddress, _amount)
 }
 
 // Exit is a paid mutator transaction binding the contract method 0xb42652e9.
 //
-// Solidity: function exit(listingAddress address) returns()
+// Solidity: function exit(address listingAddress) returns()
 func (_CivilTCRContract *CivilTCRContractTransactor) Exit(opts *bind.TransactOpts, listingAddress common.Address) (*types.Transaction, error) {
 	return _CivilTCRContract.contract.Transact(opts, "exit", listingAddress)
 }
 
 // Exit is a paid mutator transaction binding the contract method 0xb42652e9.
 //
-// Solidity: function exit(listingAddress address) returns()
+// Solidity: function exit(address listingAddress) returns()
 func (_CivilTCRContract *CivilTCRContractSession) Exit(listingAddress common.Address) (*types.Transaction, error) {
 	return _CivilTCRContract.Contract.Exit(&_CivilTCRContract.TransactOpts, listingAddress)
 }
 
 // Exit is a paid mutator transaction binding the contract method 0xb42652e9.
 //
-// Solidity: function exit(listingAddress address) returns()
+// Solidity: function exit(address listingAddress) returns()
 func (_CivilTCRContract *CivilTCRContractTransactorSession) Exit(listingAddress common.Address) (*types.Transaction, error) {
 	return _CivilTCRContract.Contract.Exit(&_CivilTCRContract.TransactOpts, listingAddress)
 }
 
 // GrantAppeal is a paid mutator transaction binding the contract method 0xc931674b.
 //
-// Solidity: function grantAppeal(listingAddress address, data string) returns()
+// Solidity: function grantAppeal(address listingAddress, string data) returns()
 func (_CivilTCRContract *CivilTCRContractTransactor) GrantAppeal(opts *bind.TransactOpts, listingAddress common.Address, data string) (*types.Transaction, error) {
 	return _CivilTCRContract.contract.Transact(opts, "grantAppeal", listingAddress, data)
 }
 
 // GrantAppeal is a paid mutator transaction binding the contract method 0xc931674b.
 //
-// Solidity: function grantAppeal(listingAddress address, data string) returns()
+// Solidity: function grantAppeal(address listingAddress, string data) returns()
 func (_CivilTCRContract *CivilTCRContractSession) GrantAppeal(listingAddress common.Address, data string) (*types.Transaction, error) {
 	return _CivilTCRContract.Contract.GrantAppeal(&_CivilTCRContract.TransactOpts, listingAddress, data)
 }
 
 // GrantAppeal is a paid mutator transaction binding the contract method 0xc931674b.
 //
-// Solidity: function grantAppeal(listingAddress address, data string) returns()
+// Solidity: function grantAppeal(address listingAddress, string data) returns()
 func (_CivilTCRContract *CivilTCRContractTransactorSession) GrantAppeal(listingAddress common.Address, data string) (*types.Transaction, error) {
 	return _CivilTCRContract.Contract.GrantAppeal(&_CivilTCRContract.TransactOpts, listingAddress, data)
 }
 
 // RequestAppeal is a paid mutator transaction binding the contract method 0xf4c8cfc5.
 //
-// Solidity: function requestAppeal(listingAddress address, data string) returns()
+// Solidity: function requestAppeal(address listingAddress, string data) returns()
 func (_CivilTCRContract *CivilTCRContractTransactor) RequestAppeal(opts *bind.TransactOpts, listingAddress common.Address, data string) (*types.Transaction, error) {
 	return _CivilTCRContract.contract.Transact(opts, "requestAppeal", listingAddress, data)
 }
 
 // RequestAppeal is a paid mutator transaction binding the contract method 0xf4c8cfc5.
 //
-// Solidity: function requestAppeal(listingAddress address, data string) returns()
+// Solidity: function requestAppeal(address listingAddress, string data) returns()
 func (_CivilTCRContract *CivilTCRContractSession) RequestAppeal(listingAddress common.Address, data string) (*types.Transaction, error) {
 	return _CivilTCRContract.Contract.RequestAppeal(&_CivilTCRContract.TransactOpts, listingAddress, data)
 }
 
 // RequestAppeal is a paid mutator transaction binding the contract method 0xf4c8cfc5.
 //
-// Solidity: function requestAppeal(listingAddress address, data string) returns()
+// Solidity: function requestAppeal(address listingAddress, string data) returns()
 func (_CivilTCRContract *CivilTCRContractTransactorSession) RequestAppeal(listingAddress common.Address, data string) (*types.Transaction, error) {
 	return _CivilTCRContract.Contract.RequestAppeal(&_CivilTCRContract.TransactOpts, listingAddress, data)
 }
 
 // TransferGovernment is a paid mutator transaction binding the contract method 0x5b5d4e73.
 //
-// Solidity: function transferGovernment(newGovernment address) returns()
+// Solidity: function transferGovernment(address newGovernment) returns()
 func (_CivilTCRContract *CivilTCRContractTransactor) TransferGovernment(opts *bind.TransactOpts, newGovernment common.Address) (*types.Transaction, error) {
 	return _CivilTCRContract.contract.Transact(opts, "transferGovernment", newGovernment)
 }
 
 // TransferGovernment is a paid mutator transaction binding the contract method 0x5b5d4e73.
 //
-// Solidity: function transferGovernment(newGovernment address) returns()
+// Solidity: function transferGovernment(address newGovernment) returns()
 func (_CivilTCRContract *CivilTCRContractSession) TransferGovernment(newGovernment common.Address) (*types.Transaction, error) {
 	return _CivilTCRContract.Contract.TransferGovernment(&_CivilTCRContract.TransactOpts, newGovernment)
 }
 
 // TransferGovernment is a paid mutator transaction binding the contract method 0x5b5d4e73.
 //
-// Solidity: function transferGovernment(newGovernment address) returns()
+// Solidity: function transferGovernment(address newGovernment) returns()
 func (_CivilTCRContract *CivilTCRContractTransactorSession) TransferGovernment(newGovernment common.Address) (*types.Transaction, error) {
 	return _CivilTCRContract.Contract.TransferGovernment(&_CivilTCRContract.TransactOpts, newGovernment)
 }
 
 // UpdateStatus is a paid mutator transaction binding the contract method 0x01162b93.
 //
-// Solidity: function updateStatus(listingAddress address) returns()
+// Solidity: function updateStatus(address listingAddress) returns()
 func (_CivilTCRContract *CivilTCRContractTransactor) UpdateStatus(opts *bind.TransactOpts, listingAddress common.Address) (*types.Transaction, error) {
 	return _CivilTCRContract.contract.Transact(opts, "updateStatus", listingAddress)
 }
 
 // UpdateStatus is a paid mutator transaction binding the contract method 0x01162b93.
 //
-// Solidity: function updateStatus(listingAddress address) returns()
+// Solidity: function updateStatus(address listingAddress) returns()
 func (_CivilTCRContract *CivilTCRContractSession) UpdateStatus(listingAddress common.Address) (*types.Transaction, error) {
 	return _CivilTCRContract.Contract.UpdateStatus(&_CivilTCRContract.TransactOpts, listingAddress)
 }
 
 // UpdateStatus is a paid mutator transaction binding the contract method 0x01162b93.
 //
-// Solidity: function updateStatus(listingAddress address) returns()
+// Solidity: function updateStatus(address listingAddress) returns()
 func (_CivilTCRContract *CivilTCRContractTransactorSession) UpdateStatus(listingAddress common.Address) (*types.Transaction, error) {
 	return _CivilTCRContract.Contract.UpdateStatus(&_CivilTCRContract.TransactOpts, listingAddress)
 }
 
 // UpdateStatuses is a paid mutator transaction binding the contract method 0xf96c8720.
 //
-// Solidity: function updateStatuses(listingAddresses address[]) returns()
+// Solidity: function updateStatuses(address[] listingAddresses) returns()
 func (_CivilTCRContract *CivilTCRContractTransactor) UpdateStatuses(opts *bind.TransactOpts, listingAddresses []common.Address) (*types.Transaction, error) {
 	return _CivilTCRContract.contract.Transact(opts, "updateStatuses", listingAddresses)
 }
 
 // UpdateStatuses is a paid mutator transaction binding the contract method 0xf96c8720.
 //
-// Solidity: function updateStatuses(listingAddresses address[]) returns()
+// Solidity: function updateStatuses(address[] listingAddresses) returns()
 func (_CivilTCRContract *CivilTCRContractSession) UpdateStatuses(listingAddresses []common.Address) (*types.Transaction, error) {
 	return _CivilTCRContract.Contract.UpdateStatuses(&_CivilTCRContract.TransactOpts, listingAddresses)
 }
 
 // UpdateStatuses is a paid mutator transaction binding the contract method 0xf96c8720.
 //
-// Solidity: function updateStatuses(listingAddresses address[]) returns()
+// Solidity: function updateStatuses(address[] listingAddresses) returns()
 func (_CivilTCRContract *CivilTCRContractTransactorSession) UpdateStatuses(listingAddresses []common.Address) (*types.Transaction, error) {
 	return _CivilTCRContract.Contract.UpdateStatuses(&_CivilTCRContract.TransactOpts, listingAddresses)
 }
 
 // Withdraw is a paid mutator transaction binding the contract method 0xf3fef3a3.
 //
-// Solidity: function withdraw(listingAddress address, _amount uint256) returns()
+// Solidity: function withdraw(address listingAddress, uint256 _amount) returns()
 func (_CivilTCRContract *CivilTCRContractTransactor) Withdraw(opts *bind.TransactOpts, listingAddress common.Address, _amount *big.Int) (*types.Transaction, error) {
 	return _CivilTCRContract.contract.Transact(opts, "withdraw", listingAddress, _amount)
 }
 
 // Withdraw is a paid mutator transaction binding the contract method 0xf3fef3a3.
 //
-// Solidity: function withdraw(listingAddress address, _amount uint256) returns()
+// Solidity: function withdraw(address listingAddress, uint256 _amount) returns()
 func (_CivilTCRContract *CivilTCRContractSession) Withdraw(listingAddress common.Address, _amount *big.Int) (*types.Transaction, error) {
 	return _CivilTCRContract.Contract.Withdraw(&_CivilTCRContract.TransactOpts, listingAddress, _amount)
 }
 
 // Withdraw is a paid mutator transaction binding the contract method 0xf3fef3a3.
 //
-// Solidity: function withdraw(listingAddress address, _amount uint256) returns()
+// Solidity: function withdraw(address listingAddress, uint256 _amount) returns()
 func (_CivilTCRContract *CivilTCRContractTransactorSession) Withdraw(listingAddress common.Address, _amount *big.Int) (*types.Transaction, error) {
 	return _CivilTCRContract.Contract.Withdraw(&_CivilTCRContract.TransactOpts, listingAddress, _amount)
 }
@@ -1120,7 +1132,7 @@ type CivilTCRContractAppealGranted struct {
 
 // FilterAppealGranted is a free log retrieval operation binding the contract event 0x85f61fe0f1b618d4efbf918ec1be0591560df9463fe15cbfb435c3537a1fc102.
 //
-// Solidity: e _AppealGranted(listingAddress indexed address, challengeID indexed uint256, data string)
+// Solidity: event _AppealGranted(address indexed listingAddress, uint256 indexed challengeID, string data)
 func (_CivilTCRContract *CivilTCRContractFilterer) FilterAppealGranted(opts *bind.FilterOpts, listingAddress []common.Address, challengeID []*big.Int) (*CivilTCRContractAppealGrantedIterator, error) {
 
 	var listingAddressRule []interface{}
@@ -1141,7 +1153,7 @@ func (_CivilTCRContract *CivilTCRContractFilterer) FilterAppealGranted(opts *bin
 
 // WatchAppealGranted is a free log subscription operation binding the contract event 0x85f61fe0f1b618d4efbf918ec1be0591560df9463fe15cbfb435c3537a1fc102.
 //
-// Solidity: e _AppealGranted(listingAddress indexed address, challengeID indexed uint256, data string)
+// Solidity: event _AppealGranted(address indexed listingAddress, uint256 indexed challengeID, string data)
 func (_CivilTCRContract *CivilTCRContractFilterer) WatchAppealGranted(opts *bind.WatchOpts, sink chan<- *CivilTCRContractAppealGranted, listingAddress []common.Address, challengeID []*big.Int) (event.Subscription, error) {
 
 	var listingAddressRule []interface{}
@@ -1264,7 +1276,7 @@ type CivilTCRContractAppealRequested struct {
 
 // FilterAppealRequested is a free log retrieval operation binding the contract event 0xdb6f1c08edff9a1f7e425164118b0473e04404404b2c2d38d6e96e41fcbc7fb1.
 //
-// Solidity: e _AppealRequested(listingAddress indexed address, challengeID indexed uint256, appealFeePaid uint256, requester address, data string)
+// Solidity: event _AppealRequested(address indexed listingAddress, uint256 indexed challengeID, uint256 appealFeePaid, address requester, string data)
 func (_CivilTCRContract *CivilTCRContractFilterer) FilterAppealRequested(opts *bind.FilterOpts, listingAddress []common.Address, challengeID []*big.Int) (*CivilTCRContractAppealRequestedIterator, error) {
 
 	var listingAddressRule []interface{}
@@ -1285,7 +1297,7 @@ func (_CivilTCRContract *CivilTCRContractFilterer) FilterAppealRequested(opts *b
 
 // WatchAppealRequested is a free log subscription operation binding the contract event 0xdb6f1c08edff9a1f7e425164118b0473e04404404b2c2d38d6e96e41fcbc7fb1.
 //
-// Solidity: e _AppealRequested(listingAddress indexed address, challengeID indexed uint256, appealFeePaid uint256, requester address, data string)
+// Solidity: event _AppealRequested(address indexed listingAddress, uint256 indexed challengeID, uint256 appealFeePaid, address requester, string data)
 func (_CivilTCRContract *CivilTCRContractFilterer) WatchAppealRequested(opts *bind.WatchOpts, sink chan<- *CivilTCRContractAppealRequested, listingAddress []common.Address, challengeID []*big.Int) (event.Subscription, error) {
 
 	var listingAddressRule []interface{}
@@ -1408,7 +1420,7 @@ type CivilTCRContractApplication struct {
 
 // FilterApplication is a free log retrieval operation binding the contract event 0x09cd8dcaf170a50a26316b5fe0727dd9fb9581a688d65e758b16a1650da65c0b.
 //
-// Solidity: e _Application(listingAddress indexed address, deposit uint256, appEndDate uint256, data string, applicant indexed address)
+// Solidity: event _Application(address indexed listingAddress, uint256 deposit, uint256 appEndDate, string data, address indexed applicant)
 func (_CivilTCRContract *CivilTCRContractFilterer) FilterApplication(opts *bind.FilterOpts, listingAddress []common.Address, applicant []common.Address) (*CivilTCRContractApplicationIterator, error) {
 
 	var listingAddressRule []interface{}
@@ -1430,7 +1442,7 @@ func (_CivilTCRContract *CivilTCRContractFilterer) FilterApplication(opts *bind.
 
 // WatchApplication is a free log subscription operation binding the contract event 0x09cd8dcaf170a50a26316b5fe0727dd9fb9581a688d65e758b16a1650da65c0b.
 //
-// Solidity: e _Application(listingAddress indexed address, deposit uint256, appEndDate uint256, data string, applicant indexed address)
+// Solidity: event _Application(address indexed listingAddress, uint256 deposit, uint256 appEndDate, string data, address indexed applicant)
 func (_CivilTCRContract *CivilTCRContractFilterer) WatchApplication(opts *bind.WatchOpts, sink chan<- *CivilTCRContractApplication, listingAddress []common.Address, applicant []common.Address) (event.Subscription, error) {
 
 	var listingAddressRule []interface{}
@@ -1550,7 +1562,7 @@ type CivilTCRContractApplicationRemoved struct {
 
 // FilterApplicationRemoved is a free log retrieval operation binding the contract event 0x8ad9ca8735c55207756208e8f59c7693e83d234fc6c8af2713f266468edff871.
 //
-// Solidity: e _ApplicationRemoved(listingAddress indexed address)
+// Solidity: event _ApplicationRemoved(address indexed listingAddress)
 func (_CivilTCRContract *CivilTCRContractFilterer) FilterApplicationRemoved(opts *bind.FilterOpts, listingAddress []common.Address) (*CivilTCRContractApplicationRemovedIterator, error) {
 
 	var listingAddressRule []interface{}
@@ -1567,7 +1579,7 @@ func (_CivilTCRContract *CivilTCRContractFilterer) FilterApplicationRemoved(opts
 
 // WatchApplicationRemoved is a free log subscription operation binding the contract event 0x8ad9ca8735c55207756208e8f59c7693e83d234fc6c8af2713f266468edff871.
 //
-// Solidity: e _ApplicationRemoved(listingAddress indexed address)
+// Solidity: event _ApplicationRemoved(address indexed listingAddress)
 func (_CivilTCRContract *CivilTCRContractFilterer) WatchApplicationRemoved(opts *bind.WatchOpts, sink chan<- *CivilTCRContractApplicationRemoved, listingAddress []common.Address) (event.Subscription, error) {
 
 	var listingAddressRule []interface{}
@@ -1682,7 +1694,7 @@ type CivilTCRContractApplicationWhitelisted struct {
 
 // FilterApplicationWhitelisted is a free log retrieval operation binding the contract event 0xb268dc7f76f496fd307b40e0a3b57631a7e46123d9f708b1573bd4efbba3bdba.
 //
-// Solidity: e _ApplicationWhitelisted(listingAddress indexed address)
+// Solidity: event _ApplicationWhitelisted(address indexed listingAddress)
 func (_CivilTCRContract *CivilTCRContractFilterer) FilterApplicationWhitelisted(opts *bind.FilterOpts, listingAddress []common.Address) (*CivilTCRContractApplicationWhitelistedIterator, error) {
 
 	var listingAddressRule []interface{}
@@ -1699,7 +1711,7 @@ func (_CivilTCRContract *CivilTCRContractFilterer) FilterApplicationWhitelisted(
 
 // WatchApplicationWhitelisted is a free log subscription operation binding the contract event 0xb268dc7f76f496fd307b40e0a3b57631a7e46123d9f708b1573bd4efbba3bdba.
 //
-// Solidity: e _ApplicationWhitelisted(listingAddress indexed address)
+// Solidity: event _ApplicationWhitelisted(address indexed listingAddress)
 func (_CivilTCRContract *CivilTCRContractFilterer) WatchApplicationWhitelisted(opts *bind.WatchOpts, sink chan<- *CivilTCRContractApplicationWhitelisted, listingAddress []common.Address) (event.Subscription, error) {
 
 	var listingAddressRule []interface{}
@@ -1819,7 +1831,7 @@ type CivilTCRContractChallenge struct {
 
 // FilterChallenge is a free log retrieval operation binding the contract event 0x9a8e3864cbacafc5547b8567796b4d12d51217a879192b61932f5151ce581310.
 //
-// Solidity: e _Challenge(listingAddress indexed address, challengeID indexed uint256, data string, commitEndDate uint256, revealEndDate uint256, challenger indexed address)
+// Solidity: event _Challenge(address indexed listingAddress, uint256 indexed challengeID, string data, uint256 commitEndDate, uint256 revealEndDate, address indexed challenger)
 func (_CivilTCRContract *CivilTCRContractFilterer) FilterChallenge(opts *bind.FilterOpts, listingAddress []common.Address, challengeID []*big.Int, challenger []common.Address) (*CivilTCRContractChallengeIterator, error) {
 
 	var listingAddressRule []interface{}
@@ -1845,7 +1857,7 @@ func (_CivilTCRContract *CivilTCRContractFilterer) FilterChallenge(opts *bind.Fi
 
 // WatchChallenge is a free log subscription operation binding the contract event 0x9a8e3864cbacafc5547b8567796b4d12d51217a879192b61932f5151ce581310.
 //
-// Solidity: e _Challenge(listingAddress indexed address, challengeID indexed uint256, data string, commitEndDate uint256, revealEndDate uint256, challenger indexed address)
+// Solidity: event _Challenge(address indexed listingAddress, uint256 indexed challengeID, string data, uint256 commitEndDate, uint256 revealEndDate, address indexed challenger)
 func (_CivilTCRContract *CivilTCRContractFilterer) WatchChallenge(opts *bind.WatchOpts, sink chan<- *CivilTCRContractChallenge, listingAddress []common.Address, challengeID []*big.Int, challenger []common.Address) (event.Subscription, error) {
 
 	var listingAddressRule []interface{}
@@ -1972,7 +1984,7 @@ type CivilTCRContractChallengeFailed struct {
 
 // FilterChallengeFailed is a free log retrieval operation binding the contract event 0x3639145ca0a6a8008912a972730b5c8634e1fd1555ea44a257a8de53c30d72fb.
 //
-// Solidity: e _ChallengeFailed(listingAddress indexed address, challengeID indexed uint256, rewardPool uint256, totalTokens uint256)
+// Solidity: event _ChallengeFailed(address indexed listingAddress, uint256 indexed challengeID, uint256 rewardPool, uint256 totalTokens)
 func (_CivilTCRContract *CivilTCRContractFilterer) FilterChallengeFailed(opts *bind.FilterOpts, listingAddress []common.Address, challengeID []*big.Int) (*CivilTCRContractChallengeFailedIterator, error) {
 
 	var listingAddressRule []interface{}
@@ -1993,7 +2005,7 @@ func (_CivilTCRContract *CivilTCRContractFilterer) FilterChallengeFailed(opts *b
 
 // WatchChallengeFailed is a free log subscription operation binding the contract event 0x3639145ca0a6a8008912a972730b5c8634e1fd1555ea44a257a8de53c30d72fb.
 //
-// Solidity: e _ChallengeFailed(listingAddress indexed address, challengeID indexed uint256, rewardPool uint256, totalTokens uint256)
+// Solidity: event _ChallengeFailed(address indexed listingAddress, uint256 indexed challengeID, uint256 rewardPool, uint256 totalTokens)
 func (_CivilTCRContract *CivilTCRContractFilterer) WatchChallengeFailed(opts *bind.WatchOpts, sink chan<- *CivilTCRContractChallengeFailed, listingAddress []common.Address, challengeID []*big.Int) (event.Subscription, error) {
 
 	var listingAddressRule []interface{}
@@ -2115,7 +2127,7 @@ type CivilTCRContractChallengeSucceeded struct {
 
 // FilterChallengeSucceeded is a free log retrieval operation binding the contract event 0xe86031b52c5a57c0768c3f196b63abf60b5ed012de77ce1bb88fc63588f7603a.
 //
-// Solidity: e _ChallengeSucceeded(listingAddress indexed address, challengeID indexed uint256, rewardPool uint256, totalTokens uint256)
+// Solidity: event _ChallengeSucceeded(address indexed listingAddress, uint256 indexed challengeID, uint256 rewardPool, uint256 totalTokens)
 func (_CivilTCRContract *CivilTCRContractFilterer) FilterChallengeSucceeded(opts *bind.FilterOpts, listingAddress []common.Address, challengeID []*big.Int) (*CivilTCRContractChallengeSucceededIterator, error) {
 
 	var listingAddressRule []interface{}
@@ -2136,7 +2148,7 @@ func (_CivilTCRContract *CivilTCRContractFilterer) FilterChallengeSucceeded(opts
 
 // WatchChallengeSucceeded is a free log subscription operation binding the contract event 0xe86031b52c5a57c0768c3f196b63abf60b5ed012de77ce1bb88fc63588f7603a.
 //
-// Solidity: e _ChallengeSucceeded(listingAddress indexed address, challengeID indexed uint256, rewardPool uint256, totalTokens uint256)
+// Solidity: event _ChallengeSucceeded(address indexed listingAddress, uint256 indexed challengeID, uint256 rewardPool, uint256 totalTokens)
 func (_CivilTCRContract *CivilTCRContractFilterer) WatchChallengeSucceeded(opts *bind.WatchOpts, sink chan<- *CivilTCRContractChallengeSucceeded, listingAddress []common.Address, challengeID []*big.Int) (event.Subscription, error) {
 
 	var listingAddressRule []interface{}
@@ -2258,7 +2270,7 @@ type CivilTCRContractDeposit struct {
 
 // FilterDeposit is a free log retrieval operation binding the contract event 0xfc2e298800eb7bcacdea96213f53962a6bdf27d2a560f831d4e42301492e8f6a.
 //
-// Solidity: e _Deposit(listingAddress indexed address, added uint256, newTotal uint256, owner indexed address)
+// Solidity: event _Deposit(address indexed listingAddress, uint256 added, uint256 newTotal, address indexed owner)
 func (_CivilTCRContract *CivilTCRContractFilterer) FilterDeposit(opts *bind.FilterOpts, listingAddress []common.Address, owner []common.Address) (*CivilTCRContractDepositIterator, error) {
 
 	var listingAddressRule []interface{}
@@ -2280,7 +2292,7 @@ func (_CivilTCRContract *CivilTCRContractFilterer) FilterDeposit(opts *bind.Filt
 
 // WatchDeposit is a free log subscription operation binding the contract event 0xfc2e298800eb7bcacdea96213f53962a6bdf27d2a560f831d4e42301492e8f6a.
 //
-// Solidity: e _Deposit(listingAddress indexed address, added uint256, newTotal uint256, owner indexed address)
+// Solidity: event _Deposit(address indexed listingAddress, uint256 added, uint256 newTotal, address indexed owner)
 func (_CivilTCRContract *CivilTCRContractFilterer) WatchDeposit(opts *bind.WatchOpts, sink chan<- *CivilTCRContractDeposit, listingAddress []common.Address, owner []common.Address) (event.Subscription, error) {
 
 	var listingAddressRule []interface{}
@@ -2403,7 +2415,7 @@ type CivilTCRContractFailedChallengeOverturned struct {
 
 // FilterFailedChallengeOverturned is a free log retrieval operation binding the contract event 0x446922bbfdaa528d4a969857cd0894d6bf8bbff52226624e752b3f1be7513b0a.
 //
-// Solidity: e _FailedChallengeOverturned(listingAddress indexed address, challengeID indexed uint256, rewardPool uint256, totalTokens uint256)
+// Solidity: event _FailedChallengeOverturned(address indexed listingAddress, uint256 indexed challengeID, uint256 rewardPool, uint256 totalTokens)
 func (_CivilTCRContract *CivilTCRContractFilterer) FilterFailedChallengeOverturned(opts *bind.FilterOpts, listingAddress []common.Address, challengeID []*big.Int) (*CivilTCRContractFailedChallengeOverturnedIterator, error) {
 
 	var listingAddressRule []interface{}
@@ -2424,7 +2436,7 @@ func (_CivilTCRContract *CivilTCRContractFilterer) FilterFailedChallengeOverturn
 
 // WatchFailedChallengeOverturned is a free log subscription operation binding the contract event 0x446922bbfdaa528d4a969857cd0894d6bf8bbff52226624e752b3f1be7513b0a.
 //
-// Solidity: e _FailedChallengeOverturned(listingAddress indexed address, challengeID indexed uint256, rewardPool uint256, totalTokens uint256)
+// Solidity: event _FailedChallengeOverturned(address indexed listingAddress, uint256 indexed challengeID, uint256 rewardPool, uint256 totalTokens)
 func (_CivilTCRContract *CivilTCRContractFilterer) WatchFailedChallengeOverturned(opts *bind.WatchOpts, sink chan<- *CivilTCRContractFailedChallengeOverturned, listingAddress []common.Address, challengeID []*big.Int) (event.Subscription, error) {
 
 	var listingAddressRule []interface{}
@@ -2543,7 +2555,7 @@ type CivilTCRContractGovernmentTransfered struct {
 
 // FilterGovernmentTransfered is a free log retrieval operation binding the contract event 0x016b4781993f669e6eac42012fead2d96f8381769b4efbb4ad686cca6031ea88.
 //
-// Solidity: e _GovernmentTransfered(newGovernment address)
+// Solidity: event _GovernmentTransfered(address newGovernment)
 func (_CivilTCRContract *CivilTCRContractFilterer) FilterGovernmentTransfered(opts *bind.FilterOpts) (*CivilTCRContractGovernmentTransferedIterator, error) {
 
 	logs, sub, err := _CivilTCRContract.contract.FilterLogs(opts, "_GovernmentTransfered")
@@ -2555,7 +2567,7 @@ func (_CivilTCRContract *CivilTCRContractFilterer) FilterGovernmentTransfered(op
 
 // WatchGovernmentTransfered is a free log subscription operation binding the contract event 0x016b4781993f669e6eac42012fead2d96f8381769b4efbb4ad686cca6031ea88.
 //
-// Solidity: e _GovernmentTransfered(newGovernment address)
+// Solidity: event _GovernmentTransfered(address newGovernment)
 func (_CivilTCRContract *CivilTCRContractFilterer) WatchGovernmentTransfered(opts *bind.WatchOpts, sink chan<- *CivilTCRContractGovernmentTransfered) (event.Subscription, error) {
 
 	logs, sub, err := _CivilTCRContract.contract.WatchLogs(opts, "_GovernmentTransfered")
@@ -2668,7 +2680,7 @@ type CivilTCRContractGrantedAppealChallenged struct {
 
 // FilterGrantedAppealChallenged is a free log retrieval operation binding the contract event 0xedfe36bf00610fb3b5474f1efd2de0d52ffb9a50b056ee37c33cea805fd44161.
 //
-// Solidity: e _GrantedAppealChallenged(listingAddress indexed address, challengeID indexed uint256, appealChallengeID indexed uint256, data string)
+// Solidity: event _GrantedAppealChallenged(address indexed listingAddress, uint256 indexed challengeID, uint256 indexed appealChallengeID, string data)
 func (_CivilTCRContract *CivilTCRContractFilterer) FilterGrantedAppealChallenged(opts *bind.FilterOpts, listingAddress []common.Address, challengeID []*big.Int, appealChallengeID []*big.Int) (*CivilTCRContractGrantedAppealChallengedIterator, error) {
 
 	var listingAddressRule []interface{}
@@ -2693,7 +2705,7 @@ func (_CivilTCRContract *CivilTCRContractFilterer) FilterGrantedAppealChallenged
 
 // WatchGrantedAppealChallenged is a free log subscription operation binding the contract event 0xedfe36bf00610fb3b5474f1efd2de0d52ffb9a50b056ee37c33cea805fd44161.
 //
-// Solidity: e _GrantedAppealChallenged(listingAddress indexed address, challengeID indexed uint256, appealChallengeID indexed uint256, data string)
+// Solidity: event _GrantedAppealChallenged(address indexed listingAddress, uint256 indexed challengeID, uint256 indexed appealChallengeID, string data)
 func (_CivilTCRContract *CivilTCRContractFilterer) WatchGrantedAppealChallenged(opts *bind.WatchOpts, sink chan<- *CivilTCRContractGrantedAppealChallenged, listingAddress []common.Address, challengeID []*big.Int, appealChallengeID []*big.Int) (event.Subscription, error) {
 
 	var listingAddressRule []interface{}
@@ -2820,7 +2832,7 @@ type CivilTCRContractGrantedAppealConfirmed struct {
 
 // FilterGrantedAppealConfirmed is a free log retrieval operation binding the contract event 0x8a7e8d1076fec4f93e4d57111b034ab3975009f601977350c4542e15d2e8b0f6.
 //
-// Solidity: e _GrantedAppealConfirmed(listingAddress indexed address, challengeID indexed uint256, appealChallengeID indexed uint256, rewardPool uint256, totalTokens uint256)
+// Solidity: event _GrantedAppealConfirmed(address indexed listingAddress, uint256 indexed challengeID, uint256 indexed appealChallengeID, uint256 rewardPool, uint256 totalTokens)
 func (_CivilTCRContract *CivilTCRContractFilterer) FilterGrantedAppealConfirmed(opts *bind.FilterOpts, listingAddress []common.Address, challengeID []*big.Int, appealChallengeID []*big.Int) (*CivilTCRContractGrantedAppealConfirmedIterator, error) {
 
 	var listingAddressRule []interface{}
@@ -2845,7 +2857,7 @@ func (_CivilTCRContract *CivilTCRContractFilterer) FilterGrantedAppealConfirmed(
 
 // WatchGrantedAppealConfirmed is a free log subscription operation binding the contract event 0x8a7e8d1076fec4f93e4d57111b034ab3975009f601977350c4542e15d2e8b0f6.
 //
-// Solidity: e _GrantedAppealConfirmed(listingAddress indexed address, challengeID indexed uint256, appealChallengeID indexed uint256, rewardPool uint256, totalTokens uint256)
+// Solidity: event _GrantedAppealConfirmed(address indexed listingAddress, uint256 indexed challengeID, uint256 indexed appealChallengeID, uint256 rewardPool, uint256 totalTokens)
 func (_CivilTCRContract *CivilTCRContractFilterer) WatchGrantedAppealConfirmed(opts *bind.WatchOpts, sink chan<- *CivilTCRContractGrantedAppealConfirmed, listingAddress []common.Address, challengeID []*big.Int, appealChallengeID []*big.Int) (event.Subscription, error) {
 
 	var listingAddressRule []interface{}
@@ -2972,7 +2984,7 @@ type CivilTCRContractGrantedAppealOverturned struct {
 
 // FilterGrantedAppealOverturned is a free log retrieval operation binding the contract event 0xc49556ab8bcbdd0403e98b6dac260ac86008640cda2a5a229c895353b87f2feb.
 //
-// Solidity: e _GrantedAppealOverturned(listingAddress indexed address, challengeID indexed uint256, appealChallengeID indexed uint256, rewardPool uint256, totalTokens uint256)
+// Solidity: event _GrantedAppealOverturned(address indexed listingAddress, uint256 indexed challengeID, uint256 indexed appealChallengeID, uint256 rewardPool, uint256 totalTokens)
 func (_CivilTCRContract *CivilTCRContractFilterer) FilterGrantedAppealOverturned(opts *bind.FilterOpts, listingAddress []common.Address, challengeID []*big.Int, appealChallengeID []*big.Int) (*CivilTCRContractGrantedAppealOverturnedIterator, error) {
 
 	var listingAddressRule []interface{}
@@ -2997,7 +3009,7 @@ func (_CivilTCRContract *CivilTCRContractFilterer) FilterGrantedAppealOverturned
 
 // WatchGrantedAppealOverturned is a free log subscription operation binding the contract event 0xc49556ab8bcbdd0403e98b6dac260ac86008640cda2a5a229c895353b87f2feb.
 //
-// Solidity: e _GrantedAppealOverturned(listingAddress indexed address, challengeID indexed uint256, appealChallengeID indexed uint256, rewardPool uint256, totalTokens uint256)
+// Solidity: event _GrantedAppealOverturned(address indexed listingAddress, uint256 indexed challengeID, uint256 indexed appealChallengeID, uint256 rewardPool, uint256 totalTokens)
 func (_CivilTCRContract *CivilTCRContractFilterer) WatchGrantedAppealOverturned(opts *bind.WatchOpts, sink chan<- *CivilTCRContractGrantedAppealOverturned, listingAddress []common.Address, challengeID []*big.Int, appealChallengeID []*big.Int) (event.Subscription, error) {
 
 	var listingAddressRule []interface{}
@@ -3120,7 +3132,7 @@ type CivilTCRContractListingRemoved struct {
 
 // FilterListingRemoved is a free log retrieval operation binding the contract event 0x5aebb54d5afe29103adbc464fd4e0313af619f4d19f10a0209128b76cd9d0b07.
 //
-// Solidity: e _ListingRemoved(listingAddress indexed address)
+// Solidity: event _ListingRemoved(address indexed listingAddress)
 func (_CivilTCRContract *CivilTCRContractFilterer) FilterListingRemoved(opts *bind.FilterOpts, listingAddress []common.Address) (*CivilTCRContractListingRemovedIterator, error) {
 
 	var listingAddressRule []interface{}
@@ -3137,7 +3149,7 @@ func (_CivilTCRContract *CivilTCRContractFilterer) FilterListingRemoved(opts *bi
 
 // WatchListingRemoved is a free log subscription operation binding the contract event 0x5aebb54d5afe29103adbc464fd4e0313af619f4d19f10a0209128b76cd9d0b07.
 //
-// Solidity: e _ListingRemoved(listingAddress indexed address)
+// Solidity: event _ListingRemoved(address indexed listingAddress)
 func (_CivilTCRContract *CivilTCRContractFilterer) WatchListingRemoved(opts *bind.WatchOpts, sink chan<- *CivilTCRContractListingRemoved, listingAddress []common.Address) (event.Subscription, error) {
 
 	var listingAddressRule []interface{}
@@ -3252,7 +3264,7 @@ type CivilTCRContractListingWithdrawn struct {
 
 // FilterListingWithdrawn is a free log retrieval operation binding the contract event 0x09a024f7311a15ac363521bddca1d9937c4244ab9a25e6c968e610b35ecc7503.
 //
-// Solidity: e _ListingWithdrawn(listingAddress indexed address)
+// Solidity: event _ListingWithdrawn(address indexed listingAddress)
 func (_CivilTCRContract *CivilTCRContractFilterer) FilterListingWithdrawn(opts *bind.FilterOpts, listingAddress []common.Address) (*CivilTCRContractListingWithdrawnIterator, error) {
 
 	var listingAddressRule []interface{}
@@ -3269,7 +3281,7 @@ func (_CivilTCRContract *CivilTCRContractFilterer) FilterListingWithdrawn(opts *
 
 // WatchListingWithdrawn is a free log subscription operation binding the contract event 0x09a024f7311a15ac363521bddca1d9937c4244ab9a25e6c968e610b35ecc7503.
 //
-// Solidity: e _ListingWithdrawn(listingAddress indexed address)
+// Solidity: event _ListingWithdrawn(address indexed listingAddress)
 func (_CivilTCRContract *CivilTCRContractFilterer) WatchListingWithdrawn(opts *bind.WatchOpts, sink chan<- *CivilTCRContractListingWithdrawn, listingAddress []common.Address) (event.Subscription, error) {
 
 	var listingAddressRule []interface{}
@@ -3386,7 +3398,7 @@ type CivilTCRContractRewardClaimed struct {
 
 // FilterRewardClaimed is a free log retrieval operation binding the contract event 0x6f4c982acc31b0af2cf1dc1556f21c0325d893782d65e83c68a5534a33f59957.
 //
-// Solidity: e _RewardClaimed(challengeID indexed uint256, reward uint256, voter indexed address)
+// Solidity: event _RewardClaimed(uint256 indexed challengeID, uint256 reward, address indexed voter)
 func (_CivilTCRContract *CivilTCRContractFilterer) FilterRewardClaimed(opts *bind.FilterOpts, challengeID []*big.Int, voter []common.Address) (*CivilTCRContractRewardClaimedIterator, error) {
 
 	var challengeIDRule []interface{}
@@ -3408,7 +3420,7 @@ func (_CivilTCRContract *CivilTCRContractFilterer) FilterRewardClaimed(opts *bin
 
 // WatchRewardClaimed is a free log subscription operation binding the contract event 0x6f4c982acc31b0af2cf1dc1556f21c0325d893782d65e83c68a5534a33f59957.
 //
-// Solidity: e _RewardClaimed(challengeID indexed uint256, reward uint256, voter indexed address)
+// Solidity: event _RewardClaimed(uint256 indexed challengeID, uint256 reward, address indexed voter)
 func (_CivilTCRContract *CivilTCRContractFilterer) WatchRewardClaimed(opts *bind.WatchOpts, sink chan<- *CivilTCRContractRewardClaimed, challengeID []*big.Int, voter []common.Address) (event.Subscription, error) {
 
 	var challengeIDRule []interface{}
@@ -3531,7 +3543,7 @@ type CivilTCRContractSuccessfulChallengeOverturned struct {
 
 // FilterSuccessfulChallengeOverturned is a free log retrieval operation binding the contract event 0x72506b3ce4d8f0cf8cf6ccb7cd5281af2b0d020121fb20abfa073eeb3f6d296e.
 //
-// Solidity: e _SuccessfulChallengeOverturned(listingAddress indexed address, challengeID indexed uint256, rewardPool uint256, totalTokens uint256)
+// Solidity: event _SuccessfulChallengeOverturned(address indexed listingAddress, uint256 indexed challengeID, uint256 rewardPool, uint256 totalTokens)
 func (_CivilTCRContract *CivilTCRContractFilterer) FilterSuccessfulChallengeOverturned(opts *bind.FilterOpts, listingAddress []common.Address, challengeID []*big.Int) (*CivilTCRContractSuccessfulChallengeOverturnedIterator, error) {
 
 	var listingAddressRule []interface{}
@@ -3552,7 +3564,7 @@ func (_CivilTCRContract *CivilTCRContractFilterer) FilterSuccessfulChallengeOver
 
 // WatchSuccessfulChallengeOverturned is a free log subscription operation binding the contract event 0x72506b3ce4d8f0cf8cf6ccb7cd5281af2b0d020121fb20abfa073eeb3f6d296e.
 //
-// Solidity: e _SuccessfulChallengeOverturned(listingAddress indexed address, challengeID indexed uint256, rewardPool uint256, totalTokens uint256)
+// Solidity: event _SuccessfulChallengeOverturned(address indexed listingAddress, uint256 indexed challengeID, uint256 rewardPool, uint256 totalTokens)
 func (_CivilTCRContract *CivilTCRContractFilterer) WatchSuccessfulChallengeOverturned(opts *bind.WatchOpts, sink chan<- *CivilTCRContractSuccessfulChallengeOverturned, listingAddress []common.Address, challengeID []*big.Int) (event.Subscription, error) {
 
 	var listingAddressRule []interface{}
@@ -3671,7 +3683,7 @@ type CivilTCRContractTouchAndRemoved struct {
 
 // FilterTouchAndRemoved is a free log retrieval operation binding the contract event 0xc88462fa6972b64560d1dd34c4d66f2ff9841b2f974bdb0fab0827133d692f64.
 //
-// Solidity: e _TouchAndRemoved(listingAddress indexed address)
+// Solidity: event _TouchAndRemoved(address indexed listingAddress)
 func (_CivilTCRContract *CivilTCRContractFilterer) FilterTouchAndRemoved(opts *bind.FilterOpts, listingAddress []common.Address) (*CivilTCRContractTouchAndRemovedIterator, error) {
 
 	var listingAddressRule []interface{}
@@ -3688,7 +3700,7 @@ func (_CivilTCRContract *CivilTCRContractFilterer) FilterTouchAndRemoved(opts *b
 
 // WatchTouchAndRemoved is a free log subscription operation binding the contract event 0xc88462fa6972b64560d1dd34c4d66f2ff9841b2f974bdb0fab0827133d692f64.
 //
-// Solidity: e _TouchAndRemoved(listingAddress indexed address)
+// Solidity: event _TouchAndRemoved(address indexed listingAddress)
 func (_CivilTCRContract *CivilTCRContractFilterer) WatchTouchAndRemoved(opts *bind.WatchOpts, sink chan<- *CivilTCRContractTouchAndRemoved, listingAddress []common.Address) (event.Subscription, error) {
 
 	var listingAddressRule []interface{}
@@ -3806,7 +3818,7 @@ type CivilTCRContractWithdrawal struct {
 
 // FilterWithdrawal is a free log retrieval operation binding the contract event 0x7b7771adeec078e4a338f627a52f307a7fd66d915cb133b5ace441bed26abc0b.
 //
-// Solidity: e _Withdrawal(listingAddress indexed address, withdrew uint256, newTotal uint256, owner indexed address)
+// Solidity: event _Withdrawal(address indexed listingAddress, uint256 withdrew, uint256 newTotal, address indexed owner)
 func (_CivilTCRContract *CivilTCRContractFilterer) FilterWithdrawal(opts *bind.FilterOpts, listingAddress []common.Address, owner []common.Address) (*CivilTCRContractWithdrawalIterator, error) {
 
 	var listingAddressRule []interface{}
@@ -3828,7 +3840,7 @@ func (_CivilTCRContract *CivilTCRContractFilterer) FilterWithdrawal(opts *bind.F
 
 // WatchWithdrawal is a free log subscription operation binding the contract event 0x7b7771adeec078e4a338f627a52f307a7fd66d915cb133b5ace441bed26abc0b.
 //
-// Solidity: e _Withdrawal(listingAddress indexed address, withdrew uint256, newTotal uint256, owner indexed address)
+// Solidity: event _Withdrawal(address indexed listingAddress, uint256 withdrew, uint256 newTotal, address indexed owner)
 func (_CivilTCRContract *CivilTCRContractFilterer) WatchWithdrawal(opts *bind.WatchOpts, sink chan<- *CivilTCRContractWithdrawal, listingAddress []common.Address, owner []common.Address) (event.Subscription, error) {
 
 	var listingAddressRule []interface{}

@@ -15,6 +15,18 @@ import (
 	"github.com/ethereum/go-ethereum/event"
 )
 
+// Reference imports to suppress errors if they are not otherwise used.
+var (
+	_ = big.NewInt
+	_ = strings.NewReader
+	_ = ethereum.NotFound
+	_ = abi.U256
+	_ = bind.Bind
+	_ = common.Big1
+	_ = types.BloomLookup
+	_ = event.NewSubscription
+)
+
 // GovernmentContractABI is the input ABI used to generate the binding from.
 const GovernmentContractABI = "[{\"constant\":true,\"inputs\":[],\"name\":\"PROCESSBY\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"bytes32\"}],\"name\":\"proposals\",\"outputs\":[{\"name\":\"pollID\",\"type\":\"uint256\"},{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"processBy\",\"type\":\"uint256\"},{\"name\":\"value\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"constitutionURI\",\"outputs\":[{\"name\":\"\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"constitutionHash\",\"outputs\":[{\"name\":\"\",\"type\":\"bytes32\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"appellate\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"bytes32\"}],\"name\":\"params\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"governmentController\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"voting\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"appellateAddr\",\"type\":\"address\"},{\"name\":\"governmentControllerAddr\",\"type\":\"address\"},{\"name\":\"plcrAddr\",\"type\":\"address\"},{\"name\":\"appealFeeAmount\",\"type\":\"uint256\"},{\"name\":\"requestAppealLength\",\"type\":\"uint256\"},{\"name\":\"judgeAppealLength\",\"type\":\"uint256\"},{\"name\":\"appealSupermajorityPercentage\",\"type\":\"uint256\"},{\"name\":\"appealChallengeVoteDispensationPct\",\"type\":\"uint256\"},{\"name\":\"pDeposit\",\"type\":\"uint256\"},{\"name\":\"pCommitStageLength\",\"type\":\"uint256\"},{\"name\":\"pRevealStageLength\",\"type\":\"uint256\"},{\"name\":\"constHash\",\"type\":\"bytes32\"},{\"name\":\"constURI\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"newAppellate\",\"type\":\"address\"}],\"name\":\"_AppellateSet\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"name\",\"type\":\"string\"},{\"indexed\":false,\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"_ParameterSet\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"name\",\"type\":\"string\"},{\"indexed\":false,\"name\":\"value\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"propID\",\"type\":\"bytes32\"},{\"indexed\":false,\"name\":\"pollID\",\"type\":\"uint256\"}],\"name\":\"_GovtReparameterizationProposal\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"propId\",\"type\":\"bytes32\"},{\"indexed\":false,\"name\":\"pollID\",\"type\":\"uint256\"}],\"name\":\"_ProposalPassed\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"propId\",\"type\":\"bytes32\"},{\"indexed\":false,\"name\":\"pollID\",\"type\":\"uint256\"}],\"name\":\"_ProposalExpired\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"propId\",\"type\":\"bytes32\"},{\"indexed\":false,\"name\":\"pollID\",\"type\":\"uint256\"}],\"name\":\"_ProposalFailed\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"proposedHash\",\"type\":\"bytes32\"},{\"indexed\":false,\"name\":\"proposedURI\",\"type\":\"string\"}],\"name\":\"_NewConstSet\",\"type\":\"event\"},{\"constant\":true,\"inputs\":[],\"name\":\"getAppellate\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getGovernmentController\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"name\",\"type\":\"string\"}],\"name\":\"get\",\"outputs\":[{\"name\":\"value\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_name\",\"type\":\"string\"},{\"name\":\"_value\",\"type\":\"uint256\"}],\"name\":\"proposeReparameterization\",\"outputs\":[{\"name\":\"\",\"type\":\"bytes32\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_newConstHash\",\"type\":\"bytes32\"},{\"name\":\"_newConstURI\",\"type\":\"string\"}],\"name\":\"setNewConstitution\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_propID\",\"type\":\"bytes32\"}],\"name\":\"processProposal\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_propID\",\"type\":\"bytes32\"}],\"name\":\"propExists\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_propID\",\"type\":\"bytes32\"}],\"name\":\"propCanBeResolved\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"newAppellate\",\"type\":\"address\"}],\"name\":\"setAppellate\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]"
 
@@ -282,7 +294,7 @@ func (_GovernmentContract *GovernmentContractCallerSession) ConstitutionURI() (s
 
 // Get is a free data retrieval call binding the contract method 0x693ec85e.
 //
-// Solidity: function get(name string) constant returns(value uint256)
+// Solidity: function get(string name) constant returns(uint256 value)
 func (_GovernmentContract *GovernmentContractCaller) Get(opts *bind.CallOpts, name string) (*big.Int, error) {
 	var (
 		ret0 = new(*big.Int)
@@ -294,14 +306,14 @@ func (_GovernmentContract *GovernmentContractCaller) Get(opts *bind.CallOpts, na
 
 // Get is a free data retrieval call binding the contract method 0x693ec85e.
 //
-// Solidity: function get(name string) constant returns(value uint256)
+// Solidity: function get(string name) constant returns(uint256 value)
 func (_GovernmentContract *GovernmentContractSession) Get(name string) (*big.Int, error) {
 	return _GovernmentContract.Contract.Get(&_GovernmentContract.CallOpts, name)
 }
 
 // Get is a free data retrieval call binding the contract method 0x693ec85e.
 //
-// Solidity: function get(name string) constant returns(value uint256)
+// Solidity: function get(string name) constant returns(uint256 value)
 func (_GovernmentContract *GovernmentContractCallerSession) Get(name string) (*big.Int, error) {
 	return _GovernmentContract.Contract.Get(&_GovernmentContract.CallOpts, name)
 }
@@ -386,7 +398,7 @@ func (_GovernmentContract *GovernmentContractCallerSession) GovernmentController
 
 // Params is a free data retrieval call binding the contract method 0xdc6ab527.
 //
-// Solidity: function params( bytes32) constant returns(uint256)
+// Solidity: function params(bytes32 ) constant returns(uint256)
 func (_GovernmentContract *GovernmentContractCaller) Params(opts *bind.CallOpts, arg0 [32]byte) (*big.Int, error) {
 	var (
 		ret0 = new(*big.Int)
@@ -398,21 +410,21 @@ func (_GovernmentContract *GovernmentContractCaller) Params(opts *bind.CallOpts,
 
 // Params is a free data retrieval call binding the contract method 0xdc6ab527.
 //
-// Solidity: function params( bytes32) constant returns(uint256)
+// Solidity: function params(bytes32 ) constant returns(uint256)
 func (_GovernmentContract *GovernmentContractSession) Params(arg0 [32]byte) (*big.Int, error) {
 	return _GovernmentContract.Contract.Params(&_GovernmentContract.CallOpts, arg0)
 }
 
 // Params is a free data retrieval call binding the contract method 0xdc6ab527.
 //
-// Solidity: function params( bytes32) constant returns(uint256)
+// Solidity: function params(bytes32 ) constant returns(uint256)
 func (_GovernmentContract *GovernmentContractCallerSession) Params(arg0 [32]byte) (*big.Int, error) {
 	return _GovernmentContract.Contract.Params(&_GovernmentContract.CallOpts, arg0)
 }
 
 // PropCanBeResolved is a free data retrieval call binding the contract method 0xffa1bdf0.
 //
-// Solidity: function propCanBeResolved(_propID bytes32) constant returns(bool)
+// Solidity: function propCanBeResolved(bytes32 _propID) constant returns(bool)
 func (_GovernmentContract *GovernmentContractCaller) PropCanBeResolved(opts *bind.CallOpts, _propID [32]byte) (bool, error) {
 	var (
 		ret0 = new(bool)
@@ -424,21 +436,21 @@ func (_GovernmentContract *GovernmentContractCaller) PropCanBeResolved(opts *bin
 
 // PropCanBeResolved is a free data retrieval call binding the contract method 0xffa1bdf0.
 //
-// Solidity: function propCanBeResolved(_propID bytes32) constant returns(bool)
+// Solidity: function propCanBeResolved(bytes32 _propID) constant returns(bool)
 func (_GovernmentContract *GovernmentContractSession) PropCanBeResolved(_propID [32]byte) (bool, error) {
 	return _GovernmentContract.Contract.PropCanBeResolved(&_GovernmentContract.CallOpts, _propID)
 }
 
 // PropCanBeResolved is a free data retrieval call binding the contract method 0xffa1bdf0.
 //
-// Solidity: function propCanBeResolved(_propID bytes32) constant returns(bool)
+// Solidity: function propCanBeResolved(bytes32 _propID) constant returns(bool)
 func (_GovernmentContract *GovernmentContractCallerSession) PropCanBeResolved(_propID [32]byte) (bool, error) {
 	return _GovernmentContract.Contract.PropCanBeResolved(&_GovernmentContract.CallOpts, _propID)
 }
 
 // PropExists is a free data retrieval call binding the contract method 0x35300990.
 //
-// Solidity: function propExists(_propID bytes32) constant returns(bool)
+// Solidity: function propExists(bytes32 _propID) constant returns(bool)
 func (_GovernmentContract *GovernmentContractCaller) PropExists(opts *bind.CallOpts, _propID [32]byte) (bool, error) {
 	var (
 		ret0 = new(bool)
@@ -450,21 +462,21 @@ func (_GovernmentContract *GovernmentContractCaller) PropExists(opts *bind.CallO
 
 // PropExists is a free data retrieval call binding the contract method 0x35300990.
 //
-// Solidity: function propExists(_propID bytes32) constant returns(bool)
+// Solidity: function propExists(bytes32 _propID) constant returns(bool)
 func (_GovernmentContract *GovernmentContractSession) PropExists(_propID [32]byte) (bool, error) {
 	return _GovernmentContract.Contract.PropExists(&_GovernmentContract.CallOpts, _propID)
 }
 
 // PropExists is a free data retrieval call binding the contract method 0x35300990.
 //
-// Solidity: function propExists(_propID bytes32) constant returns(bool)
+// Solidity: function propExists(bytes32 _propID) constant returns(bool)
 func (_GovernmentContract *GovernmentContractCallerSession) PropExists(_propID [32]byte) (bool, error) {
 	return _GovernmentContract.Contract.PropExists(&_GovernmentContract.CallOpts, _propID)
 }
 
 // Proposals is a free data retrieval call binding the contract method 0x32ed5b12.
 //
-// Solidity: function proposals( bytes32) constant returns(pollID uint256, name string, processBy uint256, value uint256)
+// Solidity: function proposals(bytes32 ) constant returns(uint256 pollID, string name, uint256 processBy, uint256 value)
 func (_GovernmentContract *GovernmentContractCaller) Proposals(opts *bind.CallOpts, arg0 [32]byte) (struct {
 	PollID    *big.Int
 	Name      string
@@ -484,7 +496,7 @@ func (_GovernmentContract *GovernmentContractCaller) Proposals(opts *bind.CallOp
 
 // Proposals is a free data retrieval call binding the contract method 0x32ed5b12.
 //
-// Solidity: function proposals( bytes32) constant returns(pollID uint256, name string, processBy uint256, value uint256)
+// Solidity: function proposals(bytes32 ) constant returns(uint256 pollID, string name, uint256 processBy, uint256 value)
 func (_GovernmentContract *GovernmentContractSession) Proposals(arg0 [32]byte) (struct {
 	PollID    *big.Int
 	Name      string
@@ -496,7 +508,7 @@ func (_GovernmentContract *GovernmentContractSession) Proposals(arg0 [32]byte) (
 
 // Proposals is a free data retrieval call binding the contract method 0x32ed5b12.
 //
-// Solidity: function proposals( bytes32) constant returns(pollID uint256, name string, processBy uint256, value uint256)
+// Solidity: function proposals(bytes32 ) constant returns(uint256 pollID, string name, uint256 processBy, uint256 value)
 func (_GovernmentContract *GovernmentContractCallerSession) Proposals(arg0 [32]byte) (struct {
 	PollID    *big.Int
 	Name      string
@@ -534,84 +546,84 @@ func (_GovernmentContract *GovernmentContractCallerSession) Voting() (common.Add
 
 // ProcessProposal is a paid mutator transaction binding the contract method 0x30490e91.
 //
-// Solidity: function processProposal(_propID bytes32) returns()
+// Solidity: function processProposal(bytes32 _propID) returns()
 func (_GovernmentContract *GovernmentContractTransactor) ProcessProposal(opts *bind.TransactOpts, _propID [32]byte) (*types.Transaction, error) {
 	return _GovernmentContract.contract.Transact(opts, "processProposal", _propID)
 }
 
 // ProcessProposal is a paid mutator transaction binding the contract method 0x30490e91.
 //
-// Solidity: function processProposal(_propID bytes32) returns()
+// Solidity: function processProposal(bytes32 _propID) returns()
 func (_GovernmentContract *GovernmentContractSession) ProcessProposal(_propID [32]byte) (*types.Transaction, error) {
 	return _GovernmentContract.Contract.ProcessProposal(&_GovernmentContract.TransactOpts, _propID)
 }
 
 // ProcessProposal is a paid mutator transaction binding the contract method 0x30490e91.
 //
-// Solidity: function processProposal(_propID bytes32) returns()
+// Solidity: function processProposal(bytes32 _propID) returns()
 func (_GovernmentContract *GovernmentContractTransactorSession) ProcessProposal(_propID [32]byte) (*types.Transaction, error) {
 	return _GovernmentContract.Contract.ProcessProposal(&_GovernmentContract.TransactOpts, _propID)
 }
 
 // ProposeReparameterization is a paid mutator transaction binding the contract method 0xbade1c54.
 //
-// Solidity: function proposeReparameterization(_name string, _value uint256) returns(bytes32)
+// Solidity: function proposeReparameterization(string _name, uint256 _value) returns(bytes32)
 func (_GovernmentContract *GovernmentContractTransactor) ProposeReparameterization(opts *bind.TransactOpts, _name string, _value *big.Int) (*types.Transaction, error) {
 	return _GovernmentContract.contract.Transact(opts, "proposeReparameterization", _name, _value)
 }
 
 // ProposeReparameterization is a paid mutator transaction binding the contract method 0xbade1c54.
 //
-// Solidity: function proposeReparameterization(_name string, _value uint256) returns(bytes32)
+// Solidity: function proposeReparameterization(string _name, uint256 _value) returns(bytes32)
 func (_GovernmentContract *GovernmentContractSession) ProposeReparameterization(_name string, _value *big.Int) (*types.Transaction, error) {
 	return _GovernmentContract.Contract.ProposeReparameterization(&_GovernmentContract.TransactOpts, _name, _value)
 }
 
 // ProposeReparameterization is a paid mutator transaction binding the contract method 0xbade1c54.
 //
-// Solidity: function proposeReparameterization(_name string, _value uint256) returns(bytes32)
+// Solidity: function proposeReparameterization(string _name, uint256 _value) returns(bytes32)
 func (_GovernmentContract *GovernmentContractTransactorSession) ProposeReparameterization(_name string, _value *big.Int) (*types.Transaction, error) {
 	return _GovernmentContract.Contract.ProposeReparameterization(&_GovernmentContract.TransactOpts, _name, _value)
 }
 
 // SetAppellate is a paid mutator transaction binding the contract method 0x55122425.
 //
-// Solidity: function setAppellate(newAppellate address) returns()
+// Solidity: function setAppellate(address newAppellate) returns()
 func (_GovernmentContract *GovernmentContractTransactor) SetAppellate(opts *bind.TransactOpts, newAppellate common.Address) (*types.Transaction, error) {
 	return _GovernmentContract.contract.Transact(opts, "setAppellate", newAppellate)
 }
 
 // SetAppellate is a paid mutator transaction binding the contract method 0x55122425.
 //
-// Solidity: function setAppellate(newAppellate address) returns()
+// Solidity: function setAppellate(address newAppellate) returns()
 func (_GovernmentContract *GovernmentContractSession) SetAppellate(newAppellate common.Address) (*types.Transaction, error) {
 	return _GovernmentContract.Contract.SetAppellate(&_GovernmentContract.TransactOpts, newAppellate)
 }
 
 // SetAppellate is a paid mutator transaction binding the contract method 0x55122425.
 //
-// Solidity: function setAppellate(newAppellate address) returns()
+// Solidity: function setAppellate(address newAppellate) returns()
 func (_GovernmentContract *GovernmentContractTransactorSession) SetAppellate(newAppellate common.Address) (*types.Transaction, error) {
 	return _GovernmentContract.Contract.SetAppellate(&_GovernmentContract.TransactOpts, newAppellate)
 }
 
 // SetNewConstitution is a paid mutator transaction binding the contract method 0xb0924d6e.
 //
-// Solidity: function setNewConstitution(_newConstHash bytes32, _newConstURI string) returns()
+// Solidity: function setNewConstitution(bytes32 _newConstHash, string _newConstURI) returns()
 func (_GovernmentContract *GovernmentContractTransactor) SetNewConstitution(opts *bind.TransactOpts, _newConstHash [32]byte, _newConstURI string) (*types.Transaction, error) {
 	return _GovernmentContract.contract.Transact(opts, "setNewConstitution", _newConstHash, _newConstURI)
 }
 
 // SetNewConstitution is a paid mutator transaction binding the contract method 0xb0924d6e.
 //
-// Solidity: function setNewConstitution(_newConstHash bytes32, _newConstURI string) returns()
+// Solidity: function setNewConstitution(bytes32 _newConstHash, string _newConstURI) returns()
 func (_GovernmentContract *GovernmentContractSession) SetNewConstitution(_newConstHash [32]byte, _newConstURI string) (*types.Transaction, error) {
 	return _GovernmentContract.Contract.SetNewConstitution(&_GovernmentContract.TransactOpts, _newConstHash, _newConstURI)
 }
 
 // SetNewConstitution is a paid mutator transaction binding the contract method 0xb0924d6e.
 //
-// Solidity: function setNewConstitution(_newConstHash bytes32, _newConstURI string) returns()
+// Solidity: function setNewConstitution(bytes32 _newConstHash, string _newConstURI) returns()
 func (_GovernmentContract *GovernmentContractTransactorSession) SetNewConstitution(_newConstHash [32]byte, _newConstURI string) (*types.Transaction, error) {
 	return _GovernmentContract.Contract.SetNewConstitution(&_GovernmentContract.TransactOpts, _newConstHash, _newConstURI)
 }
@@ -691,7 +703,7 @@ type GovernmentContractAppellateSet struct {
 
 // FilterAppellateSet is a free log retrieval operation binding the contract event 0x759a9d1715f38685bd08c7fb25060b7b6795cddf54214336e02a0533c5c7b89e.
 //
-// Solidity: e _AppellateSet(newAppellate address)
+// Solidity: event _AppellateSet(address newAppellate)
 func (_GovernmentContract *GovernmentContractFilterer) FilterAppellateSet(opts *bind.FilterOpts) (*GovernmentContractAppellateSetIterator, error) {
 
 	logs, sub, err := _GovernmentContract.contract.FilterLogs(opts, "_AppellateSet")
@@ -703,7 +715,7 @@ func (_GovernmentContract *GovernmentContractFilterer) FilterAppellateSet(opts *
 
 // WatchAppellateSet is a free log subscription operation binding the contract event 0x759a9d1715f38685bd08c7fb25060b7b6795cddf54214336e02a0533c5c7b89e.
 //
-// Solidity: e _AppellateSet(newAppellate address)
+// Solidity: event _AppellateSet(address newAppellate)
 func (_GovernmentContract *GovernmentContractFilterer) WatchAppellateSet(opts *bind.WatchOpts, sink chan<- *GovernmentContractAppellateSet) (event.Subscription, error) {
 
 	logs, sub, err := _GovernmentContract.contract.WatchLogs(opts, "_AppellateSet")
@@ -816,7 +828,7 @@ type GovernmentContractGovtReparameterizationProposal struct {
 
 // FilterGovtReparameterizationProposal is a free log retrieval operation binding the contract event 0x74adf299a4c734e1ae114977ab264221c2f4a914c02243561aaa9158735d3224.
 //
-// Solidity: e _GovtReparameterizationProposal(name string, value uint256, propID bytes32, pollID uint256)
+// Solidity: event _GovtReparameterizationProposal(string name, uint256 value, bytes32 propID, uint256 pollID)
 func (_GovernmentContract *GovernmentContractFilterer) FilterGovtReparameterizationProposal(opts *bind.FilterOpts) (*GovernmentContractGovtReparameterizationProposalIterator, error) {
 
 	logs, sub, err := _GovernmentContract.contract.FilterLogs(opts, "_GovtReparameterizationProposal")
@@ -828,7 +840,7 @@ func (_GovernmentContract *GovernmentContractFilterer) FilterGovtReparameterizat
 
 // WatchGovtReparameterizationProposal is a free log subscription operation binding the contract event 0x74adf299a4c734e1ae114977ab264221c2f4a914c02243561aaa9158735d3224.
 //
-// Solidity: e _GovtReparameterizationProposal(name string, value uint256, propID bytes32, pollID uint256)
+// Solidity: event _GovtReparameterizationProposal(string name, uint256 value, bytes32 propID, uint256 pollID)
 func (_GovernmentContract *GovernmentContractFilterer) WatchGovtReparameterizationProposal(opts *bind.WatchOpts, sink chan<- *GovernmentContractGovtReparameterizationProposal) (event.Subscription, error) {
 
 	logs, sub, err := _GovernmentContract.contract.WatchLogs(opts, "_GovtReparameterizationProposal")
@@ -939,7 +951,7 @@ type GovernmentContractNewConstSet struct {
 
 // FilterNewConstSet is a free log retrieval operation binding the contract event 0x2f6679e95449d4806445cd50a14e77e4b83ea193ae84e30f8a3247436442c255.
 //
-// Solidity: e _NewConstSet(proposedHash bytes32, proposedURI string)
+// Solidity: event _NewConstSet(bytes32 proposedHash, string proposedURI)
 func (_GovernmentContract *GovernmentContractFilterer) FilterNewConstSet(opts *bind.FilterOpts) (*GovernmentContractNewConstSetIterator, error) {
 
 	logs, sub, err := _GovernmentContract.contract.FilterLogs(opts, "_NewConstSet")
@@ -951,7 +963,7 @@ func (_GovernmentContract *GovernmentContractFilterer) FilterNewConstSet(opts *b
 
 // WatchNewConstSet is a free log subscription operation binding the contract event 0x2f6679e95449d4806445cd50a14e77e4b83ea193ae84e30f8a3247436442c255.
 //
-// Solidity: e _NewConstSet(proposedHash bytes32, proposedURI string)
+// Solidity: event _NewConstSet(bytes32 proposedHash, string proposedURI)
 func (_GovernmentContract *GovernmentContractFilterer) WatchNewConstSet(opts *bind.WatchOpts, sink chan<- *GovernmentContractNewConstSet) (event.Subscription, error) {
 
 	logs, sub, err := _GovernmentContract.contract.WatchLogs(opts, "_NewConstSet")
@@ -1062,7 +1074,7 @@ type GovernmentContractParameterSet struct {
 
 // FilterParameterSet is a free log retrieval operation binding the contract event 0x0e92bd4b74871caaf73a4a51ca5ad4f01e5c5215e940a2f2a1f4c755b955066c.
 //
-// Solidity: e _ParameterSet(name string, value uint256)
+// Solidity: event _ParameterSet(string name, uint256 value)
 func (_GovernmentContract *GovernmentContractFilterer) FilterParameterSet(opts *bind.FilterOpts) (*GovernmentContractParameterSetIterator, error) {
 
 	logs, sub, err := _GovernmentContract.contract.FilterLogs(opts, "_ParameterSet")
@@ -1074,7 +1086,7 @@ func (_GovernmentContract *GovernmentContractFilterer) FilterParameterSet(opts *
 
 // WatchParameterSet is a free log subscription operation binding the contract event 0x0e92bd4b74871caaf73a4a51ca5ad4f01e5c5215e940a2f2a1f4c755b955066c.
 //
-// Solidity: e _ParameterSet(name string, value uint256)
+// Solidity: event _ParameterSet(string name, uint256 value)
 func (_GovernmentContract *GovernmentContractFilterer) WatchParameterSet(opts *bind.WatchOpts, sink chan<- *GovernmentContractParameterSet) (event.Subscription, error) {
 
 	logs, sub, err := _GovernmentContract.contract.WatchLogs(opts, "_ParameterSet")
@@ -1185,7 +1197,7 @@ type GovernmentContractProposalExpired struct {
 
 // FilterProposalExpired is a free log retrieval operation binding the contract event 0x0571dcf79f562f7040389aac4b84570b60ed77c3a1f6d9f10f2e3dc86d647e8f.
 //
-// Solidity: e _ProposalExpired(propId bytes32, pollID uint256)
+// Solidity: event _ProposalExpired(bytes32 propId, uint256 pollID)
 func (_GovernmentContract *GovernmentContractFilterer) FilterProposalExpired(opts *bind.FilterOpts) (*GovernmentContractProposalExpiredIterator, error) {
 
 	logs, sub, err := _GovernmentContract.contract.FilterLogs(opts, "_ProposalExpired")
@@ -1197,7 +1209,7 @@ func (_GovernmentContract *GovernmentContractFilterer) FilterProposalExpired(opt
 
 // WatchProposalExpired is a free log subscription operation binding the contract event 0x0571dcf79f562f7040389aac4b84570b60ed77c3a1f6d9f10f2e3dc86d647e8f.
 //
-// Solidity: e _ProposalExpired(propId bytes32, pollID uint256)
+// Solidity: event _ProposalExpired(bytes32 propId, uint256 pollID)
 func (_GovernmentContract *GovernmentContractFilterer) WatchProposalExpired(opts *bind.WatchOpts, sink chan<- *GovernmentContractProposalExpired) (event.Subscription, error) {
 
 	logs, sub, err := _GovernmentContract.contract.WatchLogs(opts, "_ProposalExpired")
@@ -1308,7 +1320,7 @@ type GovernmentContractProposalFailed struct {
 
 // FilterProposalFailed is a free log retrieval operation binding the contract event 0xcbc6fb3892c732a14043baca80213f571ebc1a385c676b25d9907fe8e7a2e37b.
 //
-// Solidity: e _ProposalFailed(propId bytes32, pollID uint256)
+// Solidity: event _ProposalFailed(bytes32 propId, uint256 pollID)
 func (_GovernmentContract *GovernmentContractFilterer) FilterProposalFailed(opts *bind.FilterOpts) (*GovernmentContractProposalFailedIterator, error) {
 
 	logs, sub, err := _GovernmentContract.contract.FilterLogs(opts, "_ProposalFailed")
@@ -1320,7 +1332,7 @@ func (_GovernmentContract *GovernmentContractFilterer) FilterProposalFailed(opts
 
 // WatchProposalFailed is a free log subscription operation binding the contract event 0xcbc6fb3892c732a14043baca80213f571ebc1a385c676b25d9907fe8e7a2e37b.
 //
-// Solidity: e _ProposalFailed(propId bytes32, pollID uint256)
+// Solidity: event _ProposalFailed(bytes32 propId, uint256 pollID)
 func (_GovernmentContract *GovernmentContractFilterer) WatchProposalFailed(opts *bind.WatchOpts, sink chan<- *GovernmentContractProposalFailed) (event.Subscription, error) {
 
 	logs, sub, err := _GovernmentContract.contract.WatchLogs(opts, "_ProposalFailed")
@@ -1431,7 +1443,7 @@ type GovernmentContractProposalPassed struct {
 
 // FilterProposalPassed is a free log retrieval operation binding the contract event 0xe040346a7ca6935dfd5ccdb81e13933d6af35a399b27c7c61d2888b496033647.
 //
-// Solidity: e _ProposalPassed(propId bytes32, pollID uint256)
+// Solidity: event _ProposalPassed(bytes32 propId, uint256 pollID)
 func (_GovernmentContract *GovernmentContractFilterer) FilterProposalPassed(opts *bind.FilterOpts) (*GovernmentContractProposalPassedIterator, error) {
 
 	logs, sub, err := _GovernmentContract.contract.FilterLogs(opts, "_ProposalPassed")
@@ -1443,7 +1455,7 @@ func (_GovernmentContract *GovernmentContractFilterer) FilterProposalPassed(opts
 
 // WatchProposalPassed is a free log subscription operation binding the contract event 0xe040346a7ca6935dfd5ccdb81e13933d6af35a399b27c7c61d2888b496033647.
 //
-// Solidity: e _ProposalPassed(propId bytes32, pollID uint256)
+// Solidity: event _ProposalPassed(bytes32 propId, uint256 pollID)
 func (_GovernmentContract *GovernmentContractFilterer) WatchProposalPassed(opts *bind.WatchOpts, sink chan<- *GovernmentContractProposalPassed) (event.Subscription, error) {
 
 	logs, sub, err := _GovernmentContract.contract.WatchLogs(opts, "_ProposalPassed")

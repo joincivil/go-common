@@ -15,6 +15,18 @@ import (
 	"github.com/ethereum/go-ethereum/event"
 )
 
+// Reference imports to suppress errors if they are not otherwise used.
+var (
+	_ = big.NewInt
+	_ = strings.NewReader
+	_ = ethereum.NotFound
+	_ = abi.U256
+	_ = bind.Bind
+	_ = common.Big1
+	_ = types.BloomLookup
+	_ = event.NewSubscription
+)
+
 // CivilPLCRVotingContractABI is the input ABI used to generate the binding from.
 const CivilPLCRVotingContractABI = "[{\"constant\":true,\"inputs\":[{\"name\":\"_pollID\",\"type\":\"uint256\"}],\"name\":\"getTotalNumberOfTokensForWinningOption\",\"outputs\":[{\"name\":\"numTokens\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"INITIAL_POLL_NONCE\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_voter\",\"type\":\"address\"},{\"name\":\"_numTokens\",\"type\":\"uint256\"},{\"name\":\"_pollID\",\"type\":\"uint256\"}],\"name\":\"getInsertPointForNumTokens\",\"outputs\":[{\"name\":\"prevNode\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_voteQuorum\",\"type\":\"uint256\"},{\"name\":\"_commitDuration\",\"type\":\"uint256\"},{\"name\":\"_revealDuration\",\"type\":\"uint256\"}],\"name\":\"startPoll\",\"outputs\":[{\"name\":\"pollID\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"voteTokenBalance\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_pollIDs\",\"type\":\"uint256[]\"},{\"name\":\"_secretHashes\",\"type\":\"bytes32[]\"},{\"name\":\"_numsTokens\",\"type\":\"uint256[]\"},{\"name\":\"_prevPollIDs\",\"type\":\"uint256[]\"}],\"name\":\"commitVotes\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"telemetry\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_voter\",\"type\":\"address\"}],\"name\":\"getLastNode\",\"outputs\":[{\"name\":\"pollID\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_pollID\",\"type\":\"uint256\"}],\"name\":\"revealPeriodActive\",\"outputs\":[{\"name\":\"active\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_pollID\",\"type\":\"uint256\"}],\"name\":\"isPassed\",\"outputs\":[{\"name\":\"passed\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"pollMap\",\"outputs\":[{\"name\":\"commitEndDate\",\"type\":\"uint256\"},{\"name\":\"revealEndDate\",\"type\":\"uint256\"},{\"name\":\"voteQuorum\",\"type\":\"uint256\"},{\"name\":\"votesFor\",\"type\":\"uint256\"},{\"name\":\"votesAgainst\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_voter\",\"type\":\"address\"}],\"name\":\"getLockedTokens\",\"outputs\":[{\"name\":\"numTokens\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_pollID\",\"type\":\"uint256\"},{\"name\":\"_secretHash\",\"type\":\"bytes32\"},{\"name\":\"_numTokens\",\"type\":\"uint256\"},{\"name\":\"_prevPollID\",\"type\":\"uint256\"}],\"name\":\"commitVote\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_voter\",\"type\":\"address\"},{\"name\":\"_pollID\",\"type\":\"uint256\"}],\"name\":\"didCommit\",\"outputs\":[{\"name\":\"committed\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_pollIDs\",\"type\":\"uint256[]\"},{\"name\":\"_voteOptions\",\"type\":\"uint256[]\"},{\"name\":\"_salts\",\"type\":\"uint256[]\"}],\"name\":\"revealVotes\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_prevID\",\"type\":\"uint256\"},{\"name\":\"_nextID\",\"type\":\"uint256\"},{\"name\":\"_voter\",\"type\":\"address\"},{\"name\":\"_numTokens\",\"type\":\"uint256\"}],\"name\":\"validPosition\",\"outputs\":[{\"name\":\"valid\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_pollID\",\"type\":\"uint256\"}],\"name\":\"pollExists\",\"outputs\":[{\"name\":\"exists\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"pollNonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_pollID\",\"type\":\"uint256\"}],\"name\":\"rescueTokens\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_user\",\"type\":\"address\"},{\"name\":\"_pollID\",\"type\":\"uint256\"}],\"name\":\"attrUUID\",\"outputs\":[{\"name\":\"UUID\",\"type\":\"bytes32\"}],\"payable\":false,\"stateMutability\":\"pure\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_pollID\",\"type\":\"uint256\"}],\"name\":\"commitPeriodActive\",\"outputs\":[{\"name\":\"active\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_voter\",\"type\":\"address\"},{\"name\":\"_pollID\",\"type\":\"uint256\"}],\"name\":\"didReveal\",\"outputs\":[{\"name\":\"revealed\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_pollID\",\"type\":\"uint256\"},{\"name\":\"_voteOption\",\"type\":\"uint256\"},{\"name\":\"_salt\",\"type\":\"uint256\"}],\"name\":\"revealVote\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_voter\",\"type\":\"address\"},{\"name\":\"_pollID\",\"type\":\"uint256\"},{\"name\":\"_salt\",\"type\":\"uint256\"}],\"name\":\"getNumPassingTokens\",\"outputs\":[{\"name\":\"correctVotes\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_pollIDs\",\"type\":\"uint256[]\"}],\"name\":\"rescueTokensInMultiplePolls\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_voter\",\"type\":\"address\"},{\"name\":\"_pollID\",\"type\":\"uint256\"}],\"name\":\"getNumTokens\",\"outputs\":[{\"name\":\"numTokens\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_voter\",\"type\":\"address\"},{\"name\":\"_pollID\",\"type\":\"uint256\"}],\"name\":\"getCommitHash\",\"outputs\":[{\"name\":\"commitHash\",\"type\":\"bytes32\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_terminationDate\",\"type\":\"uint256\"}],\"name\":\"isExpired\",\"outputs\":[{\"name\":\"expired\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_numTokens\",\"type\":\"uint256\"}],\"name\":\"withdrawVotingRights\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_pollID\",\"type\":\"uint256\"}],\"name\":\"pollEnded\",\"outputs\":[{\"name\":\"ended\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"token\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"tokenAddr\",\"type\":\"address\"},{\"name\":\"telemetryAddr\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"pollID\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"numTokens\",\"type\":\"uint256\"},{\"indexed\":true,\"name\":\"voter\",\"type\":\"address\"}],\"name\":\"_VoteCommitted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"pollID\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"numTokens\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"votesFor\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"votesAgainst\",\"type\":\"uint256\"},{\"indexed\":true,\"name\":\"choice\",\"type\":\"uint256\"},{\"indexed\":true,\"name\":\"voter\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"salt\",\"type\":\"uint256\"}],\"name\":\"_VoteRevealed\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"voteQuorum\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"commitEndDate\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"revealEndDate\",\"type\":\"uint256\"},{\"indexed\":true,\"name\":\"pollID\",\"type\":\"uint256\"},{\"indexed\":true,\"name\":\"creator\",\"type\":\"address\"}],\"name\":\"_PollCreated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"numTokens\",\"type\":\"uint256\"},{\"indexed\":true,\"name\":\"voter\",\"type\":\"address\"}],\"name\":\"_VotingRightsGranted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"numTokens\",\"type\":\"uint256\"},{\"indexed\":true,\"name\":\"voter\",\"type\":\"address\"}],\"name\":\"_VotingRightsWithdrawn\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"pollID\",\"type\":\"uint256\"},{\"indexed\":true,\"name\":\"voter\",\"type\":\"address\"}],\"name\":\"_TokensRescued\",\"type\":\"event\"},{\"constant\":false,\"inputs\":[{\"name\":\"_numTokens\",\"type\":\"uint256\"}],\"name\":\"requestVotingRights\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_voter\",\"type\":\"address\"},{\"name\":\"_pollID\",\"type\":\"uint256\"},{\"name\":\"_salt\",\"type\":\"uint256\"}],\"name\":\"getNumLosingTokens\",\"outputs\":[{\"name\":\"correctVotes\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_pollID\",\"type\":\"uint256\"}],\"name\":\"getTotalNumberOfTokensForLosingOption\",\"outputs\":[{\"name\":\"numTokens\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}]"
 
@@ -204,7 +216,7 @@ func (_CivilPLCRVotingContract *CivilPLCRVotingContractCallerSession) INITIALPOL
 
 // AttrUUID is a free data retrieval call binding the contract method 0xa1103f37.
 //
-// Solidity: function attrUUID(_user address, _pollID uint256) constant returns(UUID bytes32)
+// Solidity: function attrUUID(address _user, uint256 _pollID) constant returns(bytes32 UUID)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) AttrUUID(opts *bind.CallOpts, _user common.Address, _pollID *big.Int) ([32]byte, error) {
 	var (
 		ret0 = new([32]byte)
@@ -216,21 +228,21 @@ func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) AttrUUID(opts *bi
 
 // AttrUUID is a free data retrieval call binding the contract method 0xa1103f37.
 //
-// Solidity: function attrUUID(_user address, _pollID uint256) constant returns(UUID bytes32)
+// Solidity: function attrUUID(address _user, uint256 _pollID) constant returns(bytes32 UUID)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractSession) AttrUUID(_user common.Address, _pollID *big.Int) ([32]byte, error) {
 	return _CivilPLCRVotingContract.Contract.AttrUUID(&_CivilPLCRVotingContract.CallOpts, _user, _pollID)
 }
 
 // AttrUUID is a free data retrieval call binding the contract method 0xa1103f37.
 //
-// Solidity: function attrUUID(_user address, _pollID uint256) constant returns(UUID bytes32)
+// Solidity: function attrUUID(address _user, uint256 _pollID) constant returns(bytes32 UUID)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCallerSession) AttrUUID(_user common.Address, _pollID *big.Int) ([32]byte, error) {
 	return _CivilPLCRVotingContract.Contract.AttrUUID(&_CivilPLCRVotingContract.CallOpts, _user, _pollID)
 }
 
 // CommitPeriodActive is a free data retrieval call binding the contract method 0xa4439dc5.
 //
-// Solidity: function commitPeriodActive(_pollID uint256) constant returns(active bool)
+// Solidity: function commitPeriodActive(uint256 _pollID) constant returns(bool active)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) CommitPeriodActive(opts *bind.CallOpts, _pollID *big.Int) (bool, error) {
 	var (
 		ret0 = new(bool)
@@ -242,21 +254,21 @@ func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) CommitPeriodActiv
 
 // CommitPeriodActive is a free data retrieval call binding the contract method 0xa4439dc5.
 //
-// Solidity: function commitPeriodActive(_pollID uint256) constant returns(active bool)
+// Solidity: function commitPeriodActive(uint256 _pollID) constant returns(bool active)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractSession) CommitPeriodActive(_pollID *big.Int) (bool, error) {
 	return _CivilPLCRVotingContract.Contract.CommitPeriodActive(&_CivilPLCRVotingContract.CallOpts, _pollID)
 }
 
 // CommitPeriodActive is a free data retrieval call binding the contract method 0xa4439dc5.
 //
-// Solidity: function commitPeriodActive(_pollID uint256) constant returns(active bool)
+// Solidity: function commitPeriodActive(uint256 _pollID) constant returns(bool active)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCallerSession) CommitPeriodActive(_pollID *big.Int) (bool, error) {
 	return _CivilPLCRVotingContract.Contract.CommitPeriodActive(&_CivilPLCRVotingContract.CallOpts, _pollID)
 }
 
 // DidCommit is a free data retrieval call binding the contract method 0x7f97e836.
 //
-// Solidity: function didCommit(_voter address, _pollID uint256) constant returns(committed bool)
+// Solidity: function didCommit(address _voter, uint256 _pollID) constant returns(bool committed)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) DidCommit(opts *bind.CallOpts, _voter common.Address, _pollID *big.Int) (bool, error) {
 	var (
 		ret0 = new(bool)
@@ -268,21 +280,21 @@ func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) DidCommit(opts *b
 
 // DidCommit is a free data retrieval call binding the contract method 0x7f97e836.
 //
-// Solidity: function didCommit(_voter address, _pollID uint256) constant returns(committed bool)
+// Solidity: function didCommit(address _voter, uint256 _pollID) constant returns(bool committed)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractSession) DidCommit(_voter common.Address, _pollID *big.Int) (bool, error) {
 	return _CivilPLCRVotingContract.Contract.DidCommit(&_CivilPLCRVotingContract.CallOpts, _voter, _pollID)
 }
 
 // DidCommit is a free data retrieval call binding the contract method 0x7f97e836.
 //
-// Solidity: function didCommit(_voter address, _pollID uint256) constant returns(committed bool)
+// Solidity: function didCommit(address _voter, uint256 _pollID) constant returns(bool committed)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCallerSession) DidCommit(_voter common.Address, _pollID *big.Int) (bool, error) {
 	return _CivilPLCRVotingContract.Contract.DidCommit(&_CivilPLCRVotingContract.CallOpts, _voter, _pollID)
 }
 
 // DidReveal is a free data retrieval call binding the contract method 0xaa7ca464.
 //
-// Solidity: function didReveal(_voter address, _pollID uint256) constant returns(revealed bool)
+// Solidity: function didReveal(address _voter, uint256 _pollID) constant returns(bool revealed)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) DidReveal(opts *bind.CallOpts, _voter common.Address, _pollID *big.Int) (bool, error) {
 	var (
 		ret0 = new(bool)
@@ -294,21 +306,21 @@ func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) DidReveal(opts *b
 
 // DidReveal is a free data retrieval call binding the contract method 0xaa7ca464.
 //
-// Solidity: function didReveal(_voter address, _pollID uint256) constant returns(revealed bool)
+// Solidity: function didReveal(address _voter, uint256 _pollID) constant returns(bool revealed)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractSession) DidReveal(_voter common.Address, _pollID *big.Int) (bool, error) {
 	return _CivilPLCRVotingContract.Contract.DidReveal(&_CivilPLCRVotingContract.CallOpts, _voter, _pollID)
 }
 
 // DidReveal is a free data retrieval call binding the contract method 0xaa7ca464.
 //
-// Solidity: function didReveal(_voter address, _pollID uint256) constant returns(revealed bool)
+// Solidity: function didReveal(address _voter, uint256 _pollID) constant returns(bool revealed)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCallerSession) DidReveal(_voter common.Address, _pollID *big.Int) (bool, error) {
 	return _CivilPLCRVotingContract.Contract.DidReveal(&_CivilPLCRVotingContract.CallOpts, _voter, _pollID)
 }
 
 // GetCommitHash is a free data retrieval call binding the contract method 0xd901402b.
 //
-// Solidity: function getCommitHash(_voter address, _pollID uint256) constant returns(commitHash bytes32)
+// Solidity: function getCommitHash(address _voter, uint256 _pollID) constant returns(bytes32 commitHash)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) GetCommitHash(opts *bind.CallOpts, _voter common.Address, _pollID *big.Int) ([32]byte, error) {
 	var (
 		ret0 = new([32]byte)
@@ -320,21 +332,21 @@ func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) GetCommitHash(opt
 
 // GetCommitHash is a free data retrieval call binding the contract method 0xd901402b.
 //
-// Solidity: function getCommitHash(_voter address, _pollID uint256) constant returns(commitHash bytes32)
+// Solidity: function getCommitHash(address _voter, uint256 _pollID) constant returns(bytes32 commitHash)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractSession) GetCommitHash(_voter common.Address, _pollID *big.Int) ([32]byte, error) {
 	return _CivilPLCRVotingContract.Contract.GetCommitHash(&_CivilPLCRVotingContract.CallOpts, _voter, _pollID)
 }
 
 // GetCommitHash is a free data retrieval call binding the contract method 0xd901402b.
 //
-// Solidity: function getCommitHash(_voter address, _pollID uint256) constant returns(commitHash bytes32)
+// Solidity: function getCommitHash(address _voter, uint256 _pollID) constant returns(bytes32 commitHash)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCallerSession) GetCommitHash(_voter common.Address, _pollID *big.Int) ([32]byte, error) {
 	return _CivilPLCRVotingContract.Contract.GetCommitHash(&_CivilPLCRVotingContract.CallOpts, _voter, _pollID)
 }
 
 // GetInsertPointForNumTokens is a free data retrieval call binding the contract method 0x2c052031.
 //
-// Solidity: function getInsertPointForNumTokens(_voter address, _numTokens uint256, _pollID uint256) constant returns(prevNode uint256)
+// Solidity: function getInsertPointForNumTokens(address _voter, uint256 _numTokens, uint256 _pollID) constant returns(uint256 prevNode)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) GetInsertPointForNumTokens(opts *bind.CallOpts, _voter common.Address, _numTokens *big.Int, _pollID *big.Int) (*big.Int, error) {
 	var (
 		ret0 = new(*big.Int)
@@ -346,21 +358,21 @@ func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) GetInsertPointFor
 
 // GetInsertPointForNumTokens is a free data retrieval call binding the contract method 0x2c052031.
 //
-// Solidity: function getInsertPointForNumTokens(_voter address, _numTokens uint256, _pollID uint256) constant returns(prevNode uint256)
+// Solidity: function getInsertPointForNumTokens(address _voter, uint256 _numTokens, uint256 _pollID) constant returns(uint256 prevNode)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractSession) GetInsertPointForNumTokens(_voter common.Address, _numTokens *big.Int, _pollID *big.Int) (*big.Int, error) {
 	return _CivilPLCRVotingContract.Contract.GetInsertPointForNumTokens(&_CivilPLCRVotingContract.CallOpts, _voter, _numTokens, _pollID)
 }
 
 // GetInsertPointForNumTokens is a free data retrieval call binding the contract method 0x2c052031.
 //
-// Solidity: function getInsertPointForNumTokens(_voter address, _numTokens uint256, _pollID uint256) constant returns(prevNode uint256)
+// Solidity: function getInsertPointForNumTokens(address _voter, uint256 _numTokens, uint256 _pollID) constant returns(uint256 prevNode)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCallerSession) GetInsertPointForNumTokens(_voter common.Address, _numTokens *big.Int, _pollID *big.Int) (*big.Int, error) {
 	return _CivilPLCRVotingContract.Contract.GetInsertPointForNumTokens(&_CivilPLCRVotingContract.CallOpts, _voter, _numTokens, _pollID)
 }
 
 // GetLastNode is a free data retrieval call binding the contract method 0x427fa1d2.
 //
-// Solidity: function getLastNode(_voter address) constant returns(pollID uint256)
+// Solidity: function getLastNode(address _voter) constant returns(uint256 pollID)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) GetLastNode(opts *bind.CallOpts, _voter common.Address) (*big.Int, error) {
 	var (
 		ret0 = new(*big.Int)
@@ -372,21 +384,21 @@ func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) GetLastNode(opts 
 
 // GetLastNode is a free data retrieval call binding the contract method 0x427fa1d2.
 //
-// Solidity: function getLastNode(_voter address) constant returns(pollID uint256)
+// Solidity: function getLastNode(address _voter) constant returns(uint256 pollID)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractSession) GetLastNode(_voter common.Address) (*big.Int, error) {
 	return _CivilPLCRVotingContract.Contract.GetLastNode(&_CivilPLCRVotingContract.CallOpts, _voter)
 }
 
 // GetLastNode is a free data retrieval call binding the contract method 0x427fa1d2.
 //
-// Solidity: function getLastNode(_voter address) constant returns(pollID uint256)
+// Solidity: function getLastNode(address _voter) constant returns(uint256 pollID)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCallerSession) GetLastNode(_voter common.Address) (*big.Int, error) {
 	return _CivilPLCRVotingContract.Contract.GetLastNode(&_CivilPLCRVotingContract.CallOpts, _voter)
 }
 
 // GetLockedTokens is a free data retrieval call binding the contract method 0x6b2d95d4.
 //
-// Solidity: function getLockedTokens(_voter address) constant returns(numTokens uint256)
+// Solidity: function getLockedTokens(address _voter) constant returns(uint256 numTokens)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) GetLockedTokens(opts *bind.CallOpts, _voter common.Address) (*big.Int, error) {
 	var (
 		ret0 = new(*big.Int)
@@ -398,21 +410,21 @@ func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) GetLockedTokens(o
 
 // GetLockedTokens is a free data retrieval call binding the contract method 0x6b2d95d4.
 //
-// Solidity: function getLockedTokens(_voter address) constant returns(numTokens uint256)
+// Solidity: function getLockedTokens(address _voter) constant returns(uint256 numTokens)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractSession) GetLockedTokens(_voter common.Address) (*big.Int, error) {
 	return _CivilPLCRVotingContract.Contract.GetLockedTokens(&_CivilPLCRVotingContract.CallOpts, _voter)
 }
 
 // GetLockedTokens is a free data retrieval call binding the contract method 0x6b2d95d4.
 //
-// Solidity: function getLockedTokens(_voter address) constant returns(numTokens uint256)
+// Solidity: function getLockedTokens(address _voter) constant returns(uint256 numTokens)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCallerSession) GetLockedTokens(_voter common.Address) (*big.Int, error) {
 	return _CivilPLCRVotingContract.Contract.GetLockedTokens(&_CivilPLCRVotingContract.CallOpts, _voter)
 }
 
 // GetNumLosingTokens is a free data retrieval call binding the contract method 0x6afa97a8.
 //
-// Solidity: function getNumLosingTokens(_voter address, _pollID uint256, _salt uint256) constant returns(correctVotes uint256)
+// Solidity: function getNumLosingTokens(address _voter, uint256 _pollID, uint256 _salt) constant returns(uint256 correctVotes)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) GetNumLosingTokens(opts *bind.CallOpts, _voter common.Address, _pollID *big.Int, _salt *big.Int) (*big.Int, error) {
 	var (
 		ret0 = new(*big.Int)
@@ -424,21 +436,21 @@ func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) GetNumLosingToken
 
 // GetNumLosingTokens is a free data retrieval call binding the contract method 0x6afa97a8.
 //
-// Solidity: function getNumLosingTokens(_voter address, _pollID uint256, _salt uint256) constant returns(correctVotes uint256)
+// Solidity: function getNumLosingTokens(address _voter, uint256 _pollID, uint256 _salt) constant returns(uint256 correctVotes)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractSession) GetNumLosingTokens(_voter common.Address, _pollID *big.Int, _salt *big.Int) (*big.Int, error) {
 	return _CivilPLCRVotingContract.Contract.GetNumLosingTokens(&_CivilPLCRVotingContract.CallOpts, _voter, _pollID, _salt)
 }
 
 // GetNumLosingTokens is a free data retrieval call binding the contract method 0x6afa97a8.
 //
-// Solidity: function getNumLosingTokens(_voter address, _pollID uint256, _salt uint256) constant returns(correctVotes uint256)
+// Solidity: function getNumLosingTokens(address _voter, uint256 _pollID, uint256 _salt) constant returns(uint256 correctVotes)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCallerSession) GetNumLosingTokens(_voter common.Address, _pollID *big.Int, _salt *big.Int) (*big.Int, error) {
 	return _CivilPLCRVotingContract.Contract.GetNumLosingTokens(&_CivilPLCRVotingContract.CallOpts, _voter, _pollID, _salt)
 }
 
 // GetNumPassingTokens is a free data retrieval call binding the contract method 0xb43bd069.
 //
-// Solidity: function getNumPassingTokens(_voter address, _pollID uint256, _salt uint256) constant returns(correctVotes uint256)
+// Solidity: function getNumPassingTokens(address _voter, uint256 _pollID, uint256 _salt) constant returns(uint256 correctVotes)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) GetNumPassingTokens(opts *bind.CallOpts, _voter common.Address, _pollID *big.Int, _salt *big.Int) (*big.Int, error) {
 	var (
 		ret0 = new(*big.Int)
@@ -450,21 +462,21 @@ func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) GetNumPassingToke
 
 // GetNumPassingTokens is a free data retrieval call binding the contract method 0xb43bd069.
 //
-// Solidity: function getNumPassingTokens(_voter address, _pollID uint256, _salt uint256) constant returns(correctVotes uint256)
+// Solidity: function getNumPassingTokens(address _voter, uint256 _pollID, uint256 _salt) constant returns(uint256 correctVotes)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractSession) GetNumPassingTokens(_voter common.Address, _pollID *big.Int, _salt *big.Int) (*big.Int, error) {
 	return _CivilPLCRVotingContract.Contract.GetNumPassingTokens(&_CivilPLCRVotingContract.CallOpts, _voter, _pollID, _salt)
 }
 
 // GetNumPassingTokens is a free data retrieval call binding the contract method 0xb43bd069.
 //
-// Solidity: function getNumPassingTokens(_voter address, _pollID uint256, _salt uint256) constant returns(correctVotes uint256)
+// Solidity: function getNumPassingTokens(address _voter, uint256 _pollID, uint256 _salt) constant returns(uint256 correctVotes)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCallerSession) GetNumPassingTokens(_voter common.Address, _pollID *big.Int, _salt *big.Int) (*big.Int, error) {
 	return _CivilPLCRVotingContract.Contract.GetNumPassingTokens(&_CivilPLCRVotingContract.CallOpts, _voter, _pollID, _salt)
 }
 
 // GetNumTokens is a free data retrieval call binding the contract method 0xd1382092.
 //
-// Solidity: function getNumTokens(_voter address, _pollID uint256) constant returns(numTokens uint256)
+// Solidity: function getNumTokens(address _voter, uint256 _pollID) constant returns(uint256 numTokens)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) GetNumTokens(opts *bind.CallOpts, _voter common.Address, _pollID *big.Int) (*big.Int, error) {
 	var (
 		ret0 = new(*big.Int)
@@ -476,21 +488,21 @@ func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) GetNumTokens(opts
 
 // GetNumTokens is a free data retrieval call binding the contract method 0xd1382092.
 //
-// Solidity: function getNumTokens(_voter address, _pollID uint256) constant returns(numTokens uint256)
+// Solidity: function getNumTokens(address _voter, uint256 _pollID) constant returns(uint256 numTokens)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractSession) GetNumTokens(_voter common.Address, _pollID *big.Int) (*big.Int, error) {
 	return _CivilPLCRVotingContract.Contract.GetNumTokens(&_CivilPLCRVotingContract.CallOpts, _voter, _pollID)
 }
 
 // GetNumTokens is a free data retrieval call binding the contract method 0xd1382092.
 //
-// Solidity: function getNumTokens(_voter address, _pollID uint256) constant returns(numTokens uint256)
+// Solidity: function getNumTokens(address _voter, uint256 _pollID) constant returns(uint256 numTokens)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCallerSession) GetNumTokens(_voter common.Address, _pollID *big.Int) (*big.Int, error) {
 	return _CivilPLCRVotingContract.Contract.GetNumTokens(&_CivilPLCRVotingContract.CallOpts, _voter, _pollID)
 }
 
 // GetTotalNumberOfTokensForLosingOption is a free data retrieval call binding the contract method 0xe8cfa3f0.
 //
-// Solidity: function getTotalNumberOfTokensForLosingOption(_pollID uint256) constant returns(numTokens uint256)
+// Solidity: function getTotalNumberOfTokensForLosingOption(uint256 _pollID) constant returns(uint256 numTokens)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) GetTotalNumberOfTokensForLosingOption(opts *bind.CallOpts, _pollID *big.Int) (*big.Int, error) {
 	var (
 		ret0 = new(*big.Int)
@@ -502,21 +514,21 @@ func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) GetTotalNumberOfT
 
 // GetTotalNumberOfTokensForLosingOption is a free data retrieval call binding the contract method 0xe8cfa3f0.
 //
-// Solidity: function getTotalNumberOfTokensForLosingOption(_pollID uint256) constant returns(numTokens uint256)
+// Solidity: function getTotalNumberOfTokensForLosingOption(uint256 _pollID) constant returns(uint256 numTokens)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractSession) GetTotalNumberOfTokensForLosingOption(_pollID *big.Int) (*big.Int, error) {
 	return _CivilPLCRVotingContract.Contract.GetTotalNumberOfTokensForLosingOption(&_CivilPLCRVotingContract.CallOpts, _pollID)
 }
 
 // GetTotalNumberOfTokensForLosingOption is a free data retrieval call binding the contract method 0xe8cfa3f0.
 //
-// Solidity: function getTotalNumberOfTokensForLosingOption(_pollID uint256) constant returns(numTokens uint256)
+// Solidity: function getTotalNumberOfTokensForLosingOption(uint256 _pollID) constant returns(uint256 numTokens)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCallerSession) GetTotalNumberOfTokensForLosingOption(_pollID *big.Int) (*big.Int, error) {
 	return _CivilPLCRVotingContract.Contract.GetTotalNumberOfTokensForLosingOption(&_CivilPLCRVotingContract.CallOpts, _pollID)
 }
 
 // GetTotalNumberOfTokensForWinningOption is a free data retrieval call binding the contract method 0x053e71a6.
 //
-// Solidity: function getTotalNumberOfTokensForWinningOption(_pollID uint256) constant returns(numTokens uint256)
+// Solidity: function getTotalNumberOfTokensForWinningOption(uint256 _pollID) constant returns(uint256 numTokens)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) GetTotalNumberOfTokensForWinningOption(opts *bind.CallOpts, _pollID *big.Int) (*big.Int, error) {
 	var (
 		ret0 = new(*big.Int)
@@ -528,21 +540,21 @@ func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) GetTotalNumberOfT
 
 // GetTotalNumberOfTokensForWinningOption is a free data retrieval call binding the contract method 0x053e71a6.
 //
-// Solidity: function getTotalNumberOfTokensForWinningOption(_pollID uint256) constant returns(numTokens uint256)
+// Solidity: function getTotalNumberOfTokensForWinningOption(uint256 _pollID) constant returns(uint256 numTokens)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractSession) GetTotalNumberOfTokensForWinningOption(_pollID *big.Int) (*big.Int, error) {
 	return _CivilPLCRVotingContract.Contract.GetTotalNumberOfTokensForWinningOption(&_CivilPLCRVotingContract.CallOpts, _pollID)
 }
 
 // GetTotalNumberOfTokensForWinningOption is a free data retrieval call binding the contract method 0x053e71a6.
 //
-// Solidity: function getTotalNumberOfTokensForWinningOption(_pollID uint256) constant returns(numTokens uint256)
+// Solidity: function getTotalNumberOfTokensForWinningOption(uint256 _pollID) constant returns(uint256 numTokens)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCallerSession) GetTotalNumberOfTokensForWinningOption(_pollID *big.Int) (*big.Int, error) {
 	return _CivilPLCRVotingContract.Contract.GetTotalNumberOfTokensForWinningOption(&_CivilPLCRVotingContract.CallOpts, _pollID)
 }
 
 // IsExpired is a free data retrieval call binding the contract method 0xd9548e53.
 //
-// Solidity: function isExpired(_terminationDate uint256) constant returns(expired bool)
+// Solidity: function isExpired(uint256 _terminationDate) constant returns(bool expired)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) IsExpired(opts *bind.CallOpts, _terminationDate *big.Int) (bool, error) {
 	var (
 		ret0 = new(bool)
@@ -554,21 +566,21 @@ func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) IsExpired(opts *b
 
 // IsExpired is a free data retrieval call binding the contract method 0xd9548e53.
 //
-// Solidity: function isExpired(_terminationDate uint256) constant returns(expired bool)
+// Solidity: function isExpired(uint256 _terminationDate) constant returns(bool expired)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractSession) IsExpired(_terminationDate *big.Int) (bool, error) {
 	return _CivilPLCRVotingContract.Contract.IsExpired(&_CivilPLCRVotingContract.CallOpts, _terminationDate)
 }
 
 // IsExpired is a free data retrieval call binding the contract method 0xd9548e53.
 //
-// Solidity: function isExpired(_terminationDate uint256) constant returns(expired bool)
+// Solidity: function isExpired(uint256 _terminationDate) constant returns(bool expired)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCallerSession) IsExpired(_terminationDate *big.Int) (bool, error) {
 	return _CivilPLCRVotingContract.Contract.IsExpired(&_CivilPLCRVotingContract.CallOpts, _terminationDate)
 }
 
 // IsPassed is a free data retrieval call binding the contract method 0x49403183.
 //
-// Solidity: function isPassed(_pollID uint256) constant returns(passed bool)
+// Solidity: function isPassed(uint256 _pollID) constant returns(bool passed)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) IsPassed(opts *bind.CallOpts, _pollID *big.Int) (bool, error) {
 	var (
 		ret0 = new(bool)
@@ -580,21 +592,21 @@ func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) IsPassed(opts *bi
 
 // IsPassed is a free data retrieval call binding the contract method 0x49403183.
 //
-// Solidity: function isPassed(_pollID uint256) constant returns(passed bool)
+// Solidity: function isPassed(uint256 _pollID) constant returns(bool passed)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractSession) IsPassed(_pollID *big.Int) (bool, error) {
 	return _CivilPLCRVotingContract.Contract.IsPassed(&_CivilPLCRVotingContract.CallOpts, _pollID)
 }
 
 // IsPassed is a free data retrieval call binding the contract method 0x49403183.
 //
-// Solidity: function isPassed(_pollID uint256) constant returns(passed bool)
+// Solidity: function isPassed(uint256 _pollID) constant returns(bool passed)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCallerSession) IsPassed(_pollID *big.Int) (bool, error) {
 	return _CivilPLCRVotingContract.Contract.IsPassed(&_CivilPLCRVotingContract.CallOpts, _pollID)
 }
 
 // PollEnded is a free data retrieval call binding the contract method 0xee684830.
 //
-// Solidity: function pollEnded(_pollID uint256) constant returns(ended bool)
+// Solidity: function pollEnded(uint256 _pollID) constant returns(bool ended)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) PollEnded(opts *bind.CallOpts, _pollID *big.Int) (bool, error) {
 	var (
 		ret0 = new(bool)
@@ -606,21 +618,21 @@ func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) PollEnded(opts *b
 
 // PollEnded is a free data retrieval call binding the contract method 0xee684830.
 //
-// Solidity: function pollEnded(_pollID uint256) constant returns(ended bool)
+// Solidity: function pollEnded(uint256 _pollID) constant returns(bool ended)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractSession) PollEnded(_pollID *big.Int) (bool, error) {
 	return _CivilPLCRVotingContract.Contract.PollEnded(&_CivilPLCRVotingContract.CallOpts, _pollID)
 }
 
 // PollEnded is a free data retrieval call binding the contract method 0xee684830.
 //
-// Solidity: function pollEnded(_pollID uint256) constant returns(ended bool)
+// Solidity: function pollEnded(uint256 _pollID) constant returns(bool ended)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCallerSession) PollEnded(_pollID *big.Int) (bool, error) {
 	return _CivilPLCRVotingContract.Contract.PollEnded(&_CivilPLCRVotingContract.CallOpts, _pollID)
 }
 
 // PollExists is a free data retrieval call binding the contract method 0x88d21ff3.
 //
-// Solidity: function pollExists(_pollID uint256) constant returns(exists bool)
+// Solidity: function pollExists(uint256 _pollID) constant returns(bool exists)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) PollExists(opts *bind.CallOpts, _pollID *big.Int) (bool, error) {
 	var (
 		ret0 = new(bool)
@@ -632,21 +644,21 @@ func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) PollExists(opts *
 
 // PollExists is a free data retrieval call binding the contract method 0x88d21ff3.
 //
-// Solidity: function pollExists(_pollID uint256) constant returns(exists bool)
+// Solidity: function pollExists(uint256 _pollID) constant returns(bool exists)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractSession) PollExists(_pollID *big.Int) (bool, error) {
 	return _CivilPLCRVotingContract.Contract.PollExists(&_CivilPLCRVotingContract.CallOpts, _pollID)
 }
 
 // PollExists is a free data retrieval call binding the contract method 0x88d21ff3.
 //
-// Solidity: function pollExists(_pollID uint256) constant returns(exists bool)
+// Solidity: function pollExists(uint256 _pollID) constant returns(bool exists)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCallerSession) PollExists(_pollID *big.Int) (bool, error) {
 	return _CivilPLCRVotingContract.Contract.PollExists(&_CivilPLCRVotingContract.CallOpts, _pollID)
 }
 
 // PollMap is a free data retrieval call binding the contract method 0x6148fed5.
 //
-// Solidity: function pollMap( uint256) constant returns(commitEndDate uint256, revealEndDate uint256, voteQuorum uint256, votesFor uint256, votesAgainst uint256)
+// Solidity: function pollMap(uint256 ) constant returns(uint256 commitEndDate, uint256 revealEndDate, uint256 voteQuorum, uint256 votesFor, uint256 votesAgainst)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) PollMap(opts *bind.CallOpts, arg0 *big.Int) (struct {
 	CommitEndDate *big.Int
 	RevealEndDate *big.Int
@@ -668,7 +680,7 @@ func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) PollMap(opts *bin
 
 // PollMap is a free data retrieval call binding the contract method 0x6148fed5.
 //
-// Solidity: function pollMap( uint256) constant returns(commitEndDate uint256, revealEndDate uint256, voteQuorum uint256, votesFor uint256, votesAgainst uint256)
+// Solidity: function pollMap(uint256 ) constant returns(uint256 commitEndDate, uint256 revealEndDate, uint256 voteQuorum, uint256 votesFor, uint256 votesAgainst)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractSession) PollMap(arg0 *big.Int) (struct {
 	CommitEndDate *big.Int
 	RevealEndDate *big.Int
@@ -681,7 +693,7 @@ func (_CivilPLCRVotingContract *CivilPLCRVotingContractSession) PollMap(arg0 *bi
 
 // PollMap is a free data retrieval call binding the contract method 0x6148fed5.
 //
-// Solidity: function pollMap( uint256) constant returns(commitEndDate uint256, revealEndDate uint256, voteQuorum uint256, votesFor uint256, votesAgainst uint256)
+// Solidity: function pollMap(uint256 ) constant returns(uint256 commitEndDate, uint256 revealEndDate, uint256 voteQuorum, uint256 votesFor, uint256 votesAgainst)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCallerSession) PollMap(arg0 *big.Int) (struct {
 	CommitEndDate *big.Int
 	RevealEndDate *big.Int
@@ -720,7 +732,7 @@ func (_CivilPLCRVotingContract *CivilPLCRVotingContractCallerSession) PollNonce(
 
 // RevealPeriodActive is a free data retrieval call binding the contract method 0x441c77c0.
 //
-// Solidity: function revealPeriodActive(_pollID uint256) constant returns(active bool)
+// Solidity: function revealPeriodActive(uint256 _pollID) constant returns(bool active)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) RevealPeriodActive(opts *bind.CallOpts, _pollID *big.Int) (bool, error) {
 	var (
 		ret0 = new(bool)
@@ -732,14 +744,14 @@ func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) RevealPeriodActiv
 
 // RevealPeriodActive is a free data retrieval call binding the contract method 0x441c77c0.
 //
-// Solidity: function revealPeriodActive(_pollID uint256) constant returns(active bool)
+// Solidity: function revealPeriodActive(uint256 _pollID) constant returns(bool active)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractSession) RevealPeriodActive(_pollID *big.Int) (bool, error) {
 	return _CivilPLCRVotingContract.Contract.RevealPeriodActive(&_CivilPLCRVotingContract.CallOpts, _pollID)
 }
 
 // RevealPeriodActive is a free data retrieval call binding the contract method 0x441c77c0.
 //
-// Solidity: function revealPeriodActive(_pollID uint256) constant returns(active bool)
+// Solidity: function revealPeriodActive(uint256 _pollID) constant returns(bool active)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCallerSession) RevealPeriodActive(_pollID *big.Int) (bool, error) {
 	return _CivilPLCRVotingContract.Contract.RevealPeriodActive(&_CivilPLCRVotingContract.CallOpts, _pollID)
 }
@@ -798,7 +810,7 @@ func (_CivilPLCRVotingContract *CivilPLCRVotingContractCallerSession) Token() (c
 
 // ValidPosition is a free data retrieval call binding the contract method 0x819b0293.
 //
-// Solidity: function validPosition(_prevID uint256, _nextID uint256, _voter address, _numTokens uint256) constant returns(valid bool)
+// Solidity: function validPosition(uint256 _prevID, uint256 _nextID, address _voter, uint256 _numTokens) constant returns(bool valid)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) ValidPosition(opts *bind.CallOpts, _prevID *big.Int, _nextID *big.Int, _voter common.Address, _numTokens *big.Int) (bool, error) {
 	var (
 		ret0 = new(bool)
@@ -810,21 +822,21 @@ func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) ValidPosition(opt
 
 // ValidPosition is a free data retrieval call binding the contract method 0x819b0293.
 //
-// Solidity: function validPosition(_prevID uint256, _nextID uint256, _voter address, _numTokens uint256) constant returns(valid bool)
+// Solidity: function validPosition(uint256 _prevID, uint256 _nextID, address _voter, uint256 _numTokens) constant returns(bool valid)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractSession) ValidPosition(_prevID *big.Int, _nextID *big.Int, _voter common.Address, _numTokens *big.Int) (bool, error) {
 	return _CivilPLCRVotingContract.Contract.ValidPosition(&_CivilPLCRVotingContract.CallOpts, _prevID, _nextID, _voter, _numTokens)
 }
 
 // ValidPosition is a free data retrieval call binding the contract method 0x819b0293.
 //
-// Solidity: function validPosition(_prevID uint256, _nextID uint256, _voter address, _numTokens uint256) constant returns(valid bool)
+// Solidity: function validPosition(uint256 _prevID, uint256 _nextID, address _voter, uint256 _numTokens) constant returns(bool valid)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCallerSession) ValidPosition(_prevID *big.Int, _nextID *big.Int, _voter common.Address, _numTokens *big.Int) (bool, error) {
 	return _CivilPLCRVotingContract.Contract.ValidPosition(&_CivilPLCRVotingContract.CallOpts, _prevID, _nextID, _voter, _numTokens)
 }
 
 // VoteTokenBalance is a free data retrieval call binding the contract method 0x3b930294.
 //
-// Solidity: function voteTokenBalance( address) constant returns(uint256)
+// Solidity: function voteTokenBalance(address ) constant returns(uint256)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) VoteTokenBalance(opts *bind.CallOpts, arg0 common.Address) (*big.Int, error) {
 	var (
 		ret0 = new(*big.Int)
@@ -836,203 +848,203 @@ func (_CivilPLCRVotingContract *CivilPLCRVotingContractCaller) VoteTokenBalance(
 
 // VoteTokenBalance is a free data retrieval call binding the contract method 0x3b930294.
 //
-// Solidity: function voteTokenBalance( address) constant returns(uint256)
+// Solidity: function voteTokenBalance(address ) constant returns(uint256)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractSession) VoteTokenBalance(arg0 common.Address) (*big.Int, error) {
 	return _CivilPLCRVotingContract.Contract.VoteTokenBalance(&_CivilPLCRVotingContract.CallOpts, arg0)
 }
 
 // VoteTokenBalance is a free data retrieval call binding the contract method 0x3b930294.
 //
-// Solidity: function voteTokenBalance( address) constant returns(uint256)
+// Solidity: function voteTokenBalance(address ) constant returns(uint256)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractCallerSession) VoteTokenBalance(arg0 common.Address) (*big.Int, error) {
 	return _CivilPLCRVotingContract.Contract.VoteTokenBalance(&_CivilPLCRVotingContract.CallOpts, arg0)
 }
 
 // CommitVote is a paid mutator transaction binding the contract method 0x6cbf9c5e.
 //
-// Solidity: function commitVote(_pollID uint256, _secretHash bytes32, _numTokens uint256, _prevPollID uint256) returns()
+// Solidity: function commitVote(uint256 _pollID, bytes32 _secretHash, uint256 _numTokens, uint256 _prevPollID) returns()
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractTransactor) CommitVote(opts *bind.TransactOpts, _pollID *big.Int, _secretHash [32]byte, _numTokens *big.Int, _prevPollID *big.Int) (*types.Transaction, error) {
 	return _CivilPLCRVotingContract.contract.Transact(opts, "commitVote", _pollID, _secretHash, _numTokens, _prevPollID)
 }
 
 // CommitVote is a paid mutator transaction binding the contract method 0x6cbf9c5e.
 //
-// Solidity: function commitVote(_pollID uint256, _secretHash bytes32, _numTokens uint256, _prevPollID uint256) returns()
+// Solidity: function commitVote(uint256 _pollID, bytes32 _secretHash, uint256 _numTokens, uint256 _prevPollID) returns()
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractSession) CommitVote(_pollID *big.Int, _secretHash [32]byte, _numTokens *big.Int, _prevPollID *big.Int) (*types.Transaction, error) {
 	return _CivilPLCRVotingContract.Contract.CommitVote(&_CivilPLCRVotingContract.TransactOpts, _pollID, _secretHash, _numTokens, _prevPollID)
 }
 
 // CommitVote is a paid mutator transaction binding the contract method 0x6cbf9c5e.
 //
-// Solidity: function commitVote(_pollID uint256, _secretHash bytes32, _numTokens uint256, _prevPollID uint256) returns()
+// Solidity: function commitVote(uint256 _pollID, bytes32 _secretHash, uint256 _numTokens, uint256 _prevPollID) returns()
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractTransactorSession) CommitVote(_pollID *big.Int, _secretHash [32]byte, _numTokens *big.Int, _prevPollID *big.Int) (*types.Transaction, error) {
 	return _CivilPLCRVotingContract.Contract.CommitVote(&_CivilPLCRVotingContract.TransactOpts, _pollID, _secretHash, _numTokens, _prevPollID)
 }
 
 // CommitVotes is a paid mutator transaction binding the contract method 0x3ec36b99.
 //
-// Solidity: function commitVotes(_pollIDs uint256[], _secretHashes bytes32[], _numsTokens uint256[], _prevPollIDs uint256[]) returns()
+// Solidity: function commitVotes(uint256[] _pollIDs, bytes32[] _secretHashes, uint256[] _numsTokens, uint256[] _prevPollIDs) returns()
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractTransactor) CommitVotes(opts *bind.TransactOpts, _pollIDs []*big.Int, _secretHashes [][32]byte, _numsTokens []*big.Int, _prevPollIDs []*big.Int) (*types.Transaction, error) {
 	return _CivilPLCRVotingContract.contract.Transact(opts, "commitVotes", _pollIDs, _secretHashes, _numsTokens, _prevPollIDs)
 }
 
 // CommitVotes is a paid mutator transaction binding the contract method 0x3ec36b99.
 //
-// Solidity: function commitVotes(_pollIDs uint256[], _secretHashes bytes32[], _numsTokens uint256[], _prevPollIDs uint256[]) returns()
+// Solidity: function commitVotes(uint256[] _pollIDs, bytes32[] _secretHashes, uint256[] _numsTokens, uint256[] _prevPollIDs) returns()
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractSession) CommitVotes(_pollIDs []*big.Int, _secretHashes [][32]byte, _numsTokens []*big.Int, _prevPollIDs []*big.Int) (*types.Transaction, error) {
 	return _CivilPLCRVotingContract.Contract.CommitVotes(&_CivilPLCRVotingContract.TransactOpts, _pollIDs, _secretHashes, _numsTokens, _prevPollIDs)
 }
 
 // CommitVotes is a paid mutator transaction binding the contract method 0x3ec36b99.
 //
-// Solidity: function commitVotes(_pollIDs uint256[], _secretHashes bytes32[], _numsTokens uint256[], _prevPollIDs uint256[]) returns()
+// Solidity: function commitVotes(uint256[] _pollIDs, bytes32[] _secretHashes, uint256[] _numsTokens, uint256[] _prevPollIDs) returns()
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractTransactorSession) CommitVotes(_pollIDs []*big.Int, _secretHashes [][32]byte, _numsTokens []*big.Int, _prevPollIDs []*big.Int) (*types.Transaction, error) {
 	return _CivilPLCRVotingContract.Contract.CommitVotes(&_CivilPLCRVotingContract.TransactOpts, _pollIDs, _secretHashes, _numsTokens, _prevPollIDs)
 }
 
 // RequestVotingRights is a paid mutator transaction binding the contract method 0xa25236fe.
 //
-// Solidity: function requestVotingRights(_numTokens uint256) returns()
+// Solidity: function requestVotingRights(uint256 _numTokens) returns()
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractTransactor) RequestVotingRights(opts *bind.TransactOpts, _numTokens *big.Int) (*types.Transaction, error) {
 	return _CivilPLCRVotingContract.contract.Transact(opts, "requestVotingRights", _numTokens)
 }
 
 // RequestVotingRights is a paid mutator transaction binding the contract method 0xa25236fe.
 //
-// Solidity: function requestVotingRights(_numTokens uint256) returns()
+// Solidity: function requestVotingRights(uint256 _numTokens) returns()
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractSession) RequestVotingRights(_numTokens *big.Int) (*types.Transaction, error) {
 	return _CivilPLCRVotingContract.Contract.RequestVotingRights(&_CivilPLCRVotingContract.TransactOpts, _numTokens)
 }
 
 // RequestVotingRights is a paid mutator transaction binding the contract method 0xa25236fe.
 //
-// Solidity: function requestVotingRights(_numTokens uint256) returns()
+// Solidity: function requestVotingRights(uint256 _numTokens) returns()
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractTransactorSession) RequestVotingRights(_numTokens *big.Int) (*types.Transaction, error) {
 	return _CivilPLCRVotingContract.Contract.RequestVotingRights(&_CivilPLCRVotingContract.TransactOpts, _numTokens)
 }
 
 // RescueTokens is a paid mutator transaction binding the contract method 0x97603560.
 //
-// Solidity: function rescueTokens(_pollID uint256) returns()
+// Solidity: function rescueTokens(uint256 _pollID) returns()
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractTransactor) RescueTokens(opts *bind.TransactOpts, _pollID *big.Int) (*types.Transaction, error) {
 	return _CivilPLCRVotingContract.contract.Transact(opts, "rescueTokens", _pollID)
 }
 
 // RescueTokens is a paid mutator transaction binding the contract method 0x97603560.
 //
-// Solidity: function rescueTokens(_pollID uint256) returns()
+// Solidity: function rescueTokens(uint256 _pollID) returns()
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractSession) RescueTokens(_pollID *big.Int) (*types.Transaction, error) {
 	return _CivilPLCRVotingContract.Contract.RescueTokens(&_CivilPLCRVotingContract.TransactOpts, _pollID)
 }
 
 // RescueTokens is a paid mutator transaction binding the contract method 0x97603560.
 //
-// Solidity: function rescueTokens(_pollID uint256) returns()
+// Solidity: function rescueTokens(uint256 _pollID) returns()
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractTransactorSession) RescueTokens(_pollID *big.Int) (*types.Transaction, error) {
 	return _CivilPLCRVotingContract.Contract.RescueTokens(&_CivilPLCRVotingContract.TransactOpts, _pollID)
 }
 
 // RescueTokensInMultiplePolls is a paid mutator transaction binding the contract method 0xbb11ed7e.
 //
-// Solidity: function rescueTokensInMultiplePolls(_pollIDs uint256[]) returns()
+// Solidity: function rescueTokensInMultiplePolls(uint256[] _pollIDs) returns()
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractTransactor) RescueTokensInMultiplePolls(opts *bind.TransactOpts, _pollIDs []*big.Int) (*types.Transaction, error) {
 	return _CivilPLCRVotingContract.contract.Transact(opts, "rescueTokensInMultiplePolls", _pollIDs)
 }
 
 // RescueTokensInMultiplePolls is a paid mutator transaction binding the contract method 0xbb11ed7e.
 //
-// Solidity: function rescueTokensInMultiplePolls(_pollIDs uint256[]) returns()
+// Solidity: function rescueTokensInMultiplePolls(uint256[] _pollIDs) returns()
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractSession) RescueTokensInMultiplePolls(_pollIDs []*big.Int) (*types.Transaction, error) {
 	return _CivilPLCRVotingContract.Contract.RescueTokensInMultiplePolls(&_CivilPLCRVotingContract.TransactOpts, _pollIDs)
 }
 
 // RescueTokensInMultiplePolls is a paid mutator transaction binding the contract method 0xbb11ed7e.
 //
-// Solidity: function rescueTokensInMultiplePolls(_pollIDs uint256[]) returns()
+// Solidity: function rescueTokensInMultiplePolls(uint256[] _pollIDs) returns()
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractTransactorSession) RescueTokensInMultiplePolls(_pollIDs []*big.Int) (*types.Transaction, error) {
 	return _CivilPLCRVotingContract.Contract.RescueTokensInMultiplePolls(&_CivilPLCRVotingContract.TransactOpts, _pollIDs)
 }
 
 // RevealVote is a paid mutator transaction binding the contract method 0xb11d8bb8.
 //
-// Solidity: function revealVote(_pollID uint256, _voteOption uint256, _salt uint256) returns()
+// Solidity: function revealVote(uint256 _pollID, uint256 _voteOption, uint256 _salt) returns()
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractTransactor) RevealVote(opts *bind.TransactOpts, _pollID *big.Int, _voteOption *big.Int, _salt *big.Int) (*types.Transaction, error) {
 	return _CivilPLCRVotingContract.contract.Transact(opts, "revealVote", _pollID, _voteOption, _salt)
 }
 
 // RevealVote is a paid mutator transaction binding the contract method 0xb11d8bb8.
 //
-// Solidity: function revealVote(_pollID uint256, _voteOption uint256, _salt uint256) returns()
+// Solidity: function revealVote(uint256 _pollID, uint256 _voteOption, uint256 _salt) returns()
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractSession) RevealVote(_pollID *big.Int, _voteOption *big.Int, _salt *big.Int) (*types.Transaction, error) {
 	return _CivilPLCRVotingContract.Contract.RevealVote(&_CivilPLCRVotingContract.TransactOpts, _pollID, _voteOption, _salt)
 }
 
 // RevealVote is a paid mutator transaction binding the contract method 0xb11d8bb8.
 //
-// Solidity: function revealVote(_pollID uint256, _voteOption uint256, _salt uint256) returns()
+// Solidity: function revealVote(uint256 _pollID, uint256 _voteOption, uint256 _salt) returns()
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractTransactorSession) RevealVote(_pollID *big.Int, _voteOption *big.Int, _salt *big.Int) (*types.Transaction, error) {
 	return _CivilPLCRVotingContract.Contract.RevealVote(&_CivilPLCRVotingContract.TransactOpts, _pollID, _voteOption, _salt)
 }
 
 // RevealVotes is a paid mutator transaction binding the contract method 0x8090f92e.
 //
-// Solidity: function revealVotes(_pollIDs uint256[], _voteOptions uint256[], _salts uint256[]) returns()
+// Solidity: function revealVotes(uint256[] _pollIDs, uint256[] _voteOptions, uint256[] _salts) returns()
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractTransactor) RevealVotes(opts *bind.TransactOpts, _pollIDs []*big.Int, _voteOptions []*big.Int, _salts []*big.Int) (*types.Transaction, error) {
 	return _CivilPLCRVotingContract.contract.Transact(opts, "revealVotes", _pollIDs, _voteOptions, _salts)
 }
 
 // RevealVotes is a paid mutator transaction binding the contract method 0x8090f92e.
 //
-// Solidity: function revealVotes(_pollIDs uint256[], _voteOptions uint256[], _salts uint256[]) returns()
+// Solidity: function revealVotes(uint256[] _pollIDs, uint256[] _voteOptions, uint256[] _salts) returns()
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractSession) RevealVotes(_pollIDs []*big.Int, _voteOptions []*big.Int, _salts []*big.Int) (*types.Transaction, error) {
 	return _CivilPLCRVotingContract.Contract.RevealVotes(&_CivilPLCRVotingContract.TransactOpts, _pollIDs, _voteOptions, _salts)
 }
 
 // RevealVotes is a paid mutator transaction binding the contract method 0x8090f92e.
 //
-// Solidity: function revealVotes(_pollIDs uint256[], _voteOptions uint256[], _salts uint256[]) returns()
+// Solidity: function revealVotes(uint256[] _pollIDs, uint256[] _voteOptions, uint256[] _salts) returns()
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractTransactorSession) RevealVotes(_pollIDs []*big.Int, _voteOptions []*big.Int, _salts []*big.Int) (*types.Transaction, error) {
 	return _CivilPLCRVotingContract.Contract.RevealVotes(&_CivilPLCRVotingContract.TransactOpts, _pollIDs, _voteOptions, _salts)
 }
 
 // StartPoll is a paid mutator transaction binding the contract method 0x32ed3d60.
 //
-// Solidity: function startPoll(_voteQuorum uint256, _commitDuration uint256, _revealDuration uint256) returns(pollID uint256)
+// Solidity: function startPoll(uint256 _voteQuorum, uint256 _commitDuration, uint256 _revealDuration) returns(uint256 pollID)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractTransactor) StartPoll(opts *bind.TransactOpts, _voteQuorum *big.Int, _commitDuration *big.Int, _revealDuration *big.Int) (*types.Transaction, error) {
 	return _CivilPLCRVotingContract.contract.Transact(opts, "startPoll", _voteQuorum, _commitDuration, _revealDuration)
 }
 
 // StartPoll is a paid mutator transaction binding the contract method 0x32ed3d60.
 //
-// Solidity: function startPoll(_voteQuorum uint256, _commitDuration uint256, _revealDuration uint256) returns(pollID uint256)
+// Solidity: function startPoll(uint256 _voteQuorum, uint256 _commitDuration, uint256 _revealDuration) returns(uint256 pollID)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractSession) StartPoll(_voteQuorum *big.Int, _commitDuration *big.Int, _revealDuration *big.Int) (*types.Transaction, error) {
 	return _CivilPLCRVotingContract.Contract.StartPoll(&_CivilPLCRVotingContract.TransactOpts, _voteQuorum, _commitDuration, _revealDuration)
 }
 
 // StartPoll is a paid mutator transaction binding the contract method 0x32ed3d60.
 //
-// Solidity: function startPoll(_voteQuorum uint256, _commitDuration uint256, _revealDuration uint256) returns(pollID uint256)
+// Solidity: function startPoll(uint256 _voteQuorum, uint256 _commitDuration, uint256 _revealDuration) returns(uint256 pollID)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractTransactorSession) StartPoll(_voteQuorum *big.Int, _commitDuration *big.Int, _revealDuration *big.Int) (*types.Transaction, error) {
 	return _CivilPLCRVotingContract.Contract.StartPoll(&_CivilPLCRVotingContract.TransactOpts, _voteQuorum, _commitDuration, _revealDuration)
 }
 
 // WithdrawVotingRights is a paid mutator transaction binding the contract method 0xe7b1d43c.
 //
-// Solidity: function withdrawVotingRights(_numTokens uint256) returns()
+// Solidity: function withdrawVotingRights(uint256 _numTokens) returns()
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractTransactor) WithdrawVotingRights(opts *bind.TransactOpts, _numTokens *big.Int) (*types.Transaction, error) {
 	return _CivilPLCRVotingContract.contract.Transact(opts, "withdrawVotingRights", _numTokens)
 }
 
 // WithdrawVotingRights is a paid mutator transaction binding the contract method 0xe7b1d43c.
 //
-// Solidity: function withdrawVotingRights(_numTokens uint256) returns()
+// Solidity: function withdrawVotingRights(uint256 _numTokens) returns()
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractSession) WithdrawVotingRights(_numTokens *big.Int) (*types.Transaction, error) {
 	return _CivilPLCRVotingContract.Contract.WithdrawVotingRights(&_CivilPLCRVotingContract.TransactOpts, _numTokens)
 }
 
 // WithdrawVotingRights is a paid mutator transaction binding the contract method 0xe7b1d43c.
 //
-// Solidity: function withdrawVotingRights(_numTokens uint256) returns()
+// Solidity: function withdrawVotingRights(uint256 _numTokens) returns()
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractTransactorSession) WithdrawVotingRights(_numTokens *big.Int) (*types.Transaction, error) {
 	return _CivilPLCRVotingContract.Contract.WithdrawVotingRights(&_CivilPLCRVotingContract.TransactOpts, _numTokens)
 }
@@ -1116,7 +1128,7 @@ type CivilPLCRVotingContractPollCreated struct {
 
 // FilterPollCreated is a free log retrieval operation binding the contract event 0x404f1f1c229d9eb2a949e7584da6ffde9d059ef2169f487ca815434cce0640d0.
 //
-// Solidity: e _PollCreated(voteQuorum uint256, commitEndDate uint256, revealEndDate uint256, pollID indexed uint256, creator indexed address)
+// Solidity: event _PollCreated(uint256 voteQuorum, uint256 commitEndDate, uint256 revealEndDate, uint256 indexed pollID, address indexed creator)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractFilterer) FilterPollCreated(opts *bind.FilterOpts, pollID []*big.Int, creator []common.Address) (*CivilPLCRVotingContractPollCreatedIterator, error) {
 
 	var pollIDRule []interface{}
@@ -1137,7 +1149,7 @@ func (_CivilPLCRVotingContract *CivilPLCRVotingContractFilterer) FilterPollCreat
 
 // WatchPollCreated is a free log subscription operation binding the contract event 0x404f1f1c229d9eb2a949e7584da6ffde9d059ef2169f487ca815434cce0640d0.
 //
-// Solidity: e _PollCreated(voteQuorum uint256, commitEndDate uint256, revealEndDate uint256, pollID indexed uint256, creator indexed address)
+// Solidity: event _PollCreated(uint256 voteQuorum, uint256 commitEndDate, uint256 revealEndDate, uint256 indexed pollID, address indexed creator)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractFilterer) WatchPollCreated(opts *bind.WatchOpts, sink chan<- *CivilPLCRVotingContractPollCreated, pollID []*big.Int, creator []common.Address) (event.Subscription, error) {
 
 	var pollIDRule []interface{}
@@ -1257,7 +1269,7 @@ type CivilPLCRVotingContractTokensRescued struct {
 
 // FilterTokensRescued is a free log retrieval operation binding the contract event 0x402507661c8c8cb90e0a796450b8bdd28b6c516f05279c0cd29e84c344e1699a.
 //
-// Solidity: e _TokensRescued(pollID indexed uint256, voter indexed address)
+// Solidity: event _TokensRescued(uint256 indexed pollID, address indexed voter)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractFilterer) FilterTokensRescued(opts *bind.FilterOpts, pollID []*big.Int, voter []common.Address) (*CivilPLCRVotingContractTokensRescuedIterator, error) {
 
 	var pollIDRule []interface{}
@@ -1278,7 +1290,7 @@ func (_CivilPLCRVotingContract *CivilPLCRVotingContractFilterer) FilterTokensRes
 
 // WatchTokensRescued is a free log subscription operation binding the contract event 0x402507661c8c8cb90e0a796450b8bdd28b6c516f05279c0cd29e84c344e1699a.
 //
-// Solidity: e _TokensRescued(pollID indexed uint256, voter indexed address)
+// Solidity: event _TokensRescued(uint256 indexed pollID, address indexed voter)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractFilterer) WatchTokensRescued(opts *bind.WatchOpts, sink chan<- *CivilPLCRVotingContractTokensRescued, pollID []*big.Int, voter []common.Address) (event.Subscription, error) {
 
 	var pollIDRule []interface{}
@@ -1399,7 +1411,7 @@ type CivilPLCRVotingContractVoteCommitted struct {
 
 // FilterVoteCommitted is a free log retrieval operation binding the contract event 0xea7979e4280d7e6bffc1c7d83a1ac99f16d02ecc14465ce41016226783b663d7.
 //
-// Solidity: e _VoteCommitted(pollID indexed uint256, numTokens uint256, voter indexed address)
+// Solidity: event _VoteCommitted(uint256 indexed pollID, uint256 numTokens, address indexed voter)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractFilterer) FilterVoteCommitted(opts *bind.FilterOpts, pollID []*big.Int, voter []common.Address) (*CivilPLCRVotingContractVoteCommittedIterator, error) {
 
 	var pollIDRule []interface{}
@@ -1421,7 +1433,7 @@ func (_CivilPLCRVotingContract *CivilPLCRVotingContractFilterer) FilterVoteCommi
 
 // WatchVoteCommitted is a free log subscription operation binding the contract event 0xea7979e4280d7e6bffc1c7d83a1ac99f16d02ecc14465ce41016226783b663d7.
 //
-// Solidity: e _VoteCommitted(pollID indexed uint256, numTokens uint256, voter indexed address)
+// Solidity: event _VoteCommitted(uint256 indexed pollID, uint256 numTokens, address indexed voter)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractFilterer) WatchVoteCommitted(opts *bind.WatchOpts, sink chan<- *CivilPLCRVotingContractVoteCommitted, pollID []*big.Int, voter []common.Address) (event.Subscription, error) {
 
 	var pollIDRule []interface{}
@@ -1547,7 +1559,7 @@ type CivilPLCRVotingContractVoteRevealed struct {
 
 // FilterVoteRevealed is a free log retrieval operation binding the contract event 0x9b19aaec524fad29c0ced9b9973a15e3045d7c3be156d71394ab40f0d5f119ff.
 //
-// Solidity: e _VoteRevealed(pollID indexed uint256, numTokens uint256, votesFor uint256, votesAgainst uint256, choice indexed uint256, voter indexed address, salt uint256)
+// Solidity: event _VoteRevealed(uint256 indexed pollID, uint256 numTokens, uint256 votesFor, uint256 votesAgainst, uint256 indexed choice, address indexed voter, uint256 salt)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractFilterer) FilterVoteRevealed(opts *bind.FilterOpts, pollID []*big.Int, choice []*big.Int, voter []common.Address) (*CivilPLCRVotingContractVoteRevealedIterator, error) {
 
 	var pollIDRule []interface{}
@@ -1573,7 +1585,7 @@ func (_CivilPLCRVotingContract *CivilPLCRVotingContractFilterer) FilterVoteRevea
 
 // WatchVoteRevealed is a free log subscription operation binding the contract event 0x9b19aaec524fad29c0ced9b9973a15e3045d7c3be156d71394ab40f0d5f119ff.
 //
-// Solidity: e _VoteRevealed(pollID indexed uint256, numTokens uint256, votesFor uint256, votesAgainst uint256, choice indexed uint256, voter indexed address, salt uint256)
+// Solidity: event _VoteRevealed(uint256 indexed pollID, uint256 numTokens, uint256 votesFor, uint256 votesAgainst, uint256 indexed choice, address indexed voter, uint256 salt)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractFilterer) WatchVoteRevealed(opts *bind.WatchOpts, sink chan<- *CivilPLCRVotingContractVoteRevealed, pollID []*big.Int, choice []*big.Int, voter []common.Address) (event.Subscription, error) {
 
 	var pollIDRule []interface{}
@@ -1698,7 +1710,7 @@ type CivilPLCRVotingContractVotingRightsGranted struct {
 
 // FilterVotingRightsGranted is a free log retrieval operation binding the contract event 0xf7aaf024511d9982df8cd0d437c71c30106e6848cd1ba3d288d7a9c0e276aeda.
 //
-// Solidity: e _VotingRightsGranted(numTokens uint256, voter indexed address)
+// Solidity: event _VotingRightsGranted(uint256 numTokens, address indexed voter)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractFilterer) FilterVotingRightsGranted(opts *bind.FilterOpts, voter []common.Address) (*CivilPLCRVotingContractVotingRightsGrantedIterator, error) {
 
 	var voterRule []interface{}
@@ -1715,7 +1727,7 @@ func (_CivilPLCRVotingContract *CivilPLCRVotingContractFilterer) FilterVotingRig
 
 // WatchVotingRightsGranted is a free log subscription operation binding the contract event 0xf7aaf024511d9982df8cd0d437c71c30106e6848cd1ba3d288d7a9c0e276aeda.
 //
-// Solidity: e _VotingRightsGranted(numTokens uint256, voter indexed address)
+// Solidity: event _VotingRightsGranted(uint256 numTokens, address indexed voter)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractFilterer) WatchVotingRightsGranted(opts *bind.WatchOpts, sink chan<- *CivilPLCRVotingContractVotingRightsGranted, voter []common.Address) (event.Subscription, error) {
 
 	var voterRule []interface{}
@@ -1831,7 +1843,7 @@ type CivilPLCRVotingContractVotingRightsWithdrawn struct {
 
 // FilterVotingRightsWithdrawn is a free log retrieval operation binding the contract event 0xfaeb7dbb9992397d26ea1944efd40c80b40f702faf69b46c67ad10aba68ccb79.
 //
-// Solidity: e _VotingRightsWithdrawn(numTokens uint256, voter indexed address)
+// Solidity: event _VotingRightsWithdrawn(uint256 numTokens, address indexed voter)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractFilterer) FilterVotingRightsWithdrawn(opts *bind.FilterOpts, voter []common.Address) (*CivilPLCRVotingContractVotingRightsWithdrawnIterator, error) {
 
 	var voterRule []interface{}
@@ -1848,7 +1860,7 @@ func (_CivilPLCRVotingContract *CivilPLCRVotingContractFilterer) FilterVotingRig
 
 // WatchVotingRightsWithdrawn is a free log subscription operation binding the contract event 0xfaeb7dbb9992397d26ea1944efd40c80b40f702faf69b46c67ad10aba68ccb79.
 //
-// Solidity: e _VotingRightsWithdrawn(numTokens uint256, voter indexed address)
+// Solidity: event _VotingRightsWithdrawn(uint256 numTokens, address indexed voter)
 func (_CivilPLCRVotingContract *CivilPLCRVotingContractFilterer) WatchVotingRightsWithdrawn(opts *bind.WatchOpts, sink chan<- *CivilPLCRVotingContractVotingRightsWithdrawn, voter []common.Address) (event.Subscription, error) {
 
 	var voterRule []interface{}

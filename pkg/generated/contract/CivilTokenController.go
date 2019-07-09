@@ -15,6 +15,18 @@ import (
 	"github.com/ethereum/go-ethereum/event"
 )
 
+// Reference imports to suppress errors if they are not otherwise used.
+var (
+	_ = big.NewInt
+	_ = strings.NewReader
+	_ = ethereum.NotFound
+	_ = abi.U256
+	_ = bind.Bind
+	_ = common.Big1
+	_ = types.BloomLookup
+	_ = event.NewSubscription
+)
+
 // CivilTokenControllerContractABI is the input ABI used to generate the binding from.
 const CivilTokenControllerContractABI = "[{\"constant\":true,\"inputs\":[],\"name\":\"SUCCESS_CODE\",\"outputs\":[{\"name\":\"\",\"type\":\"uint8\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"operator\",\"type\":\"address\"}],\"name\":\"addToCivilians\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"operator\",\"type\":\"address\"}],\"name\":\"removeFromUnlocked\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"newsroomMultisigList\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"managerAddress\",\"type\":\"address\"}],\"name\":\"addManager\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"operator\",\"type\":\"address\"}],\"name\":\"removeFromCore\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"operator\",\"type\":\"address\"}],\"name\":\"addToUnlocked\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"MUST_BE_A_CIVILIAN_CODE\",\"outputs\":[{\"name\":\"\",\"type\":\"uint8\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"operator\",\"type\":\"address\"}],\"name\":\"removeFromVerified\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"operator\",\"type\":\"address\"}],\"name\":\"addToNewsroomMultisigs\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"operator\",\"type\":\"address\"}],\"name\":\"addToCore\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"MUST_BE_A_CIVILIAN_ERROR\",\"outputs\":[{\"name\":\"\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"verifiedList\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"unlockedList\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"coreList\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"operator\",\"type\":\"address\"}],\"name\":\"removeFromCivilians\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"managerAddress\",\"type\":\"address\"}],\"name\":\"removeManager\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"operator\",\"type\":\"address\"}],\"name\":\"addToStorefront\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"operator\",\"type\":\"address\"}],\"name\":\"removeFromStorefront\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"MUST_BE_VERIFIED_ERROR\",\"outputs\":[{\"name\":\"\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"MUST_BE_VERIFIED_CODE\",\"outputs\":[{\"name\":\"\",\"type\":\"uint8\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"isManager\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"MUST_BE_UNLOCKED_CODE\",\"outputs\":[{\"name\":\"\",\"type\":\"uint8\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"SUCCESS_MESSAGE\",\"outputs\":[{\"name\":\"\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"operator\",\"type\":\"address\"}],\"name\":\"removeFromNewsroomMultisigs\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"operator\",\"type\":\"address\"}],\"name\":\"checkProofOfUse\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"operator\",\"type\":\"address\"}],\"name\":\"addToVerified\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"civilianList\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"storefrontList\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"MUST_BE_UNLOCKED_ERROR\",\"outputs\":[{\"name\":\"\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"managerAddress\",\"type\":\"address\"}],\"name\":\"checkManagerStatus\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"managers\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"previousOwner\",\"type\":\"address\"}],\"name\":\"OwnershipRenounced\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"constant\":true,\"inputs\":[{\"name\":\"from\",\"type\":\"address\"},{\"name\":\"to\",\"type\":\"address\"},{\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"detectTransferRestriction\",\"outputs\":[{\"name\":\"\",\"type\":\"uint8\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"restrictionCode\",\"type\":\"uint8\"}],\"name\":\"messageForTransferRestriction\",\"outputs\":[{\"name\":\"message\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"user\",\"type\":\"address\"},{\"name\":\"tokenAmount\",\"type\":\"uint256\"}],\"name\":\"onRequestVotingRights\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]"
 
@@ -386,7 +398,7 @@ func (_CivilTokenControllerContract *CivilTokenControllerContractCallerSession) 
 
 // CheckManagerStatus is a free data retrieval call binding the contract method 0xf281e7d1.
 //
-// Solidity: function checkManagerStatus(managerAddress address) constant returns(bool)
+// Solidity: function checkManagerStatus(address managerAddress) constant returns(bool)
 func (_CivilTokenControllerContract *CivilTokenControllerContractCaller) CheckManagerStatus(opts *bind.CallOpts, managerAddress common.Address) (bool, error) {
 	var (
 		ret0 = new(bool)
@@ -398,21 +410,21 @@ func (_CivilTokenControllerContract *CivilTokenControllerContractCaller) CheckMa
 
 // CheckManagerStatus is a free data retrieval call binding the contract method 0xf281e7d1.
 //
-// Solidity: function checkManagerStatus(managerAddress address) constant returns(bool)
+// Solidity: function checkManagerStatus(address managerAddress) constant returns(bool)
 func (_CivilTokenControllerContract *CivilTokenControllerContractSession) CheckManagerStatus(managerAddress common.Address) (bool, error) {
 	return _CivilTokenControllerContract.Contract.CheckManagerStatus(&_CivilTokenControllerContract.CallOpts, managerAddress)
 }
 
 // CheckManagerStatus is a free data retrieval call binding the contract method 0xf281e7d1.
 //
-// Solidity: function checkManagerStatus(managerAddress address) constant returns(bool)
+// Solidity: function checkManagerStatus(address managerAddress) constant returns(bool)
 func (_CivilTokenControllerContract *CivilTokenControllerContractCallerSession) CheckManagerStatus(managerAddress common.Address) (bool, error) {
 	return _CivilTokenControllerContract.Contract.CheckManagerStatus(&_CivilTokenControllerContract.CallOpts, managerAddress)
 }
 
 // CivilianList is a free data retrieval call binding the contract method 0xee56f4fa.
 //
-// Solidity: function civilianList( address) constant returns(bool)
+// Solidity: function civilianList(address ) constant returns(bool)
 func (_CivilTokenControllerContract *CivilTokenControllerContractCaller) CivilianList(opts *bind.CallOpts, arg0 common.Address) (bool, error) {
 	var (
 		ret0 = new(bool)
@@ -424,21 +436,21 @@ func (_CivilTokenControllerContract *CivilTokenControllerContractCaller) Civilia
 
 // CivilianList is a free data retrieval call binding the contract method 0xee56f4fa.
 //
-// Solidity: function civilianList( address) constant returns(bool)
+// Solidity: function civilianList(address ) constant returns(bool)
 func (_CivilTokenControllerContract *CivilTokenControllerContractSession) CivilianList(arg0 common.Address) (bool, error) {
 	return _CivilTokenControllerContract.Contract.CivilianList(&_CivilTokenControllerContract.CallOpts, arg0)
 }
 
 // CivilianList is a free data retrieval call binding the contract method 0xee56f4fa.
 //
-// Solidity: function civilianList( address) constant returns(bool)
+// Solidity: function civilianList(address ) constant returns(bool)
 func (_CivilTokenControllerContract *CivilTokenControllerContractCallerSession) CivilianList(arg0 common.Address) (bool, error) {
 	return _CivilTokenControllerContract.Contract.CivilianList(&_CivilTokenControllerContract.CallOpts, arg0)
 }
 
 // CoreList is a free data retrieval call binding the contract method 0x9685cc57.
 //
-// Solidity: function coreList( address) constant returns(bool)
+// Solidity: function coreList(address ) constant returns(bool)
 func (_CivilTokenControllerContract *CivilTokenControllerContractCaller) CoreList(opts *bind.CallOpts, arg0 common.Address) (bool, error) {
 	var (
 		ret0 = new(bool)
@@ -450,21 +462,21 @@ func (_CivilTokenControllerContract *CivilTokenControllerContractCaller) CoreLis
 
 // CoreList is a free data retrieval call binding the contract method 0x9685cc57.
 //
-// Solidity: function coreList( address) constant returns(bool)
+// Solidity: function coreList(address ) constant returns(bool)
 func (_CivilTokenControllerContract *CivilTokenControllerContractSession) CoreList(arg0 common.Address) (bool, error) {
 	return _CivilTokenControllerContract.Contract.CoreList(&_CivilTokenControllerContract.CallOpts, arg0)
 }
 
 // CoreList is a free data retrieval call binding the contract method 0x9685cc57.
 //
-// Solidity: function coreList( address) constant returns(bool)
+// Solidity: function coreList(address ) constant returns(bool)
 func (_CivilTokenControllerContract *CivilTokenControllerContractCallerSession) CoreList(arg0 common.Address) (bool, error) {
 	return _CivilTokenControllerContract.Contract.CoreList(&_CivilTokenControllerContract.CallOpts, arg0)
 }
 
 // DetectTransferRestriction is a free data retrieval call binding the contract method 0xd4ce1415.
 //
-// Solidity: function detectTransferRestriction(from address, to address, value uint256) constant returns(uint8)
+// Solidity: function detectTransferRestriction(address from, address to, uint256 value) constant returns(uint8)
 func (_CivilTokenControllerContract *CivilTokenControllerContractCaller) DetectTransferRestriction(opts *bind.CallOpts, from common.Address, to common.Address, value *big.Int) (uint8, error) {
 	var (
 		ret0 = new(uint8)
@@ -476,14 +488,14 @@ func (_CivilTokenControllerContract *CivilTokenControllerContractCaller) DetectT
 
 // DetectTransferRestriction is a free data retrieval call binding the contract method 0xd4ce1415.
 //
-// Solidity: function detectTransferRestriction(from address, to address, value uint256) constant returns(uint8)
+// Solidity: function detectTransferRestriction(address from, address to, uint256 value) constant returns(uint8)
 func (_CivilTokenControllerContract *CivilTokenControllerContractSession) DetectTransferRestriction(from common.Address, to common.Address, value *big.Int) (uint8, error) {
 	return _CivilTokenControllerContract.Contract.DetectTransferRestriction(&_CivilTokenControllerContract.CallOpts, from, to, value)
 }
 
 // DetectTransferRestriction is a free data retrieval call binding the contract method 0xd4ce1415.
 //
-// Solidity: function detectTransferRestriction(from address, to address, value uint256) constant returns(uint8)
+// Solidity: function detectTransferRestriction(address from, address to, uint256 value) constant returns(uint8)
 func (_CivilTokenControllerContract *CivilTokenControllerContractCallerSession) DetectTransferRestriction(from common.Address, to common.Address, value *big.Int) (uint8, error) {
 	return _CivilTokenControllerContract.Contract.DetectTransferRestriction(&_CivilTokenControllerContract.CallOpts, from, to, value)
 }
@@ -516,7 +528,7 @@ func (_CivilTokenControllerContract *CivilTokenControllerContractCallerSession) 
 
 // Managers is a free data retrieval call binding the contract method 0xfdff9b4d.
 //
-// Solidity: function managers( address) constant returns(bool)
+// Solidity: function managers(address ) constant returns(bool)
 func (_CivilTokenControllerContract *CivilTokenControllerContractCaller) Managers(opts *bind.CallOpts, arg0 common.Address) (bool, error) {
 	var (
 		ret0 = new(bool)
@@ -528,21 +540,21 @@ func (_CivilTokenControllerContract *CivilTokenControllerContractCaller) Manager
 
 // Managers is a free data retrieval call binding the contract method 0xfdff9b4d.
 //
-// Solidity: function managers( address) constant returns(bool)
+// Solidity: function managers(address ) constant returns(bool)
 func (_CivilTokenControllerContract *CivilTokenControllerContractSession) Managers(arg0 common.Address) (bool, error) {
 	return _CivilTokenControllerContract.Contract.Managers(&_CivilTokenControllerContract.CallOpts, arg0)
 }
 
 // Managers is a free data retrieval call binding the contract method 0xfdff9b4d.
 //
-// Solidity: function managers( address) constant returns(bool)
+// Solidity: function managers(address ) constant returns(bool)
 func (_CivilTokenControllerContract *CivilTokenControllerContractCallerSession) Managers(arg0 common.Address) (bool, error) {
 	return _CivilTokenControllerContract.Contract.Managers(&_CivilTokenControllerContract.CallOpts, arg0)
 }
 
 // MessageForTransferRestriction is a free data retrieval call binding the contract method 0x7f4ab1dd.
 //
-// Solidity: function messageForTransferRestriction(restrictionCode uint8) constant returns(message string)
+// Solidity: function messageForTransferRestriction(uint8 restrictionCode) constant returns(string message)
 func (_CivilTokenControllerContract *CivilTokenControllerContractCaller) MessageForTransferRestriction(opts *bind.CallOpts, restrictionCode uint8) (string, error) {
 	var (
 		ret0 = new(string)
@@ -554,21 +566,21 @@ func (_CivilTokenControllerContract *CivilTokenControllerContractCaller) Message
 
 // MessageForTransferRestriction is a free data retrieval call binding the contract method 0x7f4ab1dd.
 //
-// Solidity: function messageForTransferRestriction(restrictionCode uint8) constant returns(message string)
+// Solidity: function messageForTransferRestriction(uint8 restrictionCode) constant returns(string message)
 func (_CivilTokenControllerContract *CivilTokenControllerContractSession) MessageForTransferRestriction(restrictionCode uint8) (string, error) {
 	return _CivilTokenControllerContract.Contract.MessageForTransferRestriction(&_CivilTokenControllerContract.CallOpts, restrictionCode)
 }
 
 // MessageForTransferRestriction is a free data retrieval call binding the contract method 0x7f4ab1dd.
 //
-// Solidity: function messageForTransferRestriction(restrictionCode uint8) constant returns(message string)
+// Solidity: function messageForTransferRestriction(uint8 restrictionCode) constant returns(string message)
 func (_CivilTokenControllerContract *CivilTokenControllerContractCallerSession) MessageForTransferRestriction(restrictionCode uint8) (string, error) {
 	return _CivilTokenControllerContract.Contract.MessageForTransferRestriction(&_CivilTokenControllerContract.CallOpts, restrictionCode)
 }
 
 // NewsroomMultisigList is a free data retrieval call binding the contract method 0x166542b3.
 //
-// Solidity: function newsroomMultisigList( address) constant returns(bool)
+// Solidity: function newsroomMultisigList(address ) constant returns(bool)
 func (_CivilTokenControllerContract *CivilTokenControllerContractCaller) NewsroomMultisigList(opts *bind.CallOpts, arg0 common.Address) (bool, error) {
 	var (
 		ret0 = new(bool)
@@ -580,14 +592,14 @@ func (_CivilTokenControllerContract *CivilTokenControllerContractCaller) Newsroo
 
 // NewsroomMultisigList is a free data retrieval call binding the contract method 0x166542b3.
 //
-// Solidity: function newsroomMultisigList( address) constant returns(bool)
+// Solidity: function newsroomMultisigList(address ) constant returns(bool)
 func (_CivilTokenControllerContract *CivilTokenControllerContractSession) NewsroomMultisigList(arg0 common.Address) (bool, error) {
 	return _CivilTokenControllerContract.Contract.NewsroomMultisigList(&_CivilTokenControllerContract.CallOpts, arg0)
 }
 
 // NewsroomMultisigList is a free data retrieval call binding the contract method 0x166542b3.
 //
-// Solidity: function newsroomMultisigList( address) constant returns(bool)
+// Solidity: function newsroomMultisigList(address ) constant returns(bool)
 func (_CivilTokenControllerContract *CivilTokenControllerContractCallerSession) NewsroomMultisigList(arg0 common.Address) (bool, error) {
 	return _CivilTokenControllerContract.Contract.NewsroomMultisigList(&_CivilTokenControllerContract.CallOpts, arg0)
 }
@@ -620,7 +632,7 @@ func (_CivilTokenControllerContract *CivilTokenControllerContractCallerSession) 
 
 // StorefrontList is a free data retrieval call binding the contract method 0xf0fbca06.
 //
-// Solidity: function storefrontList( address) constant returns(bool)
+// Solidity: function storefrontList(address ) constant returns(bool)
 func (_CivilTokenControllerContract *CivilTokenControllerContractCaller) StorefrontList(opts *bind.CallOpts, arg0 common.Address) (bool, error) {
 	var (
 		ret0 = new(bool)
@@ -632,21 +644,21 @@ func (_CivilTokenControllerContract *CivilTokenControllerContractCaller) Storefr
 
 // StorefrontList is a free data retrieval call binding the contract method 0xf0fbca06.
 //
-// Solidity: function storefrontList( address) constant returns(bool)
+// Solidity: function storefrontList(address ) constant returns(bool)
 func (_CivilTokenControllerContract *CivilTokenControllerContractSession) StorefrontList(arg0 common.Address) (bool, error) {
 	return _CivilTokenControllerContract.Contract.StorefrontList(&_CivilTokenControllerContract.CallOpts, arg0)
 }
 
 // StorefrontList is a free data retrieval call binding the contract method 0xf0fbca06.
 //
-// Solidity: function storefrontList( address) constant returns(bool)
+// Solidity: function storefrontList(address ) constant returns(bool)
 func (_CivilTokenControllerContract *CivilTokenControllerContractCallerSession) StorefrontList(arg0 common.Address) (bool, error) {
 	return _CivilTokenControllerContract.Contract.StorefrontList(&_CivilTokenControllerContract.CallOpts, arg0)
 }
 
 // UnlockedList is a free data retrieval call binding the contract method 0x8bdeb452.
 //
-// Solidity: function unlockedList( address) constant returns(bool)
+// Solidity: function unlockedList(address ) constant returns(bool)
 func (_CivilTokenControllerContract *CivilTokenControllerContractCaller) UnlockedList(opts *bind.CallOpts, arg0 common.Address) (bool, error) {
 	var (
 		ret0 = new(bool)
@@ -658,21 +670,21 @@ func (_CivilTokenControllerContract *CivilTokenControllerContractCaller) Unlocke
 
 // UnlockedList is a free data retrieval call binding the contract method 0x8bdeb452.
 //
-// Solidity: function unlockedList( address) constant returns(bool)
+// Solidity: function unlockedList(address ) constant returns(bool)
 func (_CivilTokenControllerContract *CivilTokenControllerContractSession) UnlockedList(arg0 common.Address) (bool, error) {
 	return _CivilTokenControllerContract.Contract.UnlockedList(&_CivilTokenControllerContract.CallOpts, arg0)
 }
 
 // UnlockedList is a free data retrieval call binding the contract method 0x8bdeb452.
 //
-// Solidity: function unlockedList( address) constant returns(bool)
+// Solidity: function unlockedList(address ) constant returns(bool)
 func (_CivilTokenControllerContract *CivilTokenControllerContractCallerSession) UnlockedList(arg0 common.Address) (bool, error) {
 	return _CivilTokenControllerContract.Contract.UnlockedList(&_CivilTokenControllerContract.CallOpts, arg0)
 }
 
 // VerifiedList is a free data retrieval call binding the contract method 0x81601496.
 //
-// Solidity: function verifiedList( address) constant returns(bool)
+// Solidity: function verifiedList(address ) constant returns(bool)
 func (_CivilTokenControllerContract *CivilTokenControllerContractCaller) VerifiedList(opts *bind.CallOpts, arg0 common.Address) (bool, error) {
 	var (
 		ret0 = new(bool)
@@ -684,350 +696,350 @@ func (_CivilTokenControllerContract *CivilTokenControllerContractCaller) Verifie
 
 // VerifiedList is a free data retrieval call binding the contract method 0x81601496.
 //
-// Solidity: function verifiedList( address) constant returns(bool)
+// Solidity: function verifiedList(address ) constant returns(bool)
 func (_CivilTokenControllerContract *CivilTokenControllerContractSession) VerifiedList(arg0 common.Address) (bool, error) {
 	return _CivilTokenControllerContract.Contract.VerifiedList(&_CivilTokenControllerContract.CallOpts, arg0)
 }
 
 // VerifiedList is a free data retrieval call binding the contract method 0x81601496.
 //
-// Solidity: function verifiedList( address) constant returns(bool)
+// Solidity: function verifiedList(address ) constant returns(bool)
 func (_CivilTokenControllerContract *CivilTokenControllerContractCallerSession) VerifiedList(arg0 common.Address) (bool, error) {
 	return _CivilTokenControllerContract.Contract.VerifiedList(&_CivilTokenControllerContract.CallOpts, arg0)
 }
 
 // AddManager is a paid mutator transaction binding the contract method 0x2d06177a.
 //
-// Solidity: function addManager(managerAddress address) returns()
+// Solidity: function addManager(address managerAddress) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractTransactor) AddManager(opts *bind.TransactOpts, managerAddress common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.contract.Transact(opts, "addManager", managerAddress)
 }
 
 // AddManager is a paid mutator transaction binding the contract method 0x2d06177a.
 //
-// Solidity: function addManager(managerAddress address) returns()
+// Solidity: function addManager(address managerAddress) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractSession) AddManager(managerAddress common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.Contract.AddManager(&_CivilTokenControllerContract.TransactOpts, managerAddress)
 }
 
 // AddManager is a paid mutator transaction binding the contract method 0x2d06177a.
 //
-// Solidity: function addManager(managerAddress address) returns()
+// Solidity: function addManager(address managerAddress) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractTransactorSession) AddManager(managerAddress common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.Contract.AddManager(&_CivilTokenControllerContract.TransactOpts, managerAddress)
 }
 
 // AddToCivilians is a paid mutator transaction binding the contract method 0x1299090a.
 //
-// Solidity: function addToCivilians(operator address) returns()
+// Solidity: function addToCivilians(address operator) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractTransactor) AddToCivilians(opts *bind.TransactOpts, operator common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.contract.Transact(opts, "addToCivilians", operator)
 }
 
 // AddToCivilians is a paid mutator transaction binding the contract method 0x1299090a.
 //
-// Solidity: function addToCivilians(operator address) returns()
+// Solidity: function addToCivilians(address operator) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractSession) AddToCivilians(operator common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.Contract.AddToCivilians(&_CivilTokenControllerContract.TransactOpts, operator)
 }
 
 // AddToCivilians is a paid mutator transaction binding the contract method 0x1299090a.
 //
-// Solidity: function addToCivilians(operator address) returns()
+// Solidity: function addToCivilians(address operator) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractTransactorSession) AddToCivilians(operator common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.Contract.AddToCivilians(&_CivilTokenControllerContract.TransactOpts, operator)
 }
 
 // AddToCore is a paid mutator transaction binding the contract method 0x73c60182.
 //
-// Solidity: function addToCore(operator address) returns()
+// Solidity: function addToCore(address operator) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractTransactor) AddToCore(opts *bind.TransactOpts, operator common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.contract.Transact(opts, "addToCore", operator)
 }
 
 // AddToCore is a paid mutator transaction binding the contract method 0x73c60182.
 //
-// Solidity: function addToCore(operator address) returns()
+// Solidity: function addToCore(address operator) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractSession) AddToCore(operator common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.Contract.AddToCore(&_CivilTokenControllerContract.TransactOpts, operator)
 }
 
 // AddToCore is a paid mutator transaction binding the contract method 0x73c60182.
 //
-// Solidity: function addToCore(operator address) returns()
+// Solidity: function addToCore(address operator) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractTransactorSession) AddToCore(operator common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.Contract.AddToCore(&_CivilTokenControllerContract.TransactOpts, operator)
 }
 
 // AddToNewsroomMultisigs is a paid mutator transaction binding the contract method 0x607c60bb.
 //
-// Solidity: function addToNewsroomMultisigs(operator address) returns()
+// Solidity: function addToNewsroomMultisigs(address operator) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractTransactor) AddToNewsroomMultisigs(opts *bind.TransactOpts, operator common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.contract.Transact(opts, "addToNewsroomMultisigs", operator)
 }
 
 // AddToNewsroomMultisigs is a paid mutator transaction binding the contract method 0x607c60bb.
 //
-// Solidity: function addToNewsroomMultisigs(operator address) returns()
+// Solidity: function addToNewsroomMultisigs(address operator) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractSession) AddToNewsroomMultisigs(operator common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.Contract.AddToNewsroomMultisigs(&_CivilTokenControllerContract.TransactOpts, operator)
 }
 
 // AddToNewsroomMultisigs is a paid mutator transaction binding the contract method 0x607c60bb.
 //
-// Solidity: function addToNewsroomMultisigs(operator address) returns()
+// Solidity: function addToNewsroomMultisigs(address operator) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractTransactorSession) AddToNewsroomMultisigs(operator common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.Contract.AddToNewsroomMultisigs(&_CivilTokenControllerContract.TransactOpts, operator)
 }
 
 // AddToStorefront is a paid mutator transaction binding the contract method 0xac1f3853.
 //
-// Solidity: function addToStorefront(operator address) returns()
+// Solidity: function addToStorefront(address operator) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractTransactor) AddToStorefront(opts *bind.TransactOpts, operator common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.contract.Transact(opts, "addToStorefront", operator)
 }
 
 // AddToStorefront is a paid mutator transaction binding the contract method 0xac1f3853.
 //
-// Solidity: function addToStorefront(operator address) returns()
+// Solidity: function addToStorefront(address operator) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractSession) AddToStorefront(operator common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.Contract.AddToStorefront(&_CivilTokenControllerContract.TransactOpts, operator)
 }
 
 // AddToStorefront is a paid mutator transaction binding the contract method 0xac1f3853.
 //
-// Solidity: function addToStorefront(operator address) returns()
+// Solidity: function addToStorefront(address operator) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractTransactorSession) AddToStorefront(operator common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.Contract.AddToStorefront(&_CivilTokenControllerContract.TransactOpts, operator)
 }
 
 // AddToUnlocked is a paid mutator transaction binding the contract method 0x3f16b282.
 //
-// Solidity: function addToUnlocked(operator address) returns()
+// Solidity: function addToUnlocked(address operator) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractTransactor) AddToUnlocked(opts *bind.TransactOpts, operator common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.contract.Transact(opts, "addToUnlocked", operator)
 }
 
 // AddToUnlocked is a paid mutator transaction binding the contract method 0x3f16b282.
 //
-// Solidity: function addToUnlocked(operator address) returns()
+// Solidity: function addToUnlocked(address operator) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractSession) AddToUnlocked(operator common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.Contract.AddToUnlocked(&_CivilTokenControllerContract.TransactOpts, operator)
 }
 
 // AddToUnlocked is a paid mutator transaction binding the contract method 0x3f16b282.
 //
-// Solidity: function addToUnlocked(operator address) returns()
+// Solidity: function addToUnlocked(address operator) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractTransactorSession) AddToUnlocked(operator common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.Contract.AddToUnlocked(&_CivilTokenControllerContract.TransactOpts, operator)
 }
 
 // AddToVerified is a paid mutator transaction binding the contract method 0xee37c29f.
 //
-// Solidity: function addToVerified(operator address) returns()
+// Solidity: function addToVerified(address operator) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractTransactor) AddToVerified(opts *bind.TransactOpts, operator common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.contract.Transact(opts, "addToVerified", operator)
 }
 
 // AddToVerified is a paid mutator transaction binding the contract method 0xee37c29f.
 //
-// Solidity: function addToVerified(operator address) returns()
+// Solidity: function addToVerified(address operator) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractSession) AddToVerified(operator common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.Contract.AddToVerified(&_CivilTokenControllerContract.TransactOpts, operator)
 }
 
 // AddToVerified is a paid mutator transaction binding the contract method 0xee37c29f.
 //
-// Solidity: function addToVerified(operator address) returns()
+// Solidity: function addToVerified(address operator) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractTransactorSession) AddToVerified(operator common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.Contract.AddToVerified(&_CivilTokenControllerContract.TransactOpts, operator)
 }
 
 // CheckProofOfUse is a paid mutator transaction binding the contract method 0xe99f29a4.
 //
-// Solidity: function checkProofOfUse(operator address) returns()
+// Solidity: function checkProofOfUse(address operator) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractTransactor) CheckProofOfUse(opts *bind.TransactOpts, operator common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.contract.Transact(opts, "checkProofOfUse", operator)
 }
 
 // CheckProofOfUse is a paid mutator transaction binding the contract method 0xe99f29a4.
 //
-// Solidity: function checkProofOfUse(operator address) returns()
+// Solidity: function checkProofOfUse(address operator) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractSession) CheckProofOfUse(operator common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.Contract.CheckProofOfUse(&_CivilTokenControllerContract.TransactOpts, operator)
 }
 
 // CheckProofOfUse is a paid mutator transaction binding the contract method 0xe99f29a4.
 //
-// Solidity: function checkProofOfUse(operator address) returns()
+// Solidity: function checkProofOfUse(address operator) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractTransactorSession) CheckProofOfUse(operator common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.Contract.CheckProofOfUse(&_CivilTokenControllerContract.TransactOpts, operator)
 }
 
 // OnRequestVotingRights is a paid mutator transaction binding the contract method 0x72524873.
 //
-// Solidity: function onRequestVotingRights(user address, tokenAmount uint256) returns()
+// Solidity: function onRequestVotingRights(address user, uint256 tokenAmount) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractTransactor) OnRequestVotingRights(opts *bind.TransactOpts, user common.Address, tokenAmount *big.Int) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.contract.Transact(opts, "onRequestVotingRights", user, tokenAmount)
 }
 
 // OnRequestVotingRights is a paid mutator transaction binding the contract method 0x72524873.
 //
-// Solidity: function onRequestVotingRights(user address, tokenAmount uint256) returns()
+// Solidity: function onRequestVotingRights(address user, uint256 tokenAmount) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractSession) OnRequestVotingRights(user common.Address, tokenAmount *big.Int) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.Contract.OnRequestVotingRights(&_CivilTokenControllerContract.TransactOpts, user, tokenAmount)
 }
 
 // OnRequestVotingRights is a paid mutator transaction binding the contract method 0x72524873.
 //
-// Solidity: function onRequestVotingRights(user address, tokenAmount uint256) returns()
+// Solidity: function onRequestVotingRights(address user, uint256 tokenAmount) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractTransactorSession) OnRequestVotingRights(user common.Address, tokenAmount *big.Int) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.Contract.OnRequestVotingRights(&_CivilTokenControllerContract.TransactOpts, user, tokenAmount)
 }
 
 // RemoveFromCivilians is a paid mutator transaction binding the contract method 0xab3d0c7a.
 //
-// Solidity: function removeFromCivilians(operator address) returns()
+// Solidity: function removeFromCivilians(address operator) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractTransactor) RemoveFromCivilians(opts *bind.TransactOpts, operator common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.contract.Transact(opts, "removeFromCivilians", operator)
 }
 
 // RemoveFromCivilians is a paid mutator transaction binding the contract method 0xab3d0c7a.
 //
-// Solidity: function removeFromCivilians(operator address) returns()
+// Solidity: function removeFromCivilians(address operator) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractSession) RemoveFromCivilians(operator common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.Contract.RemoveFromCivilians(&_CivilTokenControllerContract.TransactOpts, operator)
 }
 
 // RemoveFromCivilians is a paid mutator transaction binding the contract method 0xab3d0c7a.
 //
-// Solidity: function removeFromCivilians(operator address) returns()
+// Solidity: function removeFromCivilians(address operator) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractTransactorSession) RemoveFromCivilians(operator common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.Contract.RemoveFromCivilians(&_CivilTokenControllerContract.TransactOpts, operator)
 }
 
 // RemoveFromCore is a paid mutator transaction binding the contract method 0x3c421424.
 //
-// Solidity: function removeFromCore(operator address) returns()
+// Solidity: function removeFromCore(address operator) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractTransactor) RemoveFromCore(opts *bind.TransactOpts, operator common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.contract.Transact(opts, "removeFromCore", operator)
 }
 
 // RemoveFromCore is a paid mutator transaction binding the contract method 0x3c421424.
 //
-// Solidity: function removeFromCore(operator address) returns()
+// Solidity: function removeFromCore(address operator) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractSession) RemoveFromCore(operator common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.Contract.RemoveFromCore(&_CivilTokenControllerContract.TransactOpts, operator)
 }
 
 // RemoveFromCore is a paid mutator transaction binding the contract method 0x3c421424.
 //
-// Solidity: function removeFromCore(operator address) returns()
+// Solidity: function removeFromCore(address operator) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractTransactorSession) RemoveFromCore(operator common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.Contract.RemoveFromCore(&_CivilTokenControllerContract.TransactOpts, operator)
 }
 
 // RemoveFromNewsroomMultisigs is a paid mutator transaction binding the contract method 0xe79a4fd4.
 //
-// Solidity: function removeFromNewsroomMultisigs(operator address) returns()
+// Solidity: function removeFromNewsroomMultisigs(address operator) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractTransactor) RemoveFromNewsroomMultisigs(opts *bind.TransactOpts, operator common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.contract.Transact(opts, "removeFromNewsroomMultisigs", operator)
 }
 
 // RemoveFromNewsroomMultisigs is a paid mutator transaction binding the contract method 0xe79a4fd4.
 //
-// Solidity: function removeFromNewsroomMultisigs(operator address) returns()
+// Solidity: function removeFromNewsroomMultisigs(address operator) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractSession) RemoveFromNewsroomMultisigs(operator common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.Contract.RemoveFromNewsroomMultisigs(&_CivilTokenControllerContract.TransactOpts, operator)
 }
 
 // RemoveFromNewsroomMultisigs is a paid mutator transaction binding the contract method 0xe79a4fd4.
 //
-// Solidity: function removeFromNewsroomMultisigs(operator address) returns()
+// Solidity: function removeFromNewsroomMultisigs(address operator) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractTransactorSession) RemoveFromNewsroomMultisigs(operator common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.Contract.RemoveFromNewsroomMultisigs(&_CivilTokenControllerContract.TransactOpts, operator)
 }
 
 // RemoveFromStorefront is a paid mutator transaction binding the contract method 0xadbb9160.
 //
-// Solidity: function removeFromStorefront(operator address) returns()
+// Solidity: function removeFromStorefront(address operator) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractTransactor) RemoveFromStorefront(opts *bind.TransactOpts, operator common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.contract.Transact(opts, "removeFromStorefront", operator)
 }
 
 // RemoveFromStorefront is a paid mutator transaction binding the contract method 0xadbb9160.
 //
-// Solidity: function removeFromStorefront(operator address) returns()
+// Solidity: function removeFromStorefront(address operator) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractSession) RemoveFromStorefront(operator common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.Contract.RemoveFromStorefront(&_CivilTokenControllerContract.TransactOpts, operator)
 }
 
 // RemoveFromStorefront is a paid mutator transaction binding the contract method 0xadbb9160.
 //
-// Solidity: function removeFromStorefront(operator address) returns()
+// Solidity: function removeFromStorefront(address operator) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractTransactorSession) RemoveFromStorefront(operator common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.Contract.RemoveFromStorefront(&_CivilTokenControllerContract.TransactOpts, operator)
 }
 
 // RemoveFromUnlocked is a paid mutator transaction binding the contract method 0x14862ea5.
 //
-// Solidity: function removeFromUnlocked(operator address) returns()
+// Solidity: function removeFromUnlocked(address operator) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractTransactor) RemoveFromUnlocked(opts *bind.TransactOpts, operator common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.contract.Transact(opts, "removeFromUnlocked", operator)
 }
 
 // RemoveFromUnlocked is a paid mutator transaction binding the contract method 0x14862ea5.
 //
-// Solidity: function removeFromUnlocked(operator address) returns()
+// Solidity: function removeFromUnlocked(address operator) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractSession) RemoveFromUnlocked(operator common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.Contract.RemoveFromUnlocked(&_CivilTokenControllerContract.TransactOpts, operator)
 }
 
 // RemoveFromUnlocked is a paid mutator transaction binding the contract method 0x14862ea5.
 //
-// Solidity: function removeFromUnlocked(operator address) returns()
+// Solidity: function removeFromUnlocked(address operator) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractTransactorSession) RemoveFromUnlocked(operator common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.Contract.RemoveFromUnlocked(&_CivilTokenControllerContract.TransactOpts, operator)
 }
 
 // RemoveFromVerified is a paid mutator transaction binding the contract method 0x4b3d1485.
 //
-// Solidity: function removeFromVerified(operator address) returns()
+// Solidity: function removeFromVerified(address operator) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractTransactor) RemoveFromVerified(opts *bind.TransactOpts, operator common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.contract.Transact(opts, "removeFromVerified", operator)
 }
 
 // RemoveFromVerified is a paid mutator transaction binding the contract method 0x4b3d1485.
 //
-// Solidity: function removeFromVerified(operator address) returns()
+// Solidity: function removeFromVerified(address operator) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractSession) RemoveFromVerified(operator common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.Contract.RemoveFromVerified(&_CivilTokenControllerContract.TransactOpts, operator)
 }
 
 // RemoveFromVerified is a paid mutator transaction binding the contract method 0x4b3d1485.
 //
-// Solidity: function removeFromVerified(operator address) returns()
+// Solidity: function removeFromVerified(address operator) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractTransactorSession) RemoveFromVerified(operator common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.Contract.RemoveFromVerified(&_CivilTokenControllerContract.TransactOpts, operator)
 }
 
 // RemoveManager is a paid mutator transaction binding the contract method 0xac18de43.
 //
-// Solidity: function removeManager(managerAddress address) returns()
+// Solidity: function removeManager(address managerAddress) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractTransactor) RemoveManager(opts *bind.TransactOpts, managerAddress common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.contract.Transact(opts, "removeManager", managerAddress)
 }
 
 // RemoveManager is a paid mutator transaction binding the contract method 0xac18de43.
 //
-// Solidity: function removeManager(managerAddress address) returns()
+// Solidity: function removeManager(address managerAddress) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractSession) RemoveManager(managerAddress common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.Contract.RemoveManager(&_CivilTokenControllerContract.TransactOpts, managerAddress)
 }
 
 // RemoveManager is a paid mutator transaction binding the contract method 0xac18de43.
 //
-// Solidity: function removeManager(managerAddress address) returns()
+// Solidity: function removeManager(address managerAddress) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractTransactorSession) RemoveManager(managerAddress common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.Contract.RemoveManager(&_CivilTokenControllerContract.TransactOpts, managerAddress)
 }
@@ -1055,21 +1067,21 @@ func (_CivilTokenControllerContract *CivilTokenControllerContractTransactorSessi
 
 // TransferOwnership is a paid mutator transaction binding the contract method 0xf2fde38b.
 //
-// Solidity: function transferOwnership(_newOwner address) returns()
+// Solidity: function transferOwnership(address _newOwner) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractTransactor) TransferOwnership(opts *bind.TransactOpts, _newOwner common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.contract.Transact(opts, "transferOwnership", _newOwner)
 }
 
 // TransferOwnership is a paid mutator transaction binding the contract method 0xf2fde38b.
 //
-// Solidity: function transferOwnership(_newOwner address) returns()
+// Solidity: function transferOwnership(address _newOwner) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractSession) TransferOwnership(_newOwner common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.Contract.TransferOwnership(&_CivilTokenControllerContract.TransactOpts, _newOwner)
 }
 
 // TransferOwnership is a paid mutator transaction binding the contract method 0xf2fde38b.
 //
-// Solidity: function transferOwnership(_newOwner address) returns()
+// Solidity: function transferOwnership(address _newOwner) returns()
 func (_CivilTokenControllerContract *CivilTokenControllerContractTransactorSession) TransferOwnership(_newOwner common.Address) (*types.Transaction, error) {
 	return _CivilTokenControllerContract.Contract.TransferOwnership(&_CivilTokenControllerContract.TransactOpts, _newOwner)
 }
@@ -1149,7 +1161,7 @@ type CivilTokenControllerContractOwnershipRenounced struct {
 
 // FilterOwnershipRenounced is a free log retrieval operation binding the contract event 0xf8df31144d9c2f0f6b59d69b8b98abd5459d07f2742c4df920b25aae33c64820.
 //
-// Solidity: e OwnershipRenounced(previousOwner indexed address)
+// Solidity: event OwnershipRenounced(address indexed previousOwner)
 func (_CivilTokenControllerContract *CivilTokenControllerContractFilterer) FilterOwnershipRenounced(opts *bind.FilterOpts, previousOwner []common.Address) (*CivilTokenControllerContractOwnershipRenouncedIterator, error) {
 
 	var previousOwnerRule []interface{}
@@ -1166,7 +1178,7 @@ func (_CivilTokenControllerContract *CivilTokenControllerContractFilterer) Filte
 
 // WatchOwnershipRenounced is a free log subscription operation binding the contract event 0xf8df31144d9c2f0f6b59d69b8b98abd5459d07f2742c4df920b25aae33c64820.
 //
-// Solidity: e OwnershipRenounced(previousOwner indexed address)
+// Solidity: event OwnershipRenounced(address indexed previousOwner)
 func (_CivilTokenControllerContract *CivilTokenControllerContractFilterer) WatchOwnershipRenounced(opts *bind.WatchOpts, sink chan<- *CivilTokenControllerContractOwnershipRenounced, previousOwner []common.Address) (event.Subscription, error) {
 
 	var previousOwnerRule []interface{}
@@ -1282,7 +1294,7 @@ type CivilTokenControllerContractOwnershipTransferred struct {
 
 // FilterOwnershipTransferred is a free log retrieval operation binding the contract event 0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0.
 //
-// Solidity: e OwnershipTransferred(previousOwner indexed address, newOwner indexed address)
+// Solidity: event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)
 func (_CivilTokenControllerContract *CivilTokenControllerContractFilterer) FilterOwnershipTransferred(opts *bind.FilterOpts, previousOwner []common.Address, newOwner []common.Address) (*CivilTokenControllerContractOwnershipTransferredIterator, error) {
 
 	var previousOwnerRule []interface{}
@@ -1303,7 +1315,7 @@ func (_CivilTokenControllerContract *CivilTokenControllerContractFilterer) Filte
 
 // WatchOwnershipTransferred is a free log subscription operation binding the contract event 0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0.
 //
-// Solidity: e OwnershipTransferred(previousOwner indexed address, newOwner indexed address)
+// Solidity: event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)
 func (_CivilTokenControllerContract *CivilTokenControllerContractFilterer) WatchOwnershipTransferred(opts *bind.WatchOpts, sink chan<- *CivilTokenControllerContractOwnershipTransferred, previousOwner []common.Address, newOwner []common.Address) (event.Subscription, error) {
 
 	var previousOwnerRule []interface{}

@@ -7,10 +7,24 @@ import (
 	"math/big"
 	"strings"
 
+	ethereum "github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
+	"github.com/ethereum/go-ethereum/event"
+)
+
+// Reference imports to suppress errors if they are not otherwise used.
+var (
+	_ = big.NewInt
+	_ = strings.NewReader
+	_ = ethereum.NotFound
+	_ = abi.U256
+	_ = bind.Bind
+	_ = common.Big1
+	_ = types.BloomLookup
+	_ = event.NewSubscription
 )
 
 // DummyTokenTelemetryContractABI is the input ABI used to generate the binding from.
@@ -176,21 +190,21 @@ func (_DummyTokenTelemetryContract *DummyTokenTelemetryContractTransactorRaw) Tr
 
 // OnRequestVotingRights is a paid mutator transaction binding the contract method 0x72524873.
 //
-// Solidity: function onRequestVotingRights(user address, tokenAmount uint256) returns()
+// Solidity: function onRequestVotingRights(address user, uint256 tokenAmount) returns()
 func (_DummyTokenTelemetryContract *DummyTokenTelemetryContractTransactor) OnRequestVotingRights(opts *bind.TransactOpts, user common.Address, tokenAmount *big.Int) (*types.Transaction, error) {
 	return _DummyTokenTelemetryContract.contract.Transact(opts, "onRequestVotingRights", user, tokenAmount)
 }
 
 // OnRequestVotingRights is a paid mutator transaction binding the contract method 0x72524873.
 //
-// Solidity: function onRequestVotingRights(user address, tokenAmount uint256) returns()
+// Solidity: function onRequestVotingRights(address user, uint256 tokenAmount) returns()
 func (_DummyTokenTelemetryContract *DummyTokenTelemetryContractSession) OnRequestVotingRights(user common.Address, tokenAmount *big.Int) (*types.Transaction, error) {
 	return _DummyTokenTelemetryContract.Contract.OnRequestVotingRights(&_DummyTokenTelemetryContract.TransactOpts, user, tokenAmount)
 }
 
 // OnRequestVotingRights is a paid mutator transaction binding the contract method 0x72524873.
 //
-// Solidity: function onRequestVotingRights(user address, tokenAmount uint256) returns()
+// Solidity: function onRequestVotingRights(address user, uint256 tokenAmount) returns()
 func (_DummyTokenTelemetryContract *DummyTokenTelemetryContractTransactorSession) OnRequestVotingRights(user common.Address, tokenAmount *big.Int) (*types.Transaction, error) {
 	return _DummyTokenTelemetryContract.Contract.OnRequestVotingRights(&_DummyTokenTelemetryContract.TransactOpts, user, tokenAmount)
 }

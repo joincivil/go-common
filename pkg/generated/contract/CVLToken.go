@@ -15,6 +15,18 @@ import (
 	"github.com/ethereum/go-ethereum/event"
 )
 
+// Reference imports to suppress errors if they are not otherwise used.
+var (
+	_ = big.NewInt
+	_ = strings.NewReader
+	_ = ethereum.NotFound
+	_ = abi.U256
+	_ = bind.Bind
+	_ = common.Big1
+	_ = types.BloomLookup
+	_ = event.NewSubscription
+)
+
 // CVLTokenContractABI is the input ABI used to generate the binding from.
 const CVLTokenContractABI = "[{\"constant\":true,\"inputs\":[],\"name\":\"name\",\"outputs\":[{\"name\":\"\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"spender\",\"type\":\"address\"},{\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"approve\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"totalSupply\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"decimals\",\"outputs\":[{\"name\":\"\",\"type\":\"uint8\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"spender\",\"type\":\"address\"},{\"name\":\"addedValue\",\"type\":\"uint256\"}],\"name\":\"increaseAllowance\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"symbol\",\"outputs\":[{\"name\":\"\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"spender\",\"type\":\"address\"},{\"name\":\"subtractedValue\",\"type\":\"uint256\"}],\"name\":\"decreaseAllowance\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"owner\",\"type\":\"address\"},{\"name\":\"spender\",\"type\":\"address\"}],\"name\":\"allowance\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"controller\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"_initialAmount\",\"type\":\"uint256\"},{\"name\":\"_tokenName\",\"type\":\"string\"},{\"name\":\"_decimalUnits\",\"type\":\"uint8\"},{\"name\":\"_tokenSymbol\",\"type\":\"string\"},{\"name\":\"_controller\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"previousOwner\",\"type\":\"address\"}],\"name\":\"OwnershipRenounced\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"Transfer\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"spender\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"Approval\",\"type\":\"event\"},{\"constant\":false,\"inputs\":[{\"name\":\"_controller\",\"type\":\"address\"}],\"name\":\"changeController\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"to\",\"type\":\"address\"},{\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"transfer\",\"outputs\":[{\"name\":\"success\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"from\",\"type\":\"address\"},{\"name\":\"to\",\"type\":\"address\"},{\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"transferFrom\",\"outputs\":[{\"name\":\"success\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"from\",\"type\":\"address\"},{\"name\":\"to\",\"type\":\"address\"},{\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"detectTransferRestriction\",\"outputs\":[{\"name\":\"\",\"type\":\"uint8\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"restrictionCode\",\"type\":\"uint8\"}],\"name\":\"messageForTransferRestriction\",\"outputs\":[{\"name\":\"\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}]"
 
@@ -178,7 +190,7 @@ func (_CVLTokenContract *CVLTokenContractTransactorRaw) Transact(opts *bind.Tran
 
 // Allowance is a free data retrieval call binding the contract method 0xdd62ed3e.
 //
-// Solidity: function allowance(owner address, spender address) constant returns(uint256)
+// Solidity: function allowance(address owner, address spender) constant returns(uint256)
 func (_CVLTokenContract *CVLTokenContractCaller) Allowance(opts *bind.CallOpts, owner common.Address, spender common.Address) (*big.Int, error) {
 	var (
 		ret0 = new(*big.Int)
@@ -190,21 +202,21 @@ func (_CVLTokenContract *CVLTokenContractCaller) Allowance(opts *bind.CallOpts, 
 
 // Allowance is a free data retrieval call binding the contract method 0xdd62ed3e.
 //
-// Solidity: function allowance(owner address, spender address) constant returns(uint256)
+// Solidity: function allowance(address owner, address spender) constant returns(uint256)
 func (_CVLTokenContract *CVLTokenContractSession) Allowance(owner common.Address, spender common.Address) (*big.Int, error) {
 	return _CVLTokenContract.Contract.Allowance(&_CVLTokenContract.CallOpts, owner, spender)
 }
 
 // Allowance is a free data retrieval call binding the contract method 0xdd62ed3e.
 //
-// Solidity: function allowance(owner address, spender address) constant returns(uint256)
+// Solidity: function allowance(address owner, address spender) constant returns(uint256)
 func (_CVLTokenContract *CVLTokenContractCallerSession) Allowance(owner common.Address, spender common.Address) (*big.Int, error) {
 	return _CVLTokenContract.Contract.Allowance(&_CVLTokenContract.CallOpts, owner, spender)
 }
 
 // BalanceOf is a free data retrieval call binding the contract method 0x70a08231.
 //
-// Solidity: function balanceOf(owner address) constant returns(uint256)
+// Solidity: function balanceOf(address owner) constant returns(uint256)
 func (_CVLTokenContract *CVLTokenContractCaller) BalanceOf(opts *bind.CallOpts, owner common.Address) (*big.Int, error) {
 	var (
 		ret0 = new(*big.Int)
@@ -216,14 +228,14 @@ func (_CVLTokenContract *CVLTokenContractCaller) BalanceOf(opts *bind.CallOpts, 
 
 // BalanceOf is a free data retrieval call binding the contract method 0x70a08231.
 //
-// Solidity: function balanceOf(owner address) constant returns(uint256)
+// Solidity: function balanceOf(address owner) constant returns(uint256)
 func (_CVLTokenContract *CVLTokenContractSession) BalanceOf(owner common.Address) (*big.Int, error) {
 	return _CVLTokenContract.Contract.BalanceOf(&_CVLTokenContract.CallOpts, owner)
 }
 
 // BalanceOf is a free data retrieval call binding the contract method 0x70a08231.
 //
-// Solidity: function balanceOf(owner address) constant returns(uint256)
+// Solidity: function balanceOf(address owner) constant returns(uint256)
 func (_CVLTokenContract *CVLTokenContractCallerSession) BalanceOf(owner common.Address) (*big.Int, error) {
 	return _CVLTokenContract.Contract.BalanceOf(&_CVLTokenContract.CallOpts, owner)
 }
@@ -282,7 +294,7 @@ func (_CVLTokenContract *CVLTokenContractCallerSession) Decimals() (uint8, error
 
 // DetectTransferRestriction is a free data retrieval call binding the contract method 0xd4ce1415.
 //
-// Solidity: function detectTransferRestriction(from address, to address, value uint256) constant returns(uint8)
+// Solidity: function detectTransferRestriction(address from, address to, uint256 value) constant returns(uint8)
 func (_CVLTokenContract *CVLTokenContractCaller) DetectTransferRestriction(opts *bind.CallOpts, from common.Address, to common.Address, value *big.Int) (uint8, error) {
 	var (
 		ret0 = new(uint8)
@@ -294,21 +306,21 @@ func (_CVLTokenContract *CVLTokenContractCaller) DetectTransferRestriction(opts 
 
 // DetectTransferRestriction is a free data retrieval call binding the contract method 0xd4ce1415.
 //
-// Solidity: function detectTransferRestriction(from address, to address, value uint256) constant returns(uint8)
+// Solidity: function detectTransferRestriction(address from, address to, uint256 value) constant returns(uint8)
 func (_CVLTokenContract *CVLTokenContractSession) DetectTransferRestriction(from common.Address, to common.Address, value *big.Int) (uint8, error) {
 	return _CVLTokenContract.Contract.DetectTransferRestriction(&_CVLTokenContract.CallOpts, from, to, value)
 }
 
 // DetectTransferRestriction is a free data retrieval call binding the contract method 0xd4ce1415.
 //
-// Solidity: function detectTransferRestriction(from address, to address, value uint256) constant returns(uint8)
+// Solidity: function detectTransferRestriction(address from, address to, uint256 value) constant returns(uint8)
 func (_CVLTokenContract *CVLTokenContractCallerSession) DetectTransferRestriction(from common.Address, to common.Address, value *big.Int) (uint8, error) {
 	return _CVLTokenContract.Contract.DetectTransferRestriction(&_CVLTokenContract.CallOpts, from, to, value)
 }
 
 // MessageForTransferRestriction is a free data retrieval call binding the contract method 0x7f4ab1dd.
 //
-// Solidity: function messageForTransferRestriction(restrictionCode uint8) constant returns(string)
+// Solidity: function messageForTransferRestriction(uint8 restrictionCode) constant returns(string)
 func (_CVLTokenContract *CVLTokenContractCaller) MessageForTransferRestriction(opts *bind.CallOpts, restrictionCode uint8) (string, error) {
 	var (
 		ret0 = new(string)
@@ -320,14 +332,14 @@ func (_CVLTokenContract *CVLTokenContractCaller) MessageForTransferRestriction(o
 
 // MessageForTransferRestriction is a free data retrieval call binding the contract method 0x7f4ab1dd.
 //
-// Solidity: function messageForTransferRestriction(restrictionCode uint8) constant returns(string)
+// Solidity: function messageForTransferRestriction(uint8 restrictionCode) constant returns(string)
 func (_CVLTokenContract *CVLTokenContractSession) MessageForTransferRestriction(restrictionCode uint8) (string, error) {
 	return _CVLTokenContract.Contract.MessageForTransferRestriction(&_CVLTokenContract.CallOpts, restrictionCode)
 }
 
 // MessageForTransferRestriction is a free data retrieval call binding the contract method 0x7f4ab1dd.
 //
-// Solidity: function messageForTransferRestriction(restrictionCode uint8) constant returns(string)
+// Solidity: function messageForTransferRestriction(uint8 restrictionCode) constant returns(string)
 func (_CVLTokenContract *CVLTokenContractCallerSession) MessageForTransferRestriction(restrictionCode uint8) (string, error) {
 	return _CVLTokenContract.Contract.MessageForTransferRestriction(&_CVLTokenContract.CallOpts, restrictionCode)
 }
@@ -438,84 +450,84 @@ func (_CVLTokenContract *CVLTokenContractCallerSession) TotalSupply() (*big.Int,
 
 // Approve is a paid mutator transaction binding the contract method 0x095ea7b3.
 //
-// Solidity: function approve(spender address, value uint256) returns(bool)
+// Solidity: function approve(address spender, uint256 value) returns(bool)
 func (_CVLTokenContract *CVLTokenContractTransactor) Approve(opts *bind.TransactOpts, spender common.Address, value *big.Int) (*types.Transaction, error) {
 	return _CVLTokenContract.contract.Transact(opts, "approve", spender, value)
 }
 
 // Approve is a paid mutator transaction binding the contract method 0x095ea7b3.
 //
-// Solidity: function approve(spender address, value uint256) returns(bool)
+// Solidity: function approve(address spender, uint256 value) returns(bool)
 func (_CVLTokenContract *CVLTokenContractSession) Approve(spender common.Address, value *big.Int) (*types.Transaction, error) {
 	return _CVLTokenContract.Contract.Approve(&_CVLTokenContract.TransactOpts, spender, value)
 }
 
 // Approve is a paid mutator transaction binding the contract method 0x095ea7b3.
 //
-// Solidity: function approve(spender address, value uint256) returns(bool)
+// Solidity: function approve(address spender, uint256 value) returns(bool)
 func (_CVLTokenContract *CVLTokenContractTransactorSession) Approve(spender common.Address, value *big.Int) (*types.Transaction, error) {
 	return _CVLTokenContract.Contract.Approve(&_CVLTokenContract.TransactOpts, spender, value)
 }
 
 // ChangeController is a paid mutator transaction binding the contract method 0x3cebb823.
 //
-// Solidity: function changeController(_controller address) returns()
+// Solidity: function changeController(address _controller) returns()
 func (_CVLTokenContract *CVLTokenContractTransactor) ChangeController(opts *bind.TransactOpts, _controller common.Address) (*types.Transaction, error) {
 	return _CVLTokenContract.contract.Transact(opts, "changeController", _controller)
 }
 
 // ChangeController is a paid mutator transaction binding the contract method 0x3cebb823.
 //
-// Solidity: function changeController(_controller address) returns()
+// Solidity: function changeController(address _controller) returns()
 func (_CVLTokenContract *CVLTokenContractSession) ChangeController(_controller common.Address) (*types.Transaction, error) {
 	return _CVLTokenContract.Contract.ChangeController(&_CVLTokenContract.TransactOpts, _controller)
 }
 
 // ChangeController is a paid mutator transaction binding the contract method 0x3cebb823.
 //
-// Solidity: function changeController(_controller address) returns()
+// Solidity: function changeController(address _controller) returns()
 func (_CVLTokenContract *CVLTokenContractTransactorSession) ChangeController(_controller common.Address) (*types.Transaction, error) {
 	return _CVLTokenContract.Contract.ChangeController(&_CVLTokenContract.TransactOpts, _controller)
 }
 
 // DecreaseAllowance is a paid mutator transaction binding the contract method 0xa457c2d7.
 //
-// Solidity: function decreaseAllowance(spender address, subtractedValue uint256) returns(bool)
+// Solidity: function decreaseAllowance(address spender, uint256 subtractedValue) returns(bool)
 func (_CVLTokenContract *CVLTokenContractTransactor) DecreaseAllowance(opts *bind.TransactOpts, spender common.Address, subtractedValue *big.Int) (*types.Transaction, error) {
 	return _CVLTokenContract.contract.Transact(opts, "decreaseAllowance", spender, subtractedValue)
 }
 
 // DecreaseAllowance is a paid mutator transaction binding the contract method 0xa457c2d7.
 //
-// Solidity: function decreaseAllowance(spender address, subtractedValue uint256) returns(bool)
+// Solidity: function decreaseAllowance(address spender, uint256 subtractedValue) returns(bool)
 func (_CVLTokenContract *CVLTokenContractSession) DecreaseAllowance(spender common.Address, subtractedValue *big.Int) (*types.Transaction, error) {
 	return _CVLTokenContract.Contract.DecreaseAllowance(&_CVLTokenContract.TransactOpts, spender, subtractedValue)
 }
 
 // DecreaseAllowance is a paid mutator transaction binding the contract method 0xa457c2d7.
 //
-// Solidity: function decreaseAllowance(spender address, subtractedValue uint256) returns(bool)
+// Solidity: function decreaseAllowance(address spender, uint256 subtractedValue) returns(bool)
 func (_CVLTokenContract *CVLTokenContractTransactorSession) DecreaseAllowance(spender common.Address, subtractedValue *big.Int) (*types.Transaction, error) {
 	return _CVLTokenContract.Contract.DecreaseAllowance(&_CVLTokenContract.TransactOpts, spender, subtractedValue)
 }
 
 // IncreaseAllowance is a paid mutator transaction binding the contract method 0x39509351.
 //
-// Solidity: function increaseAllowance(spender address, addedValue uint256) returns(bool)
+// Solidity: function increaseAllowance(address spender, uint256 addedValue) returns(bool)
 func (_CVLTokenContract *CVLTokenContractTransactor) IncreaseAllowance(opts *bind.TransactOpts, spender common.Address, addedValue *big.Int) (*types.Transaction, error) {
 	return _CVLTokenContract.contract.Transact(opts, "increaseAllowance", spender, addedValue)
 }
 
 // IncreaseAllowance is a paid mutator transaction binding the contract method 0x39509351.
 //
-// Solidity: function increaseAllowance(spender address, addedValue uint256) returns(bool)
+// Solidity: function increaseAllowance(address spender, uint256 addedValue) returns(bool)
 func (_CVLTokenContract *CVLTokenContractSession) IncreaseAllowance(spender common.Address, addedValue *big.Int) (*types.Transaction, error) {
 	return _CVLTokenContract.Contract.IncreaseAllowance(&_CVLTokenContract.TransactOpts, spender, addedValue)
 }
 
 // IncreaseAllowance is a paid mutator transaction binding the contract method 0x39509351.
 //
-// Solidity: function increaseAllowance(spender address, addedValue uint256) returns(bool)
+// Solidity: function increaseAllowance(address spender, uint256 addedValue) returns(bool)
 func (_CVLTokenContract *CVLTokenContractTransactorSession) IncreaseAllowance(spender common.Address, addedValue *big.Int) (*types.Transaction, error) {
 	return _CVLTokenContract.Contract.IncreaseAllowance(&_CVLTokenContract.TransactOpts, spender, addedValue)
 }
@@ -543,63 +555,63 @@ func (_CVLTokenContract *CVLTokenContractTransactorSession) RenounceOwnership() 
 
 // Transfer is a paid mutator transaction binding the contract method 0xa9059cbb.
 //
-// Solidity: function transfer(to address, value uint256) returns(success bool)
+// Solidity: function transfer(address to, uint256 value) returns(bool success)
 func (_CVLTokenContract *CVLTokenContractTransactor) Transfer(opts *bind.TransactOpts, to common.Address, value *big.Int) (*types.Transaction, error) {
 	return _CVLTokenContract.contract.Transact(opts, "transfer", to, value)
 }
 
 // Transfer is a paid mutator transaction binding the contract method 0xa9059cbb.
 //
-// Solidity: function transfer(to address, value uint256) returns(success bool)
+// Solidity: function transfer(address to, uint256 value) returns(bool success)
 func (_CVLTokenContract *CVLTokenContractSession) Transfer(to common.Address, value *big.Int) (*types.Transaction, error) {
 	return _CVLTokenContract.Contract.Transfer(&_CVLTokenContract.TransactOpts, to, value)
 }
 
 // Transfer is a paid mutator transaction binding the contract method 0xa9059cbb.
 //
-// Solidity: function transfer(to address, value uint256) returns(success bool)
+// Solidity: function transfer(address to, uint256 value) returns(bool success)
 func (_CVLTokenContract *CVLTokenContractTransactorSession) Transfer(to common.Address, value *big.Int) (*types.Transaction, error) {
 	return _CVLTokenContract.Contract.Transfer(&_CVLTokenContract.TransactOpts, to, value)
 }
 
 // TransferFrom is a paid mutator transaction binding the contract method 0x23b872dd.
 //
-// Solidity: function transferFrom(from address, to address, value uint256) returns(success bool)
+// Solidity: function transferFrom(address from, address to, uint256 value) returns(bool success)
 func (_CVLTokenContract *CVLTokenContractTransactor) TransferFrom(opts *bind.TransactOpts, from common.Address, to common.Address, value *big.Int) (*types.Transaction, error) {
 	return _CVLTokenContract.contract.Transact(opts, "transferFrom", from, to, value)
 }
 
 // TransferFrom is a paid mutator transaction binding the contract method 0x23b872dd.
 //
-// Solidity: function transferFrom(from address, to address, value uint256) returns(success bool)
+// Solidity: function transferFrom(address from, address to, uint256 value) returns(bool success)
 func (_CVLTokenContract *CVLTokenContractSession) TransferFrom(from common.Address, to common.Address, value *big.Int) (*types.Transaction, error) {
 	return _CVLTokenContract.Contract.TransferFrom(&_CVLTokenContract.TransactOpts, from, to, value)
 }
 
 // TransferFrom is a paid mutator transaction binding the contract method 0x23b872dd.
 //
-// Solidity: function transferFrom(from address, to address, value uint256) returns(success bool)
+// Solidity: function transferFrom(address from, address to, uint256 value) returns(bool success)
 func (_CVLTokenContract *CVLTokenContractTransactorSession) TransferFrom(from common.Address, to common.Address, value *big.Int) (*types.Transaction, error) {
 	return _CVLTokenContract.Contract.TransferFrom(&_CVLTokenContract.TransactOpts, from, to, value)
 }
 
 // TransferOwnership is a paid mutator transaction binding the contract method 0xf2fde38b.
 //
-// Solidity: function transferOwnership(_newOwner address) returns()
+// Solidity: function transferOwnership(address _newOwner) returns()
 func (_CVLTokenContract *CVLTokenContractTransactor) TransferOwnership(opts *bind.TransactOpts, _newOwner common.Address) (*types.Transaction, error) {
 	return _CVLTokenContract.contract.Transact(opts, "transferOwnership", _newOwner)
 }
 
 // TransferOwnership is a paid mutator transaction binding the contract method 0xf2fde38b.
 //
-// Solidity: function transferOwnership(_newOwner address) returns()
+// Solidity: function transferOwnership(address _newOwner) returns()
 func (_CVLTokenContract *CVLTokenContractSession) TransferOwnership(_newOwner common.Address) (*types.Transaction, error) {
 	return _CVLTokenContract.Contract.TransferOwnership(&_CVLTokenContract.TransactOpts, _newOwner)
 }
 
 // TransferOwnership is a paid mutator transaction binding the contract method 0xf2fde38b.
 //
-// Solidity: function transferOwnership(_newOwner address) returns()
+// Solidity: function transferOwnership(address _newOwner) returns()
 func (_CVLTokenContract *CVLTokenContractTransactorSession) TransferOwnership(_newOwner common.Address) (*types.Transaction, error) {
 	return _CVLTokenContract.Contract.TransferOwnership(&_CVLTokenContract.TransactOpts, _newOwner)
 }
@@ -681,7 +693,7 @@ type CVLTokenContractApproval struct {
 
 // FilterApproval is a free log retrieval operation binding the contract event 0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925.
 //
-// Solidity: e Approval(owner indexed address, spender indexed address, value uint256)
+// Solidity: event Approval(address indexed owner, address indexed spender, uint256 value)
 func (_CVLTokenContract *CVLTokenContractFilterer) FilterApproval(opts *bind.FilterOpts, owner []common.Address, spender []common.Address) (*CVLTokenContractApprovalIterator, error) {
 
 	var ownerRule []interface{}
@@ -702,7 +714,7 @@ func (_CVLTokenContract *CVLTokenContractFilterer) FilterApproval(opts *bind.Fil
 
 // WatchApproval is a free log subscription operation binding the contract event 0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925.
 //
-// Solidity: e Approval(owner indexed address, spender indexed address, value uint256)
+// Solidity: event Approval(address indexed owner, address indexed spender, uint256 value)
 func (_CVLTokenContract *CVLTokenContractFilterer) WatchApproval(opts *bind.WatchOpts, sink chan<- *CVLTokenContractApproval, owner []common.Address, spender []common.Address) (event.Subscription, error) {
 
 	var ownerRule []interface{}
@@ -821,7 +833,7 @@ type CVLTokenContractOwnershipRenounced struct {
 
 // FilterOwnershipRenounced is a free log retrieval operation binding the contract event 0xf8df31144d9c2f0f6b59d69b8b98abd5459d07f2742c4df920b25aae33c64820.
 //
-// Solidity: e OwnershipRenounced(previousOwner indexed address)
+// Solidity: event OwnershipRenounced(address indexed previousOwner)
 func (_CVLTokenContract *CVLTokenContractFilterer) FilterOwnershipRenounced(opts *bind.FilterOpts, previousOwner []common.Address) (*CVLTokenContractOwnershipRenouncedIterator, error) {
 
 	var previousOwnerRule []interface{}
@@ -838,7 +850,7 @@ func (_CVLTokenContract *CVLTokenContractFilterer) FilterOwnershipRenounced(opts
 
 // WatchOwnershipRenounced is a free log subscription operation binding the contract event 0xf8df31144d9c2f0f6b59d69b8b98abd5459d07f2742c4df920b25aae33c64820.
 //
-// Solidity: e OwnershipRenounced(previousOwner indexed address)
+// Solidity: event OwnershipRenounced(address indexed previousOwner)
 func (_CVLTokenContract *CVLTokenContractFilterer) WatchOwnershipRenounced(opts *bind.WatchOpts, sink chan<- *CVLTokenContractOwnershipRenounced, previousOwner []common.Address) (event.Subscription, error) {
 
 	var previousOwnerRule []interface{}
@@ -954,7 +966,7 @@ type CVLTokenContractOwnershipTransferred struct {
 
 // FilterOwnershipTransferred is a free log retrieval operation binding the contract event 0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0.
 //
-// Solidity: e OwnershipTransferred(previousOwner indexed address, newOwner indexed address)
+// Solidity: event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)
 func (_CVLTokenContract *CVLTokenContractFilterer) FilterOwnershipTransferred(opts *bind.FilterOpts, previousOwner []common.Address, newOwner []common.Address) (*CVLTokenContractOwnershipTransferredIterator, error) {
 
 	var previousOwnerRule []interface{}
@@ -975,7 +987,7 @@ func (_CVLTokenContract *CVLTokenContractFilterer) FilterOwnershipTransferred(op
 
 // WatchOwnershipTransferred is a free log subscription operation binding the contract event 0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0.
 //
-// Solidity: e OwnershipTransferred(previousOwner indexed address, newOwner indexed address)
+// Solidity: event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)
 func (_CVLTokenContract *CVLTokenContractFilterer) WatchOwnershipTransferred(opts *bind.WatchOpts, sink chan<- *CVLTokenContractOwnershipTransferred, previousOwner []common.Address, newOwner []common.Address) (event.Subscription, error) {
 
 	var previousOwnerRule []interface{}
@@ -1096,7 +1108,7 @@ type CVLTokenContractTransfer struct {
 
 // FilterTransfer is a free log retrieval operation binding the contract event 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef.
 //
-// Solidity: e Transfer(from indexed address, to indexed address, value uint256)
+// Solidity: event Transfer(address indexed from, address indexed to, uint256 value)
 func (_CVLTokenContract *CVLTokenContractFilterer) FilterTransfer(opts *bind.FilterOpts, from []common.Address, to []common.Address) (*CVLTokenContractTransferIterator, error) {
 
 	var fromRule []interface{}
@@ -1117,7 +1129,7 @@ func (_CVLTokenContract *CVLTokenContractFilterer) FilterTransfer(opts *bind.Fil
 
 // WatchTransfer is a free log subscription operation binding the contract event 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef.
 //
-// Solidity: e Transfer(from indexed address, to indexed address, value uint256)
+// Solidity: event Transfer(address indexed from, address indexed to, uint256 value)
 func (_CVLTokenContract *CVLTokenContractFilterer) WatchTransfer(opts *bind.WatchOpts, sink chan<- *CVLTokenContractTransfer, from []common.Address, to []common.Address) (event.Subscription, error) {
 
 	var fromRule []interface{}

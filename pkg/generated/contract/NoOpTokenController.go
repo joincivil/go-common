@@ -7,10 +7,24 @@ import (
 	"math/big"
 	"strings"
 
+	ethereum "github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
+	"github.com/ethereum/go-ethereum/event"
+)
+
+// Reference imports to suppress errors if they are not otherwise used.
+var (
+	_ = big.NewInt
+	_ = strings.NewReader
+	_ = ethereum.NotFound
+	_ = abi.U256
+	_ = bind.Bind
+	_ = common.Big1
+	_ = types.BloomLookup
+	_ = event.NewSubscription
 )
 
 // NoOpTokenControllerContractABI is the input ABI used to generate the binding from.
@@ -228,7 +242,7 @@ func (_NoOpTokenControllerContract *NoOpTokenControllerContractCallerSession) SU
 
 // DetectTransferRestriction is a free data retrieval call binding the contract method 0xd4ce1415.
 //
-// Solidity: function detectTransferRestriction(from address, to address, value uint256) constant returns(uint8)
+// Solidity: function detectTransferRestriction(address from, address to, uint256 value) constant returns(uint8)
 func (_NoOpTokenControllerContract *NoOpTokenControllerContractCaller) DetectTransferRestriction(opts *bind.CallOpts, from common.Address, to common.Address, value *big.Int) (uint8, error) {
 	var (
 		ret0 = new(uint8)
@@ -240,21 +254,21 @@ func (_NoOpTokenControllerContract *NoOpTokenControllerContractCaller) DetectTra
 
 // DetectTransferRestriction is a free data retrieval call binding the contract method 0xd4ce1415.
 //
-// Solidity: function detectTransferRestriction(from address, to address, value uint256) constant returns(uint8)
+// Solidity: function detectTransferRestriction(address from, address to, uint256 value) constant returns(uint8)
 func (_NoOpTokenControllerContract *NoOpTokenControllerContractSession) DetectTransferRestriction(from common.Address, to common.Address, value *big.Int) (uint8, error) {
 	return _NoOpTokenControllerContract.Contract.DetectTransferRestriction(&_NoOpTokenControllerContract.CallOpts, from, to, value)
 }
 
 // DetectTransferRestriction is a free data retrieval call binding the contract method 0xd4ce1415.
 //
-// Solidity: function detectTransferRestriction(from address, to address, value uint256) constant returns(uint8)
+// Solidity: function detectTransferRestriction(address from, address to, uint256 value) constant returns(uint8)
 func (_NoOpTokenControllerContract *NoOpTokenControllerContractCallerSession) DetectTransferRestriction(from common.Address, to common.Address, value *big.Int) (uint8, error) {
 	return _NoOpTokenControllerContract.Contract.DetectTransferRestriction(&_NoOpTokenControllerContract.CallOpts, from, to, value)
 }
 
 // MessageForTransferRestriction is a free data retrieval call binding the contract method 0x7f4ab1dd.
 //
-// Solidity: function messageForTransferRestriction(restrictionCode uint8) constant returns(string)
+// Solidity: function messageForTransferRestriction(uint8 restrictionCode) constant returns(string)
 func (_NoOpTokenControllerContract *NoOpTokenControllerContractCaller) MessageForTransferRestriction(opts *bind.CallOpts, restrictionCode uint8) (string, error) {
 	var (
 		ret0 = new(string)
@@ -266,14 +280,14 @@ func (_NoOpTokenControllerContract *NoOpTokenControllerContractCaller) MessageFo
 
 // MessageForTransferRestriction is a free data retrieval call binding the contract method 0x7f4ab1dd.
 //
-// Solidity: function messageForTransferRestriction(restrictionCode uint8) constant returns(string)
+// Solidity: function messageForTransferRestriction(uint8 restrictionCode) constant returns(string)
 func (_NoOpTokenControllerContract *NoOpTokenControllerContractSession) MessageForTransferRestriction(restrictionCode uint8) (string, error) {
 	return _NoOpTokenControllerContract.Contract.MessageForTransferRestriction(&_NoOpTokenControllerContract.CallOpts, restrictionCode)
 }
 
 // MessageForTransferRestriction is a free data retrieval call binding the contract method 0x7f4ab1dd.
 //
-// Solidity: function messageForTransferRestriction(restrictionCode uint8) constant returns(string)
+// Solidity: function messageForTransferRestriction(uint8 restrictionCode) constant returns(string)
 func (_NoOpTokenControllerContract *NoOpTokenControllerContractCallerSession) MessageForTransferRestriction(restrictionCode uint8) (string, error) {
 	return _NoOpTokenControllerContract.Contract.MessageForTransferRestriction(&_NoOpTokenControllerContract.CallOpts, restrictionCode)
 }
