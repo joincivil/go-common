@@ -2,8 +2,11 @@ package newsroom
 
 // Newsroom represents data about a newsroom, including the charter
 type Newsroom struct {
-	Name    string   `json:"name,omitempty"`
-	Charter *Charter `json:"charter,omitempty"`
+	NewsroomDeployTx string   `json:"deployTx,omitempty"`
+	ContractAddress  string   `json:"contractAddress,omitempty"`
+	MultisigAddress  string   `json:"multisigAddress,omitempty"`
+	Name             string   `json:"name,omitempty"`
+	Charter          *Charter `json:"charter,omitempty"`
 }
 
 // Charter represents charter data for a newsroom, mirrors structure from the
