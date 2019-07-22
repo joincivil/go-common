@@ -5,23 +5,30 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"math/big"
-	"strings"
-
 	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/joincivil/go-common/pkg/eth"
 	"github.com/joincivil/go-common/pkg/generated/contract"
 	"github.com/pkg/errors"
+	"io"
+	"math/big"
+	"strings"
 
 	shell "github.com/ipfs/go-ipfs-api"
 )
 
+// IPFSHelper describes the methods needed to interact with IPFS
+// sh := shell.NewShell("https://ipfs.infura.io:5001") satisfies this interface
+type IPFSHelper interface {
+	Cat(path string) (io.ReadCloser, error)
+	Add(r io.Reader, options ...shell.AddOpts) (string, error)
+}
+
 // Service provides methods to create and manage newsrooms
 type Service struct {
 	eth         *eth.Helper
-	ipfs        *shell.Shell
+	ipfs        IPFSHelper
 	addresses   eth.DeployerContractAddresses
 	cvl         *contract.CVLTokenContract
 	cvlABI      abi.ABI
@@ -33,8 +40,7 @@ type Service struct {
 }
 
 // NewService builds a new newsroom Service
-func NewService(eth *eth.Helper, addresses eth.DeployerContractAddresses) (*Service, error) {
-	sh := shell.NewShell("https://ipfs.infura.io:5001")
+func NewService(eth *eth.Helper, ipfs IPFSHelper, addresses eth.DeployerContractAddresses) (*Service, error) {
 
 	factory, err := contract.NewCreateNewsroomInGroupContract(addresses.CreateNewsroomInGroup, eth.Blockchain)
 	if err != nil {
@@ -79,7 +85,7 @@ func NewService(eth *eth.Helper, addresses eth.DeployerContractAddresses) (*Serv
 		cvl:         cvl,
 		cvlABI:      cvlABI,
 		multisigABI: multisigABI,
-		ipfs:        sh,
+		ipfs:        ipfs,
 	}, nil
 }
 
@@ -91,16 +97,9 @@ func (s *Service) PublishCharter(charter Charter, pin bool) (string, error) {
 		return "", errors.Wrap(err, "Error serializing charter")
 	}
 
-	cid, err := s.ipfs.Add(bytes.NewReader(res))
+	cid, err := s.ipfs.Add(bytes.NewReader(res), shell.Pin(pin))
 	if err != nil {
 		return "", err
-	}
-
-	if pin {
-		err := s.ipfs.Pin(cid)
-		if err != nil {
-			return "", err
-		}
 	}
 
 	return cid, nil
@@ -183,7 +182,7 @@ func (s *Service) RenameNewsroom(newsroomAddress common.Address, newName string)
 		return common.Hash{}, err
 	}
 
-	// amounf of ETH to send with the tx
+	// amount of ETH to send with the tx
 	value := big.NewInt(0)
 
 	// submit the tx to the multisig
@@ -207,6 +206,34 @@ func (s *Service) GetNewsroomName(newsroomAddress common.Address) (string, error
 	}
 
 	return name, nil
+}
+
+// GetCharter retrieves the charter of the newsroom at the provided address
+func (s *Service) GetCharter(newsroomAddress common.Address) (*Charter, error) {
+	newsroom, err := contract.NewNewsroomContract(newsroomAddress, s.eth.Blockchain)
+	if err != nil {
+		return nil, err
+	}
+	content, err := newsroom.GetContent(nil, big.NewInt(0))
+	if err != nil {
+		return nil, err
+	}
+
+	ipfsHash := strings.Replace(content.Uri, "ipfs://", "", 1)
+	reader, err := s.ipfs.Cat(ipfsHash)
+	if err != nil {
+		return nil, err
+	}
+
+	dec := json.NewDecoder(reader)
+
+	var charter = &Charter{}
+	err = dec.Decode(charter)
+	if err != nil {
+		return nil, err
+	}
+
+	return charter, nil
 }
 
 // GetOwner retrieves the address of the owner of the Newsroom

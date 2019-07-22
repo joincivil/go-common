@@ -2,7 +2,12 @@ package newsroom_test
 
 import (
 	"context"
+	"fmt"
+	shell "github.com/ipfs/go-ipfs-api"
+	"io"
+	"io/ioutil"
 	"math/big"
+	"strings"
 	"testing"
 
 	"github.com/ethereum/go-ethereum"
@@ -12,6 +17,13 @@ import (
 	"github.com/joincivil/go-common/pkg/generated/contract"
 	"github.com/joincivil/go-common/pkg/newsroom"
 )
+
+const testHash = "Qma1sdZfxWYWBUcEJGc7WeZX4aFvPoJYqrbzARAJPSjhCe"
+
+const charterJSON = `{
+	"name": "test newsroom",
+	"tagline": "Stay classy, San Diego"
+}`
 
 func deployContracts(t *testing.T, helper *eth.Helper) *eth.DeployerContractAddresses {
 	addresses := &eth.DeployerContractAddresses{}
@@ -127,7 +139,23 @@ func deployContracts(t *testing.T, helper *eth.Helper) *eth.DeployerContractAddr
 	return addresses
 }
 
+type MockIPFS struct {
+}
+
+func (m MockIPFS) Cat(path string) (io.ReadCloser, error) {
+	if path == testHash {
+		reader := ioutil.NopCloser(strings.NewReader(charterJSON))
+		return reader, nil
+	}
+	return ioutil.NopCloser(strings.NewReader("")), fmt.Errorf("not found")
+}
+
+func (m MockIPFS) Add(r io.Reader, options ...shell.AddOpts) (string, error) {
+	return testHash, nil
+}
+
 func TestNewsroomService(t *testing.T) {
+	ipfs := MockIPFS{}
 
 	ethHelper, err := eth.NewSimulatedBackendHelper()
 	if err != nil {
@@ -135,14 +163,14 @@ func TestNewsroomService(t *testing.T) {
 	}
 	addresses := deployContracts(t, ethHelper)
 
-	svc, err := newsroom.NewService(ethHelper, *addresses)
+	svc, err := newsroom.NewService(ethHelper, ipfs, *addresses)
 	if err != nil {
 		t.Fatal("error starting newsroom Service")
 	}
 	blockchain := ethHelper.Blockchain.(*backends.SimulatedBackend)
 
 	createNewsroom := func(name string) common.Address {
-		tx, err := svc.CreateNewsroom(name, "charter foo")
+		tx, err := svc.CreateNewsroom(name, testHash)
 		if err != nil {
 			t.Fatalf("not expecting an error but received: %v", err)
 		}
@@ -348,6 +376,23 @@ func TestNewsroomService(t *testing.T) {
 			t.Fatalf("did not receive the expected newsroom name")
 		}
 
+	})
+
+	t.Run("GetCharter", func(t *testing.T) {
+		newsroomAddress := createNewsroom("test newsroom")
+
+		charter, err := svc.GetCharter(newsroomAddress)
+		if err != nil {
+			t.Fatalf("not expecting an error but received: %v", err)
+		}
+
+		if charter.Name != "test newsroom" {
+			t.Fatalf("expecting name to be `test newsroom` but is: %v", charter.Name)
+		}
+
+		if charter.Tagline != "Stay classy, San Diego" {
+			t.Fatalf("expecting tagline to be to be `Stay classy, San Diego` but is: %v", charter.Tagline)
+		}
 	})
 
 }
