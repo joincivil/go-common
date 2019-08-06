@@ -3,7 +3,7 @@
 ---
 [Civil](https://joincivil.com/) is a decentralized and censorship resistant ecosystem for online Journalism. Read more in our whitepaper.
 
-This repository contains open-source code for common components used in various Civil projects written in Go. 
+This repository contains open-source code for common components used in various Civil projects written in Go.
 
 [![CircleCI](https://circleci.com/gh/joincivil/go-common.svg?style=shield)](https://circleci.com/gh/joincivil/go-common)
 [![Go Report Card](https://goreportcard.com/badge/github.com/joincivil/go-common)](https://goreportcard.com/report/github.com/joincivil/go-common)
@@ -48,7 +48,7 @@ The latest generated code is checked into the repository, except for the contrac
 This project relies on artifacts from the main Civil repository [http://github.com/joincivil/Civil](http://github.com/joincivil/Civil). **NOTE: The `.abi/.bin` is pre-generated and included in this repository in `/abi`, so this step can normally be skipped**.
 
 
-If re-generation of the `.abi/.bin` files is needed, please clone (or have cloned) the Civil repository into a directory accessible by this repository. 
+If re-generation of the `.abi/.bin` files is needed, please clone (or have cloned) the Civil repository into a directory accessible by this repository.
 
 To build and copy the Civil contract .abi/.bin files, run the `scripts/abi_retrieval.sh` script:
 
@@ -70,7 +70,7 @@ make generate-civil-contracts
 
 ## Lint
 
-Check all the packages for linting errors using a variety of linters via `gometalinter`.  Check the `Makefile` for the up to date list of linters.
+Check all the packages for linting errors using a variety of linters via `golangci-lint`.  Check the `Makefile` for the up to date list of linters.
 
 ```
 make lint

@@ -53,7 +53,7 @@ jobs:
             - vendor
             - scripts
             - cmd
-            - .gometalinter.json
+            - .golangci.yml
 
   lint:
     <<: *defaults
