@@ -5,6 +5,8 @@
 # POSTGRES_USER=docker
 # POSTGRES_PSWD=docker
 
+GOVERSION=go1.12.7
+
 GOCMD=go
 GOGEN=$(GOCMD) generate
 GORUN=$(GOCMD) run
@@ -25,9 +27,6 @@ ABI_DIR=abi
 GENERATED_DIR=pkg/generated
 GENERATED_CONTRACT_DIR=$(GENERATED_DIR)/contract
 
-# GOMETALINTER_INSTALLER=scripts/gometalinter_install.sh
-# GOMETALINTER_VERSION_TAG=v2.0.11
-
 # curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(go env GOPATH)/bin vX.Y.Z
 GOLANGCILINT_URL=https://install.goreleaser.com/github.com/golangci/golangci-lint.sh
 GOLANGCILINT_VERSION_TAG=v1.16.0
@@ -36,6 +35,8 @@ GOLANGCILINT_VERSION_TAG=v1.16.0
 GO:=$(shell command -v go 2> /dev/null)
 DOCKER:=$(shell command -v docker 2> /dev/null)
 APT:=$(shell command -v apt-get 2> /dev/null)
+GOVERCURRENT=$(shell go version |awk {'print $$3'})
+
 
 UNAME=$(shell uname)
 
@@ -52,6 +53,9 @@ ifndef GO
 endif
 ifndef GOPATH
 	$(error GOPATH is not set)
+endif
+ifneq ($(GOVERCURRENT), $(GOVERSION))
+	$(error Incorrect go version, needs $(GOVERSION))
 endif
 
 ## NOTE: If installing on a Mac, use Docker for Mac, not Docker toolkit
@@ -172,19 +176,19 @@ endif
 
 ## golangci-lint config in .golangci.yml
 .PHONY: lint
-lint: ## Runs linting.
+lint: check-go-env ## Runs linting.
 	@golangci-lint run ./...
 
 .PHONY: build
-build: ## Builds the repo, mainly to ensure all the files will build properly
+build: check-go-env ## Builds the repo, mainly to ensure all the files will build properly
 	$(GOBUILD) ./...
 
 .PHONY: test
-test: ## Runs unit tests and tests code coverage
+test: check-go-env ## Runs unit tests and tests code coverage
 	@echo 'mode: atomic' > coverage.txt && $(GOTEST) -covermode=atomic -coverprofile=coverage.txt -v -race -timeout=60s ./...
 
 .PHONY: test-integration
-test-integration: ## Runs tagged integration tests
+test-integration: check-go-env ## Runs tagged integration tests
 	@echo 'mode: atomic' > coverage.txt && PUBSUB_EMULATOR_HOST=localhost:8042 $(GOTEST) -covermode=atomic -coverprofile=coverage.txt -v -race -timeout=60s -tags=integration ./...
 
 .PHONY: cover
