@@ -12,7 +12,7 @@ defaults: &defaults
 jobs:
   build:
     <<: *defaults
-    working_directory: /go/src/github.com/joincivil/go-common
+    working_directory: ~/repos/go-common
     environment:
     steps:
       - run:
@@ -41,41 +41,59 @@ jobs:
       #         sleep 1
       #       done
       #       echo Failed waiting for Postgres && exit 1
+      - restore_cache:
+          keys:
+            - go-mod-v1-{{ checksum "go.sum" }}
       - run:
           name: Building code
           command: make build
+      - save_cache:
+          key: go-mod-v1-{{ checksum "go.sum" }}
+          paths:
+            - "/go/pkg/mod"
       - persist_to_workspace:
           root: ./
           paths:
             - build
             - pkg
             - Makefile
-            - vendor
+            - go.mod
+            - go.sum
             - scripts
             - cmd
             - .golangci.yml
 
   lint:
     <<: *defaults
-    working_directory: /go/src/github.com/joincivil/go-common
+    working_directory: ~/repos/go-common
     environment:
     steps:
         - attach_workspace:
             at: ./
+        - restore_cache:
+            keys:
+              - go-mod-v1-{{ checksum "go.sum" }}
         - run:
            name: Setting up tools
            command: make install-linter
         - run:
             name: Run linter
             command: make lint
+        - save_cache:
+            key: go-mod-v1-{{ checksum "go.sum" }}
+            paths:
+              - "/go/pkg/mod"
 
   test:
     <<: *defaults
-    working_directory: /go/src/github.com/joincivil/go-common
+    working_directory: ~/repos/go-common
     environment:
     steps:
         - attach_workspace:
             at: ./
+        - restore_cache:
+            keys:
+              - go-mod-v1-{{ checksum "go.sum" }}
         - run:
             name: Run unit tests
             # environment:
@@ -83,6 +101,10 @@ jobs:
             #    DB_MIGRATIONS: /go/src/github.com/joincivil/go-common/migrations
             command: |
                make test
+        - save_cache:
+            key: go-mod-v1-{{ checksum "go.sum" }}
+            paths:
+              - "/go/pkg/mod"
 
 
 workflows:
