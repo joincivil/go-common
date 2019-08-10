@@ -77,16 +77,16 @@ install-conform: install-gobin ## Installs conform
 
 .PHONY: install-linter
 install-linter: check-go-env ## Installs linter
-	# sh $(GOMETALINTER_INSTALLER) -b $(GOPATH)/bin $(GOMETALINTER_VERSION_TAG)
 	@curl -sfL $(GOLANGCILINT_URL) | sh -s -- -b $(shell go env GOPATH)/bin $(GOLANGCILINT_VERSION_TAG)
 
 .PHONY: install-cover
-install-cover: check-go-env ## Installs code coverage tool
-	@$(GOGET) -u golang.org/x/tools/cmd/cover
+install-cover: install-gobin ## Installs code coverage tool
+	@gobin -u golang.org/x/tools/cmd/cover
 
+# Update to matching version
 .PHONY: install-abigen
-install-abigen: check-go-env ## Installs the Ethereum abigen tool
-	@$(GOGET) -u github.com/ethereum/go-ethereum/cmd/abigen
+install-abigen: install-gobin ## Installs the Ethereum abigen tool
+	@gobin github.com/ethereum/go-ethereum/cmd/abigen@v0.0.0-20190528221609-008d250e3c57
 
 .PHONY: setup-githooks
 setup-githooks: ## Setups any git hooks in githooks
