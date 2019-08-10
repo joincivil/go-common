@@ -66,11 +66,6 @@ ifndef DOCKER
 	$(error docker command is not installed or in PATH)
 endif
 
-.PHONY: install-dep
-install-dep: check-go-env ## Installs dep
-	@mkdir -p $(GOPATH)/bin
-	@curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
-
 .PHONY: install-gobin
 install-gobin: check-go-env ## Installs gobin tool
 	@GO111MODULE=off go get -u github.com/myitcv/gobin
@@ -98,7 +93,7 @@ setup-githooks: ## Setups any git hooks in githooks
 	@ln -f -s ../../githooks/commit-msg .git/hooks
 
 .PHONY: setup
-setup: check-go-env install-dep install-conform install-linter install-cover install-abigen setup-githooks ## Sets up the tooling.
+setup: check-go-env install-conform install-linter install-cover install-abigen setup-githooks ## Sets up the tooling.
 
 # .PHONY: postgres-setup-launch
 # postgres-setup-launch:
