@@ -1,0 +1,20 @@
+#!/bin/sh
+#
+# Called by "git commit" with one argument, the name of the file
+# that has the commit message.  The hook should exit with non-zero
+# status after issuing an appropriate message if it wants to stop the
+# commit.  The hook is allowed to edit the commit message file.
+
+# Run the conform command on the last commit message if conform is
+# available
+
+if ! command -V conform &>/dev/null; then
+    make install-conform
+fi
+
+conform enforce --commit-msg-file "$1"
+
+if [ $? -eq 1 ]; then
+    echo "*failed, did not commit*"
+    exit 1
+fi

@@ -66,26 +66,34 @@ ifndef DOCKER
 	$(error docker command is not installed or in PATH)
 endif
 
-.PHONY: install-dep
-install-dep: check-go-env ## Installs dep
-	@mkdir -p $(GOPATH)/bin
-	@curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+.PHONY: install-gobin
+install-gobin: check-go-env ## Installs gobin tool
+	@GO111MODULE=off go get -u github.com/myitcv/gobin
+
+# Use commit until they cut a release with our fix
+.PHONY: install-conform
+install-conform: install-gobin ## Installs conform
+	@gobin github.com/autonomy/conform@7bed9129bc73b5a6fd2b6d8c12f7c024ea4b7107
 
 .PHONY: install-linter
 install-linter: check-go-env ## Installs linter
-	# sh $(GOMETALINTER_INSTALLER) -b $(GOPATH)/bin $(GOMETALINTER_VERSION_TAG)
 	@curl -sfL $(GOLANGCILINT_URL) | sh -s -- -b $(shell go env GOPATH)/bin $(GOLANGCILINT_VERSION_TAG)
 
 .PHONY: install-cover
-install-cover: check-go-env ## Installs code coverage tool
-	@$(GOGET) -u golang.org/x/tools/cmd/cover
+install-cover: install-gobin ## Installs code coverage tool
+	@gobin -u golang.org/x/tools/cmd/cover
 
+# Update to matching version
 .PHONY: install-abigen
-install-abigen: check-go-env ## Installs the Ethereum abigen tool
-	@$(GOGET) -u github.com/ethereum/go-ethereum/cmd/abigen
+install-abigen: install-gobin ## Installs the Ethereum abigen tool
+	@gobin github.com/ethereum/go-ethereum/cmd/abigen@v0.0.0-20190528221609-008d250e3c57
+
+.PHONY: setup-githooks
+setup-githooks: ## Setups any git hooks in githooks
+	@ln -f -s ../../githooks/commit-msg .git/hooks
 
 .PHONY: setup
-setup: check-go-env install-dep install-linter install-cover install-abigen ## Sets up the tooling.
+setup: check-go-env install-conform install-linter install-cover install-abigen setup-githooks ## Sets up the tooling.
 
 # .PHONY: postgres-setup-launch
 # postgres-setup-launch:
@@ -178,6 +186,10 @@ endif
 .PHONY: lint
 lint: check-go-env ## Runs linting.
 	@golangci-lint run ./...
+
+.PHONY: conform
+conform: check-go-env ## Runs conform (commit message linting)
+	@conform enforce
 
 .PHONY: build
 build: check-go-env ## Builds the repo, mainly to ensure all the files will build properly
