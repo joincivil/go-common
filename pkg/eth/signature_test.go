@@ -1,10 +1,14 @@
 package eth_test
 
 import (
+	"encoding/hex"
+
 	"testing"
 	"time"
 
 	"github.com/joincivil/go-common/pkg/eth"
+
+	"github.com/ethereum/go-ethereum/crypto"
 )
 
 func TestVerifyEthChallengeAndSignature(t *testing.T) {
@@ -80,4 +84,60 @@ func TestVerifyChallengeValid(t *testing.T) {
 	if err != nil {
 		t.Fatalf("error thrown: %s", err)
 	}
+}
+
+func TestSignEthMessage(t *testing.T) {
+	message := "Civil Test @ 2018-01-09T20:08:57Z"
+
+	acct, _ := eth.MakeAccount()
+	pk := acct.Key
+
+	signature, err := eth.SignEthMessage(pk, message)
+	if err != nil {
+		t.Errorf("did not expect error signing: err: %v", err)
+	}
+
+	ethAddress := eth.GetEthAddressFromPrivateKey(pk)
+
+	// Verify that the signature is valid with same message
+	result, err := eth.VerifyEthSignature(ethAddress.Hex(), message, signature)
+
+	if err != nil {
+		t.Fatalf("error thrown: %s", err)
+	}
+	if !result {
+		t.Errorf("signature was not verified for generated signature")
+	}
+
+	// Test
+}
+
+func TestVerifyEthSignatureWithPubkey(t *testing.T) {
+	message := "Civil Test @ 2018-01-09T20:08:57Z"
+
+	acct, _ := eth.MakeAccount()
+	pk := acct.Key
+
+	signature, err := eth.SignEthMessage(pk, message)
+	if err != nil {
+		t.Errorf("did not expect error signing: err: %v", err)
+	}
+
+	// Ensure proper conversion between hex store format and bytes to pub key
+	// Test with standard package, does not append 0x to hex strings as in go-ethereum
+	// hexutils
+	pubKeyBys := crypto.FromECDSAPub(&pk.PublicKey)
+	pubKeyHex := hex.EncodeToString(pubKeyBys)
+	pubKeyBys, _ = hex.DecodeString(pubKeyHex)
+	pubKey, _ := crypto.UnmarshalPubkey(pubKeyBys)
+
+	// Verify the signature using the public key
+	result, err := eth.VerifyEthSignatureWithPubkey(*pubKey, message, signature)
+	if err != nil {
+		t.Fatalf("Should not have failed to verify")
+	}
+	if !result {
+		t.Errorf("should have verified the generated signature")
+	}
+
 }

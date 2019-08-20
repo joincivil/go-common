@@ -2,6 +2,7 @@ package eth
 
 import (
 	"bytes"
+	"crypto/ecdsa"
 	"errors"
 	"strings"
 	"time"
@@ -71,6 +72,13 @@ func VerifyEthSignature(address string, message string, signature string) (bool,
 	return true, nil
 }
 
+// VerifyEthSignatureWithPubkey accepts an ECDSA public key, a message string, and a signature and
+// confirms that the signature was indeed signed by the key specified
+func VerifyEthSignatureWithPubkey(pubKey ecdsa.PublicKey, message string, signature string) (bool, error) {
+	addr := crypto.PubkeyToAddress(pubKey)
+	return VerifyEthSignature(addr.Hex(), message, signature)
+}
+
 // VerifyEthChallenge confirms that a "challenge" string has a timestamp that is
 // within {gracePeriod} number of seconds from the current time
 // this is used to ensure that an attacker cannot reuse previously signed messages
@@ -95,4 +103,16 @@ func VerifyEthChallenge(prefix string, gracePeriod int64, challenge string) erro
 	}
 
 	return nil
+}
+
+// SignEthMessage signs a given message with the given ECDSA private key.
+// Returns the signature as a hex string with 0x prefix.
+func SignEthMessage(pk *ecdsa.PrivateKey, message string) (string, error) {
+	hash := crypto.Keccak256([]byte(message))
+	signature, err := crypto.Sign(hash, pk)
+	if err != nil {
+		return "", err
+	}
+	hexSig := hexutil.Encode(signature)
+	return hexSig, nil
 }
