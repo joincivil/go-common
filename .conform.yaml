@@ -6,7 +6,7 @@ policies:
       gpg: false
       imperative: true
       maximumOfOneCommit: false
-      requireCommitBody: true
+      requireCommitBody: false
       conventional:
         types:
           - feat
