@@ -4,10 +4,10 @@ import (
 	"bytes"
 	"crypto/ecdsa"
 	"errors"
+	"fmt"
 	"strings"
 	"time"
 
-	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/crypto"
 )
@@ -60,13 +60,15 @@ func VerifyEthSignature(address string, message string, signature string) (bool,
 		signatureBytes[64] = 0
 	}
 
-	hash := crypto.Keccak256([]byte(message))
-	pubKeyBys, err := crypto.Ecrecover(hash, signatureBytes)
+	message = AsEthereumSignature(message)
+	hash := crypto.Keccak256Hash([]byte(message))
+
+	pubKey, err := crypto.SigToPub(hash.Bytes(), signatureBytes)
 	if err != nil {
 		return false, err
 	}
 
-	sigAddr := common.BytesToAddress(crypto.Keccak256(pubKeyBys[1:])[12:])
+	sigAddr := crypto.PubkeyToAddress(*pubKey)
 
 	// If addresses don't match, then return false
 	if !bytes.Equal(addressBytes, sigAddr.Bytes()) {
@@ -112,6 +114,7 @@ func VerifyEthChallenge(prefix string, gracePeriod int64, challenge string) erro
 // SignEthMessage signs a given message with the given ECDSA private key.
 // Returns the signature as a hex string with 0x prefix.
 func SignEthMessage(pk *ecdsa.PrivateKey, message string) (string, error) {
+	message = AsEthereumSignature(message)
 	hash := crypto.Keccak256([]byte(message))
 	signature, err := crypto.Sign(hash, pk)
 	if err != nil {
@@ -119,4 +122,11 @@ func SignEthMessage(pk *ecdsa.PrivateKey, message string) (string, error) {
 	}
 	hexSig := hexutil.Encode(signature)
 	return hexSig, nil
+}
+
+// AsEthereumSignedMessage adds a prefix and len to the message to identify it
+// as an Ethereum specific signature.
+// https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_sign
+func AsEthereumSignature(msg string) string {
+	return fmt.Sprintf("\x19Ethereum Signed Message:\n%d%s", len(msg), msg)
 }

@@ -15,7 +15,8 @@ import (
 func TestVerifyEthChallengeAndSignature(t *testing.T) {
 	privKey, _ := crypto.GenerateKey()
 	pubKeyBys := crypto.FromECDSAPub(&privKey.PublicKey)
-	sigAddr := common.BytesToAddress(crypto.Keccak256(pubKeyBys[1:])[12:])
+	pubKey, _ := crypto.UnmarshalPubkey(pubKeyBys)
+	sigAddr := crypto.PubkeyToAddress(*pubKey)
 	message := LoginChallenge()
 	signature, _ := eth.SignEthMessage(privKey, message)
 
@@ -23,7 +24,7 @@ func TestVerifyEthChallengeAndSignature(t *testing.T) {
 		ExpectedPrefix: "Civil Test",
 		GracePeriod:    100,
 		InputChallenge: message,
-		InputAddress:   sigAddr.String(),
+		InputAddress:   sigAddr.Hex(),
 		Signature:      signature,
 	}
 
@@ -57,9 +58,9 @@ func TestVerifyEthChallengeAndSignatureGracePeriod(t *testing.T) {
 }
 
 func TestVerifySignature(t *testing.T) {
-	address := "0x7c342E040D73639FA20b8e4f539BA6A29319DcCc"
-	message := "Civil Test @ 2018-01-09T20:08:57Z"
-	signature := "0x120fbe013f535b5ace9590b7e902adc3aaf72cb52349a7b3975bb0ffb3992b8b469afe5b590cc6342afc78d6119a06f12ca5fd2c431468f8dfe619c739c1f96400"
+	address := "0x5385A3a9a1468b7D900A93E6f21E903E30928764"
+	message := "Log in to Civil @ 2019-09-25T17:01:19.545Z"
+	signature := "0x0808658f881758de3ada6d9e072f2c9b89d8aad580885af19e21268d012d528733950be423d4a726c03c57cf5523d88aaac57c6a96526c3cbaa938592a15db7c1b"
 
 	var result, err = eth.VerifyEthSignature(address, message, signature)
 
@@ -190,12 +191,9 @@ func TestVerifyEthSignatureWithPubkey(t *testing.T) {
 
 func TestVerifyEthSignatureWithPubkeyHex(t *testing.T) {
 	message := "Civil Test @ 2018-01-09T20:08:57Z"
-	signature := "0xfea80f27862777116d2d5557aaa5a8887bf411a70e3c3cd377368128f88546ce2f59ffbd8263d64d328a324f21ab5dfe6516467bc2129b35012d9ca8bb39f0eb01"
-	pubKeyHex := "044f4a35cb48550342ac99b5be887a1e90b3d0ea30010e74ab77faa077a935f65e5dcc9ab02755f982e85e06a52679ccae6221d631c89dfaba6359f305444b93ef"
+	signature := "0x9ff69ebcb961ab7617733a0f75efc5d419cea57067e4de0455d53da9779e5ec665cc46e67b32d698e9eab3653dd9e9ed735f9b81dce3c7d599c4391aa064f97001"
+	pubKeyHex := "04f621285c7e14fc5eabecb65a1796afdc1a3f8f23926b7faa853b13eacb6d212c527d2eefd0d7e82bc1a59dc99220797c6034751eb9dadf23fc9fc6ed1274fca0"
 
-	// Ensure proper conversion between hex store format and bytes to pub key
-	// Test with standard package, does not append 0x to hex strings as in go-ethereum
-	// hexutils
 	pubKeyBys, _ := hex.DecodeString(pubKeyHex)
 	pubKey, _ := crypto.UnmarshalPubkey(pubKeyBys)
 
