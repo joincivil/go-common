@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/crypto"
 )
@@ -46,6 +47,7 @@ func VerifyEthSignature(address string, message string, signature string) (bool,
 	if err != nil {
 		return false, errors.New("Address appears to be invalid")
 	}
+
 	signatureBytes, err := hexutil.Decode(signature)
 	if err != nil {
 		return false, errors.New("Signature appears to be invalid")
@@ -58,15 +60,17 @@ func VerifyEthSignature(address string, message string, signature string) (bool,
 		signatureBytes[64] = 0
 	}
 
-	var hash = crypto.Keccak256([]byte(message))
-	sigAddress, err := crypto.Ecrecover(hash, signatureBytes)
-
+	hash := crypto.Keccak256([]byte(message))
+	pubKeyBys, err := crypto.Ecrecover(hash, signatureBytes)
 	if err != nil {
 		return false, err
 	}
 
-	if bytes.Equal(addressBytes, sigAddress) {
-		return false, errors.New("signature does not match")
+	sigAddr := common.BytesToAddress(crypto.Keccak256(pubKeyBys[1:])[12:])
+
+	// If addresses don't match, then return false
+	if !bytes.Equal(addressBytes, sigAddr.Bytes()) {
+		return false, nil
 	}
 
 	return true, nil

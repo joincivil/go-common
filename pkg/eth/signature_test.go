@@ -8,16 +8,23 @@ import (
 
 	"github.com/joincivil/go-common/pkg/eth"
 
+	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
 )
 
 func TestVerifyEthChallengeAndSignature(t *testing.T) {
+	privKey, _ := crypto.GenerateKey()
+	pubKeyBys := crypto.FromECDSAPub(&privKey.PublicKey)
+	sigAddr := common.BytesToAddress(crypto.Keccak256(pubKeyBys[1:])[12:])
+	message := LoginChallenge()
+	signature, _ := eth.SignEthMessage(privKey, message)
+
 	req := eth.ChallengeRequest{
 		ExpectedPrefix: "Civil Test",
 		GracePeriod:    100,
-		InputChallenge: LoginChallenge(),
-		InputAddress:   "0xddB9e9957452d0E39A5E43Fd1AB4aE818aecC6aD",
-		Signature:      "0x520c1f6a0f1f968db5aaa39c08055bf2bd33dc9162d0237423549d31e91b6c661aa171e475cca20e1f0347685eaca6a0e443ecf5de3f53fb88dbb006ade5fc001b",
+		InputChallenge: message,
+		InputAddress:   sigAddr.String(),
+		Signature:      signature,
 	}
 
 	err := eth.VerifyEthChallengeAndSignature(req)
@@ -26,11 +33,33 @@ func TestVerifyEthChallengeAndSignature(t *testing.T) {
 	}
 }
 
-func TestVerifySignature(t *testing.T) {
+func TestVerifyEthChallengeAndSignatureGracePeriod(t *testing.T) {
+	privKey, _ := crypto.GenerateKey()
+	pubKeyBys := crypto.FromECDSAPub(&privKey.PublicKey)
+	sigAddr := common.BytesToAddress(crypto.Keccak256(pubKeyBys[1:])[12:])
+	message := LoginChallenge()
+	signature, _ := eth.SignEthMessage(privKey, message)
 
-	const address = "0xddB9e9957452d0E39A5E43Fd1AB4aE818aecC6aD"
-	const message = "Civil Test @ 2018-01-09T20:08:57Z"
-	const signature = "0x520c1f6a0f1f968db5aaa39c08055bf2bd33dc9162d0237423549d31e91b6c661aa171e475cca20e1f0347685eaca6a0e443ecf5de3f53fb88dbb006ade5fc001b"
+	req := eth.ChallengeRequest{
+		ExpectedPrefix: "Civil Test",
+		GracePeriod:    3,
+		InputChallenge: message,
+		InputAddress:   sigAddr.String(),
+		Signature:      signature,
+	}
+
+	time.Sleep(4 * time.Second)
+
+	err := eth.VerifyEthChallengeAndSignature(req)
+	if err == nil {
+		t.Errorf("verify eth challenge should have expired grace period")
+	}
+}
+
+func TestVerifySignature(t *testing.T) {
+	address := "0x7c342E040D73639FA20b8e4f539BA6A29319DcCc"
+	message := "Civil Test @ 2018-01-09T20:08:57Z"
+	signature := "0x120fbe013f535b5ace9590b7e902adc3aaf72cb52349a7b3975bb0ffb3992b8b469afe5b590cc6342afc78d6119a06f12ca5fd2c431468f8dfe619c739c1f96400"
 
 	var result, err = eth.VerifyEthSignature(address, message, signature)
 
@@ -39,6 +68,23 @@ func TestVerifySignature(t *testing.T) {
 	}
 	if !result {
 		t.Errorf("signature was not verified")
+	}
+}
+
+func TestVerifyInvalidSignature(t *testing.T) {
+	address := "0x7c342E040D73639FA20b8e4f539BA6A29319DcCc"
+	message := "Civil Test @ 2018-01-09T20:08:57Z"
+
+	// Sign this message with a different key; the verification should fail
+	privKey, _ := crypto.GenerateKey()
+	signature, _ := eth.SignEthMessage(privKey, message)
+
+	result, err := eth.VerifyEthSignature(address, message, signature)
+	if err != nil {
+		t.Errorf("error should not have been thrown: %s", err)
+	}
+	if result {
+		t.Errorf("signature should not have been verified")
 	}
 }
 
@@ -135,6 +181,28 @@ func TestVerifyEthSignatureWithPubkey(t *testing.T) {
 	result, err := eth.VerifyEthSignatureWithPubkey(*pubKey, message, signature)
 	if err != nil {
 		t.Fatalf("Should not have failed to verify")
+	}
+	if !result {
+		t.Errorf("should have verified the generated signature")
+	}
+
+}
+
+func TestVerifyEthSignatureWithPubkeyHex(t *testing.T) {
+	message := "Civil Test @ 2018-01-09T20:08:57Z"
+	signature := "0xfea80f27862777116d2d5557aaa5a8887bf411a70e3c3cd377368128f88546ce2f59ffbd8263d64d328a324f21ab5dfe6516467bc2129b35012d9ca8bb39f0eb01"
+	pubKeyHex := "044f4a35cb48550342ac99b5be887a1e90b3d0ea30010e74ab77faa077a935f65e5dcc9ab02755f982e85e06a52679ccae6221d631c89dfaba6359f305444b93ef"
+
+	// Ensure proper conversion between hex store format and bytes to pub key
+	// Test with standard package, does not append 0x to hex strings as in go-ethereum
+	// hexutils
+	pubKeyBys, _ := hex.DecodeString(pubKeyHex)
+	pubKey, _ := crypto.UnmarshalPubkey(pubKeyBys)
+
+	// Verify the signature using the public key
+	result, err := eth.VerifyEthSignatureWithPubkey(*pubKey, message, signature)
+	if err != nil {
+		t.Errorf("Should not have failed to verify")
 	}
 	if !result {
 		t.Errorf("should have verified the generated signature")
