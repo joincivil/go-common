@@ -52,12 +52,16 @@ func VerifyEthSignature(address string, message string, signature string) (bool,
 	if err != nil {
 		return false, errors.New("Signature appears to be invalid")
 	}
+
 	// TODO this is a hack to set the ECDSA signature recovery ID to 0
 	// web3 is returning 27 or 28, but should be 0 or 1
 	// https://github.com/ethereum/wiki/wiki/JavaScript-API#web3ethsign
 	// https://github.com/ethereum/go-ethereum/blob/6cd6b921ac57480d95af8b9bec2424e1f89fa196/crypto/secp256k1/secp256.go
-	if signatureBytes[64] == 27 || signatureBytes[64] == 28 {
+	if signatureBytes[64] == 27 {
 		signatureBytes[64] = 0
+	}
+	if signatureBytes[64] == 28 {
+		signatureBytes[64] = 1
 	}
 
 	message = AsEthereumSignature(message)
