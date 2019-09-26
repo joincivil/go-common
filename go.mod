@@ -4,9 +4,9 @@ go 1.12
 
 require (
 	cloud.google.com/go v0.43.0
-	github.com/allegro/bigcache v1.1.0 // indirect
+	github.com/allegro/bigcache v1.2.0 // indirect
 	github.com/apilayer/freegeoip v3.5.0+incompatible // indirect
-	github.com/aristanetworks/goarista v0.0.0-20181210134948-aa2a42e13be6 // indirect
+	github.com/aristanetworks/goarista v0.0.0-20190325233358-a123909ec740 // indirect
 	github.com/beeker1121/mailchimp-go v0.0.0-20160721165115-7c5f827423b2
 	github.com/certifi/gocertifi v0.0.0-20180118203423-deb3ae2ef261 // indirect
 	github.com/cespare/cp v1.1.1 // indirect
@@ -23,7 +23,7 @@ require (
 	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/google/go-cmp v0.3.1 // indirect
-	github.com/google/uuid v1.1.0 // indirect
+	github.com/google/uuid v1.1.1 // indirect
 	github.com/hashicorp/golang-lru v0.5.3 // indirect
 	github.com/howeyc/fsnotify v0.9.0 // indirect
 	github.com/huin/goupnp v1.0.0 // indirect
@@ -57,12 +57,12 @@ require (
 	github.com/steakknife/bloomfilter v0.0.0-20180906043351-99ee86d9200f // indirect
 	github.com/steakknife/hamming v0.0.0-20180906055317-003c143a81c2 // indirect
 	github.com/stretchr/testify v1.3.0 // indirect
-	github.com/syndtr/goleveldb v0.0.0-20181128100959-b001fa50d6b2 // indirect
+	github.com/syndtr/goleveldb v1.0.0 // indirect
 	github.com/tyler-smith/go-bip39 v1.0.2 // indirect
 	github.com/wsddn/go-ecdh v0.0.0-20161211032359-48726bab9208 // indirect
-	golang.org/x/crypto v0.0.0-20190911031432-227b76d455e7 // indirect
-	golang.org/x/net v0.0.0-20190918130420-a8b05e9114ab // indirect
-	golang.org/x/sys v0.0.0-20190919044723-0c1ff786ef13 // indirect
+	golang.org/x/crypto v0.0.0-20190923035154-9ee001bba392 // indirect
+	golang.org/x/net v0.0.0-20190923162816-aa69164e4478 // indirect
+	golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e // indirect
 	google.golang.org/genproto v0.0.0-20190801165951-fa694d86fc64 // indirect
 	google.golang.org/grpc v1.22.1 // indirect
 	gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127 // indirect

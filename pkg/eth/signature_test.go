@@ -72,6 +72,36 @@ func TestVerifySignature(t *testing.T) {
 	}
 }
 
+func TestVerifySignature2(t *testing.T) {
+	address := "0x5385A3a9a1468b7D900A93E6f21E903E30928764"
+	message := "Log in to Civil @ 2019-09-25T21:20:15.281Z"
+	signature := "0x07379457500168cf5e518990557953b4ed60bfdddb3174e2195ab2c6f27bfbc92cdb377dc9fad60fb30f25eb113d90e64b89b946faf922b6d530ea2caa8981101c"
+
+	var result, err = eth.VerifyEthSignature(address, message, signature)
+
+	if err != nil {
+		t.Fatalf("error thrown: %s", err)
+	}
+	if !result {
+		t.Errorf("signature was not verified")
+	}
+}
+
+func TestVerifySignature3(t *testing.T) {
+	address := "0x5385A3a9a1468b7D900A93E6f21E903E30928764"
+	message := "Log in to Civil @ 2019-09-25T21:01:44.253Z"
+	signature := "0xf97da474ff293c3be0dfbf225cc4beb2e1f17eda8479f5de05c082c8c7d26e9648e0800e8936c2835c366e857b69a234b606dbd0936b2c2fff9a67e8d75c6e481c"
+
+	var result, err = eth.VerifyEthSignature(address, message, signature)
+
+	if err != nil {
+		t.Fatalf("error thrown: %s", err)
+	}
+	if !result {
+		t.Errorf("signature was not verified")
+	}
+}
+
 func TestVerifyInvalidSignature(t *testing.T) {
 	address := "0x7c342E040D73639FA20b8e4f539BA6A29319DcCc"
 	message := "Civil Test @ 2018-01-09T20:08:57Z"
