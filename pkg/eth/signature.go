@@ -3,6 +3,7 @@ package eth
 import (
 	"bytes"
 	"crypto/ecdsa"
+	"encoding/hex"
 	"errors"
 	"fmt"
 	"strings"
@@ -40,17 +41,18 @@ func VerifyEthChallengeAndSignature(request ChallengeRequest) error {
 
 // VerifyEthSignature accepts an Ethereum address, a message string, and a signature and
 // confirms that the signature was indeed signed by the address specified
+// Handles signatures with and without 0x prefixes
 func VerifyEthSignature(address string, message string, signature string) (bool, error) {
 	// sig must be a 65-byte compact ECDSA signature containing the
 	// recovery id as the last element.
 	addressBytes, err := hexutil.Decode(address)
 	if err != nil {
-		return false, errors.New("Address appears to be invalid")
+		return false, errors.New("address appears to be invalid")
 	}
 
-	signatureBytes, err := hexutil.Decode(signature)
+	signatureBytes, err := DecodeSignatureBytes(signature)
 	if err != nil {
-		return false, errors.New("Signature appears to be invalid")
+		return false, errors.New("signature appears to be invalid")
 	}
 
 	// TODO this is a hack to set the ECDSA signature recovery ID to 0
@@ -84,6 +86,7 @@ func VerifyEthSignature(address string, message string, signature string) (bool,
 
 // VerifyEthSignatureWithPubkey accepts an ECDSA public key, a message string, and a signature and
 // confirms that the signature was indeed signed by the key specified
+// Handles signatures with and without 0x prefixes
 func VerifyEthSignatureWithPubkey(pubKey ecdsa.PublicKey, message string, signature string) (bool, error) {
 	addr := crypto.PubkeyToAddress(pubKey)
 	return VerifyEthSignature(addr.Hex(), message, signature)
@@ -133,4 +136,17 @@ func SignEthMessage(pk *ecdsa.PrivateKey, message string) (string, error) {
 // https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_sign
 func AsEthereumSignature(msg string) string {
 	return fmt.Sprintf("\x19Ethereum Signed Message:\n%d%s", len(msg), msg)
+}
+
+// DecodeSignatureBytes decodes a signature to bytes.  Handles signature
+// hex strings with or without 0x prefix.
+func DecodeSignatureBytes(signature string) ([]byte, error) {
+	signatureBytes, err := hexutil.Decode(signature)
+	if err != nil {
+		signatureBytes, err = hex.DecodeString(signature)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return signatureBytes, nil
 }

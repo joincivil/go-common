@@ -60,15 +60,26 @@ func TestVerifyEthChallengeAndSignatureGracePeriod(t *testing.T) {
 func TestVerifySignature(t *testing.T) {
 	address := "0x5385A3a9a1468b7D900A93E6f21E903E30928764"
 	message := "Log in to Civil @ 2019-09-25T17:01:19.545Z"
-	signature := "0x0808658f881758de3ada6d9e072f2c9b89d8aad580885af19e21268d012d528733950be423d4a726c03c57cf5523d88aaac57c6a96526c3cbaa938592a15db7c1b"
 
-	var result, err = eth.VerifyEthSignature(address, message, signature)
+	signature := "0x0808658f881758de3ada6d9e072f2c9b89d8aad580885af19e21268d012d528733950be423d4a726c03c57cf5523d88aaac57c6a96526c3cbaa938592a15db7c1b"
+	result, err := eth.VerifyEthSignature(address, message, signature)
 
 	if err != nil {
 		t.Fatalf("error thrown: %s", err)
 	}
 	if !result {
 		t.Errorf("signature was not verified")
+	}
+
+	// Test same signature without prefix
+	signature = "0808658f881758de3ada6d9e072f2c9b89d8aad580885af19e21268d012d528733950be423d4a726c03c57cf5523d88aaac57c6a96526c3cbaa938592a15db7c1b"
+	result, err = eth.VerifyEthSignature(address, message, signature)
+
+	if err != nil {
+		t.Fatalf("error thrown: %s", err)
+	}
+	if !result {
+		t.Errorf("non prefix signature was not verified")
 	}
 }
 
@@ -113,6 +124,20 @@ func TestVerifyInvalidSignature(t *testing.T) {
 	result, err := eth.VerifyEthSignature(address, message, signature)
 	if err != nil {
 		t.Errorf("error should not have been thrown: %s", err)
+	}
+	if result {
+		t.Errorf("signature should not have been verified")
+	}
+}
+
+func TestVerifyInvalidSignature2(t *testing.T) {
+	address := "0x7c342E040D73639FA20b8e4f539BA6A29319DcCc"
+	message := "Civil Test @ 2018-01-09T20:08:57Z"
+	signature := "thisisnotasignature"
+
+	result, err := eth.VerifyEthSignature(address, message, signature)
+	if err == nil {
+		t.Errorf("error should have been throw for invalid sig")
 	}
 	if result {
 		t.Errorf("signature should not have been verified")
