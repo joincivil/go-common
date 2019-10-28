@@ -158,6 +158,7 @@ ifneq ("$(wildcard $(ABI_DIR)/*.abi)", "")
 	@$(ABIGEN) -abi ./$(ABI_DIR)/MultiSigWalletFactory.abi -bin ./$(ABI_DIR)/MultiSigWalletFactory.bin -type MultiSigWalletFactoryContract -out ./$(GENERATED_CONTRACT_DIR)/MultiSigWalletFactory.go -pkg contract
 	@$(ABIGEN) -abi ./$(ABI_DIR)/MultiSigWallet.abi -bin ./$(ABI_DIR)/MultiSigWallet.bin -type MultiSigWalletContract -out ./$(GENERATED_CONTRACT_DIR)/MultiSigWallet.go -pkg contract
 	@$(ABIGEN) -abi ./$(ABI_DIR)/ECRecovery.abi -bin ./$(ABI_DIR)/ECRecovery.bin -type ECRecoveryContract -out ./$(GENERATED_CONTRACT_DIR)/ECRecovery.go -pkg contract
+	@$(ABIGEN) -abi ./$(ABI_DIR)/RootCommits.abi -bin ./$(ABI_DIR)/RootCommits.bin -type RootCommitsContract -out ./$(GENERATED_CONTRACT_DIR)/RootCommits.go -pkg contract
 
 	@# Produce the bin/abi files
 	@# NOTE(PN): The ABIs for these need to have the Data types replaced with "string" before this will successfully work.
