@@ -31,7 +31,7 @@ var (
 const DummyTokenTelemetryContractABI = "[{\"constant\":false,\"inputs\":[{\"name\":\"user\",\"type\":\"address\"},{\"name\":\"tokenAmount\",\"type\":\"uint256\"}],\"name\":\"onRequestVotingRights\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]"
 
 // DummyTokenTelemetryContractBin is the compiled bytecode used for deploying new contracts.
-const DummyTokenTelemetryContractBin = `0x608060405234801561001057600080fd5b5060a38061001f6000396000f300608060405260043610603e5763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416637252487381146043575b600080fd5b348015604e57600080fd5b50607173ffffffffffffffffffffffffffffffffffffffff600435166024356073565b005b50505600a165627a7a72305820954330fd4dd629975a76bd718c6908a75f44a59203a6a6e721ff5a127ba853270029`
+const DummyTokenTelemetryContractBin = `0x608060405234801561001057600080fd5b5060a38061001f6000396000f300608060405260043610603e5763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416637252487381146043575b600080fd5b348015604e57600080fd5b50607173ffffffffffffffffffffffffffffffffffffffff600435166024356073565b005b50505600a165627a7a7230582026076a5a5b5a5109c5e76b1eaf4c815302de19cff5379fdb94bbd22616aa2e480029`
 
 // DeployDummyTokenTelemetryContract deploys a new Ethereum contract, binding an instance of DummyTokenTelemetryContract to it.
 func DeployDummyTokenTelemetryContract(auth *bind.TransactOpts, backend bind.ContractBackend) (common.Address, *types.Transaction, *DummyTokenTelemetryContract, error) {

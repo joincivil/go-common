@@ -1,0 +1,108 @@
+[
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "addr",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "name": "blockN",
+        "type": "uint64"
+      },
+      {
+        "indexed": false,
+        "name": "timestamp",
+        "type": "uint64"
+      },
+      {
+        "indexed": false,
+        "name": "root",
+        "type": "bytes32"
+      }
+    ],
+    "name": "RootUpdated",
+    "type": "event"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_root",
+        "type": "bytes32"
+      }
+    ],
+    "name": "setRoot",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_address",
+        "type": "address"
+      }
+    ],
+    "name": "getRoot",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_address",
+        "type": "address"
+      },
+      {
+        "name": "_blockN",
+        "type": "uint64"
+      }
+    ],
+    "name": "getRootByBlock",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_address",
+        "type": "address"
+      },
+      {
+        "name": "_timestamp",
+        "type": "uint64"
+      }
+    ],
+    "name": "getRootByTime",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  }
+]
