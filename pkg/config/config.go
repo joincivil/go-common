@@ -33,11 +33,14 @@ var (
 // PersisterConfig defines the interfaces for persister-related configuration
 type PersisterConfig interface {
 	PersistType() PersisterType
-	PostgresAddress() string
-	PostgresPort() int
-	PostgresDbname() string
-	PostgresUser() string
-	PostgresPw() string
+	Address() string
+	Port() int
+	Dbname() string
+	User() string
+	Password() string
+	PoolMaxConns() *int
+	PoolMaxIdleConns() *int
+	PoolConnLifetimeSecs() *int
 }
 
 const (
