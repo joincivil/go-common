@@ -1,11 +1,11 @@
 package pubsub
 
 import (
-	"errors"
 	"sync"
 	"time"
 
 	log "github.com/golang/glog"
+	"github.com/pkg/errors"
 )
 
 // WorkersConfig configures the governance event pubsub workers
@@ -39,6 +39,7 @@ func NewWorkers(config *WorkersConfig) (*Workers, error) {
 		config.NumWorkers = 1
 	}
 	return &Workers{
+		Errors:                 make(chan error),
 		pubSubProjectID:        config.PubSubProjectID,
 		pubSubTopicName:        config.PubSubTopicName,
 		pubSubSubscriptionName: config.PubSubSubscriptionName,
@@ -50,13 +51,14 @@ func NewWorkers(config *WorkersConfig) (*Workers, error) {
 	}, nil
 }
 
-// Workers controls the events workers that handles incoming events
-// from the processor.  One instance of Workers normally points to one
-// particular queue of events by event types.  i.e. one Workers instance
-// for gov events and a separate instance for token events.
+// Workers controls the events workers that handles incoming pubsub events.
+// One instance of Workers normally points to one particular queue of events
+// by event types.  i.e. one Workers instance for gov events and a separate
+// instance for token events.
 // Meant to be generic framework where the pubsub queue and the set of
 // event handlers are configured before use.
 type Workers struct {
+	Errors                 chan error
 	pubSubProjectID        string
 	pubSubTopicName        string
 	pubSubSubscriptionName string
@@ -117,25 +119,24 @@ func (w *Workers) runWorker() {
 		time.Sleep(1 * time.Second)
 		w.workerStartChan <- true
 		// Blocks here, unless initial failure
-		err := w.worker()
-		if err != nil {
-			log.Errorf("Error starting event worker: err: %v", err)
-		}
+		w.worker()
 		w.workerStopChan <- true
 	}()
 }
 
-func (w *Workers) worker() error {
+func (w *Workers) worker() {
 	// Initializing pubsub here so each worker has their own subscriber pool
 	ps, err := initPubSub(w.pubSubProjectID)
 	if err != nil {
-		return err
+		w.Errors <- err
+		return
 	}
 
 	log.Infof("%v, %v", w.pubSubTopicName, w.pubSubSubscriptionName)
 	err = initPubSubSubscribers(ps, w.pubSubTopicName, w.pubSubSubscriptionName)
 	if err != nil {
-		return err
+		w.Errors <- err
+		return
 	}
 
 	log.Info("Start listening for events")
@@ -165,6 +166,10 @@ Loop:
 			// Ack the pubsub message
 			msg.Ack()
 
+		case err := <-ps.SubscribeErrChan:
+			log.Errorf("Error in subscriber worker: err: %v", err)
+			w.Errors <- errors.WithMessage(err, "error with worker subscriber")
+
 		case <-w.quitChan:
 			defer func() {
 				if r := recover(); r != nil {
@@ -178,6 +183,4 @@ Loop:
 			log.Info("Quitting events worker")
 		}
 	}
-
-	return nil
 }
