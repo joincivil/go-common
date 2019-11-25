@@ -65,12 +65,15 @@ type GooglePubSub struct {
 	publishMutex      sync.Mutex
 
 	SubscribeChan          chan *pubsub.Message
+	SubscribeErrChan       chan error
 	subscribeConfig        SubscribeConfig
 	subscribeContext       context.Context
 	subscribeContextCancel context.CancelFunc
 	subscribeStarted       bool
 	subscribeMutex         sync.Mutex
 	numRunningSubscribe    int
+
+	subscribeTestRetry bool
 }
 
 // SubscribeConfig is a config for the wrapper around a Google Pubsub Subscription
@@ -201,6 +204,7 @@ func (g *GooglePubSub) StartSubscribersWithConfig(config SubscribeConfig) error 
 	g.subscribeConfig = config
 	g.subscribeContext, g.subscribeContextCancel = context.WithCancel(ctx)
 	g.SubscribeChan = make(chan *pubsub.Message)
+	g.SubscribeErrChan = make(chan error)
 	g.subscribeStarted = false
 	g.numRunningSubscribe = 0
 
@@ -364,18 +368,46 @@ func (g *GooglePubSub) subscriber(wg *sync.WaitGroup) {
 	g.numRunningSubscribe++
 	g.subscribeMutex.Unlock()
 	sub := g.client.Subscription(g.subscribeConfig.Name)
-	err := sub.Receive(g.subscribeContext, func(ctx context.Context, msg *pubsub.Message) {
-		log.Infof("Got message: %v @ %v: %v\n", msg.ID, msg.PublishTime, string(msg.Data))
-		g.SubscribeChan <- msg
-		if g.subscribeConfig.AutoAck {
-			msg.Ack()
+
+	var err error
+	attempt := 1
+	baseWaitMs := 500
+	maxAttempts := 5
+
+Loop:
+	for {
+		if g.subscribeTestRetry {
+			err = errors.New("test error")
+
+		} else {
+			err = sub.Receive(g.subscribeContext, func(ctx context.Context, msg *pubsub.Message) {
+				log.Infof("Got message: %v @ %v: %v\n", msg.ID, msg.PublishTime, string(msg.Data))
+				g.SubscribeChan <- msg
+				if g.subscribeConfig.AutoAck {
+					msg.Ack()
+				}
+			})
 		}
-	})
+
+		if err != nil {
+			log.Errorf("Error with subscription, retrying receive: %v", err)
+			time.Sleep(time.Duration(baseWaitMs) * time.Duration(attempt) * time.Millisecond)
+			if attempt >= maxAttempts {
+				break Loop
+			}
+			attempt++
+			continue
+		}
+
+		break Loop
+	}
+
 	g.subscribeMutex.Lock()
 	g.numRunningSubscribe--
 	g.subscribeMutex.Unlock()
 	if err != nil {
-		log.Errorf("Error with subscription: %v\n", err)
+		log.Errorf("Error with subscription, stopping/failing: %v", err)
+		g.SubscribeErrChan <- err
 		return
 	}
 	log.Info("Subscriber stopped")
