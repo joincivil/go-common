@@ -16,6 +16,36 @@ var (
 	addressesOneString = "0x77e5aaBddb760FBa989A1C4B2CDd4aA8Fa3d311d,0xDFe273082089bB7f70Ee36Eebcde64832FE97E55"
 )
 
+func TestStrOrEmptyStr(t *testing.T) {
+	res := strings.StrOrEmptyStr(nil)
+	if res != "" {
+		t.Errorf("Should have returned an empty string")
+	}
+
+	testStr := "thisisatest"
+	res = strings.StrOrEmptyStr(&testStr)
+	if res == "" {
+		t.Errorf("Should not have returned an empty string")
+	}
+	if res != testStr {
+		t.Errorf("Should have returned the test string")
+	}
+
+	testStr = ""
+	res = strings.StrOrEmptyStr(&testStr)
+	if res != "" {
+		t.Errorf("Should have returned an empty string")
+	}
+}
+
+func TestStrToPtr(t *testing.T) {
+	testStr := "thisisatest"
+	strPtr := strings.StrToPtr(testStr)
+	if *strPtr != testStr {
+		t.Errorf("Should have returned the test string")
+	}
+}
+
 func TestIsValidEthAPIURL(t *testing.T) {
 	if strings.IsValidEthAPIURL("thisisnotavalidurl") {
 		t.Error("Should have failed on an invalid eth API url")
