@@ -2,6 +2,7 @@ package lock
 
 import (
 	"fmt"
+	"strings"
 	"sync"
 	"time"
 
@@ -147,6 +148,7 @@ func (r *RedisDLock) newMutex(key string, expireMillis *int) *redsync.Mutex {
 }
 
 func (r *RedisDLock) fullKey(key string) string {
+	key = strings.ToLower(key)
 	if r.namespace == nil {
 		return key
 	}
