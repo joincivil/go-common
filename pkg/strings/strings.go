@@ -15,6 +15,20 @@ var (
 	validEthAddressExp = regexp.MustCompile(`^(http|https|ws|wss):\/\/((.+?)\.(.{2,5})|localhost|ethereum|127\.0\.0\.1)(\:[0-9]{2,})*.*$`)
 )
 
+// StrOrEmptyStr returns an empty string if a string pointer is nil.
+// Otherwise returns the string value of the pointer.
+func StrOrEmptyStr(s *string) string {
+	if s != nil {
+		return *s
+	}
+	return ""
+}
+
+// StrToPtr is a convenience func that converts a string to it's pointer
+func StrToPtr(s string) *string {
+	return &s
+}
+
 // IsValidEthAPIURL returns true if the given string matches a valid
 // eth endpoint URL
 func IsValidEthAPIURL(url string) bool {
