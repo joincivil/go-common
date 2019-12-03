@@ -60,8 +60,13 @@ func NewRedisDLock(pools []redsync.Pool, namespace *string) *RedisDLock {
 	rl := &RedisDLock{}
 	rl.namespace = namespace
 	rl.client = redsync.New(pools)
-	rl.mutexes = make(map[string]*redsync.Mutex, 100)
+	rl.mutexes = make(map[string]*mutex, 100)
 	return rl
+}
+
+type mutex struct {
+	mutex   *redsync.Mutex
+	waiting int
 }
 
 // RedisDLock is an implementation of a distributed lock using Redis.
@@ -72,7 +77,7 @@ func NewRedisDLock(pools []redsync.Pool, namespace *string) *RedisDLock {
 type RedisDLock struct {
 	client    *redsync.Redsync
 	m         sync.Mutex
-	mutexes   map[string]*redsync.Mutex
+	mutexes   map[string]*mutex
 	namespace *string
 
 	MutexTries            *int
@@ -87,12 +92,16 @@ func (r *RedisDLock) Lock(key string, expireMillis *int) error {
 	r.m.Lock()
 	mt, ok := r.mutexes[fullKey]
 	if !ok {
-		mt = r.newMutex(fullKey, expireMillis)
+		mt = &mutex{
+			mutex:   r.newMutex(fullKey, expireMillis),
+			waiting: 0,
+		}
 		r.mutexes[fullKey] = mt
 	}
+	mt.waiting++
 	r.m.Unlock()
 
-	err := mt.Lock()
+	err := mt.mutex.Lock()
 	if err == redsync.ErrFailed {
 		return ErrNoLockObtained
 	} else if err != nil {
@@ -112,16 +121,19 @@ func (r *RedisDLock) Unlock(key string) error {
 		r.m.Unlock()
 		return ErrDidNotUnlock
 	}
+	mt.waiting--
 	r.m.Unlock()
 
 	// Unlock the dist lock
-	res := mt.Unlock()
+	res := mt.mutex.Unlock()
 	if !res {
 		return ErrDidNotUnlock
 	}
 
 	r.m.Lock()
-	delete(r.mutexes, fullKey)
+	if mt.waiting <= 0 {
+		delete(r.mutexes, fullKey)
+	}
 	r.m.Unlock()
 
 	return nil
