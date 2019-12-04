@@ -155,7 +155,7 @@ func (r *RedisDLock) newMutex(key string, expireMillis *int) *redsync.Mutex {
 		options = append(options, delay)
 	}
 
-	mt := r.client.NewMutex(r.fullKey(key), options...)
+	mt := r.client.NewMutex(key, options...)
 	return mt
 }
 
@@ -164,5 +164,5 @@ func (r *RedisDLock) fullKey(key string) string {
 	if r.namespace == nil {
 		return key
 	}
-	return fmt.Sprintf("%v-%v", r.namespace, key)
+	return fmt.Sprintf("%v-%v", *r.namespace, key)
 }

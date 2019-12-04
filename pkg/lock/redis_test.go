@@ -1,6 +1,7 @@
 package lock_test
 
 import (
+	"flag"
 	"sync"
 	"testing"
 	"time"
@@ -13,14 +14,30 @@ import (
 	"github.com/joincivil/go-common/pkg/strings"
 )
 
+var redis2x = flag.Bool("redis2x", false, "enable two redis pool test")
+
 func interfaceTest(l lock.DLock) {}
 
-func TestRedisDLock(t *testing.T) {
-	pool1 := lock.NewRedisDLockPool("127.0.0.1:6379",
-		numbers.IntToPtr(1), numbers.IntToPtr(1), numbers.IntToPtr(10))
-	pool2 := lock.NewRedisDLockPool("127.0.0.1:6378", nil, nil, nil)
+func redisDLock() *lock.RedisDLock {
+	pools := []redsync.Pool{}
+	pool1 := lock.NewRedisDLockPool(
+		"127.0.0.1:6379",
+		numbers.IntToPtr(1),
+		numbers.IntToPtr(1),
+		numbers.IntToPtr(10),
+	)
+	pools = append(pools, pool1)
 
-	dlock := lock.NewRedisDLock([]redsync.Pool{pool1, pool2}, strings.StrToPtr("anamespace"))
+	if redis2x != nil && *redis2x {
+		pool2 := lock.NewRedisDLockPool("127.0.0.1:6378", nil, nil, nil)
+		pools = append(pools, pool2)
+	}
+
+	return lock.NewRedisDLock(pools, strings.StrToPtr("anamespace"))
+}
+
+func TestRedisDLock(t *testing.T) {
+	dlock := redisDLock()
 	key := "test-key"
 
 	interfaceTest(dlock)
@@ -67,11 +84,8 @@ func TestRedisDLock(t *testing.T) {
 }
 
 func TestRedisDLockExpire(t *testing.T) {
-	pool1 := lock.NewRedisDLockPool("127.0.0.1:6379",
-		numbers.IntToPtr(1), numbers.IntToPtr(1), numbers.IntToPtr(10))
-	pool2 := lock.NewRedisDLockPool("127.0.0.1:6378", nil, nil, nil)
+	dlock := redisDLock()
 
-	dlock := lock.NewRedisDLock([]redsync.Pool{pool1, pool2}, nil)
 	dlock.MutexTries = numbers.IntToPtr(64)
 	dlock.MutexRetryDelayMillis = numbers.IntToPtr(500)
 
@@ -85,11 +99,11 @@ func TestRedisDLockExpire(t *testing.T) {
 		t.Errorf("Should have gotten lock: %v", err)
 	}
 
-	dlock = lock.NewRedisDLock([]redsync.Pool{pool1, pool2}, nil)
-	dlock.MutexTries = numbers.IntToPtr(5)
-	dlock.MutexRetryDelayMillis = numbers.IntToPtr(100)
+	dlock2 := redisDLock()
+	dlock2.MutexTries = numbers.IntToPtr(5)
+	dlock2.MutexRetryDelayMillis = numbers.IntToPtr(100)
 
-	err = dlock.Lock(key, numbers.IntToPtr(1000*5))
+	err = dlock2.Lock(key, numbers.IntToPtr(1000*5))
 	if err == nil {
 		t.Error("Should have returned error with lock timeout")
 	}
@@ -99,14 +113,11 @@ func TestRedisDLockExpire(t *testing.T) {
 
 	// unlock
 	_ = dlock.Unlock(key)
+	_ = dlock2.Unlock(key)
 }
 
 func TestRedisDLockMultiLock(t *testing.T) {
-	pool1 := lock.NewRedisDLockPool("127.0.0.1:6379",
-		numbers.IntToPtr(1), numbers.IntToPtr(1), numbers.IntToPtr(10))
-	pool2 := lock.NewRedisDLockPool("127.0.0.1:6378", nil, nil, nil)
-
-	dlock := lock.NewRedisDLock([]redsync.Pool{pool1, pool2}, strings.StrToPtr("anamespace"))
+	dlock := redisDLock()
 	key := "test-key"
 
 	interfaceTest(dlock)
@@ -121,8 +132,6 @@ func TestRedisDLockMultiLock(t *testing.T) {
 	if err != nil {
 		t.Errorf("Should have not returned error on lock: err: %v", err)
 	}
-
-	// end := make(chan bool)
 
 	wg := sync.WaitGroup{}
 
