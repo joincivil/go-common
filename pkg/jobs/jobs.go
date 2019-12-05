@@ -106,7 +106,9 @@ func (j *Job) Subscribe() *Subscription {
 
 // Unsubscribe removes a subscription from the broadcast
 func (j *Job) Unsubscribe(receipt *Subscription) {
+	j.mu.Lock()
 	subscription := j.observers[receipt.SubscriberID]
+	j.mu.Unlock()
 	close(subscription.Updates)
 	j.mu.Lock()
 	delete(j.observers, receipt.SubscriberID)

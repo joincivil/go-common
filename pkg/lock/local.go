@@ -32,6 +32,7 @@ func NewLocalDLock() *LocalDLock {
 // server projects or for testing services that require an DLock implementation.
 type LocalDLock struct {
 	m     sync.Mutex
+	trymx sync.Mutex
 	locks map[string]*lockMeta
 
 	Tries            *int
@@ -60,9 +61,11 @@ func (m *LocalDLock) Lock(key string, expireMillis *int) error {
 
 	for i := 0; i < tries; i++ {
 		// Check to see if it was unlocked
+		m.trymx.Lock()
 		l = m.lockMeta(key)
 		if l == nil {
 			m.acquire(key, expireMillis)
+			m.trymx.Unlock()
 			return nil
 		}
 
@@ -71,8 +74,10 @@ func (m *LocalDLock) Lock(key string, expireMillis *int) error {
 		if l.expireAt != nil && nowMs > *l.expireAt {
 			m.release(key)
 			m.acquire(key, expireMillis)
+			m.trymx.Unlock()
 			return nil
 		}
+		m.trymx.Unlock()
 
 		time.Sleep(time.Duration(delay) * time.Millisecond)
 	}
@@ -98,12 +103,12 @@ func (m *LocalDLock) acquire(key string, expireMillis *int) {
 	l := &lockMeta{}
 	if expireMillis != nil {
 		nowMs := ctime.CurrentEpochSecsInInt() * 1000
-		m.m.Lock()
 		l.expireAt = numbers.IntToPtr(nowMs + *expireMillis)
-		m.m.Unlock()
 	}
 
+	m.m.Lock()
 	m.locks[key] = l
+	m.m.Unlock()
 }
 
 func (m *LocalDLock) release(key string) {

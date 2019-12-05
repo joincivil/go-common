@@ -1,14 +1,15 @@
 version: 2
 
 defaults: &defaults
-    docker:
-      # CircleCI Go images available at: https://hub.docker.com/r/circleci/golang/
-      - image: circleci/golang:1.12.7
-      # CircleCI PostgreSQL images available at: https://hub.docker.com/r/circleci/postgres/
-      # - image: circleci/postgres:9.4.12-alpine
-      #   environment:
-      #     POSTGRES_USER: root
-      #     POSTGRES_DB: circle_test
+  docker:
+    # CircleCI Go images available at: https://hub.docker.com/r/circleci/golang/
+    - image: circleci/golang:1.12.7
+    - image: circleci/redis:4.0.14-alpine
+    # CircleCI PostgreSQL images available at: https://hub.docker.com/r/circleci/postgres/
+    # - image: circleci/postgres:9.4.12-alpine
+    #   environment:
+    #     POSTGRES_USER: root
+    #     POSTGRES_DB: circle_test
 jobs:
   build:
     <<: *defaults
@@ -26,11 +27,11 @@ jobs:
               echo sudo > ~/sudo
             fi
       - checkout
-      - setup_remote_docker:   # (2)
-          docker_layer_caching: true # (3)
+      - setup_remote_docker: # (2)
+          docker_layer_caching: false # (3)
       - run:
-           name: Setting up tools
-           command: make check-go-env
+          name: Setting up tools
+          command: make check-go-env
       # - run:
       #     name: Waiting for Postgres to be ready
       #     command: |
@@ -68,44 +69,43 @@ jobs:
     working_directory: ~/repos/go-common
     environment:
     steps:
-        - attach_workspace:
-            at: ./
-        - restore_cache:
-            keys:
-              - go-mod-v1-{{ checksum "go.sum" }}
-        - run:
-           name: Setting up tools
-           command: make install-linter
-        - run:
-            name: Run linter
-            command: make lint
-        - save_cache:
-            key: go-mod-v1-{{ checksum "go.sum" }}
-            paths:
-              - "/go/pkg/mod"
+      - attach_workspace:
+          at: ./
+      - restore_cache:
+          keys:
+            - go-mod-v1-{{ checksum "go.sum" }}
+      - run:
+          name: Setting up tools
+          command: make install-linter
+      - run:
+          name: Run linter
+          command: make lint
+      - save_cache:
+          key: go-mod-v1-{{ checksum "go.sum" }}
+          paths:
+            - "/go/pkg/mod"
 
   test:
     <<: *defaults
     working_directory: ~/repos/go-common
     environment:
     steps:
-        - attach_workspace:
-            at: ./
-        - restore_cache:
-            keys:
-              - go-mod-v1-{{ checksum "go.sum" }}
-        - run:
-            name: Run unit tests
-            # environment:
-            #    DB_URL: "postgres://root@localhost:5432/circle_test?sslmode=disable"
-            #    DB_MIGRATIONS: /go/src/github.com/joincivil/go-common/migrations
-            command: |
-               make test
-        - save_cache:
-            key: go-mod-v1-{{ checksum "go.sum" }}
-            paths:
-              - "/go/pkg/mod"
-
+      - attach_workspace:
+          at: ./
+      - restore_cache:
+          keys:
+            - go-mod-v1-{{ checksum "go.sum" }}
+      - run:
+          name: Run unit tests
+          # environment:
+          #    DB_URL: "postgres://root@localhost:5432/circle_test?sslmode=disable"
+          #    DB_MIGRATIONS: /go/src/github.com/joincivil/go-common/migrations
+          command: |
+            make test
+      - save_cache:
+          key: go-mod-v1-{{ checksum "go.sum" }}
+          paths:
+            - "/go/pkg/mod"
 
 workflows:
   version: 2
