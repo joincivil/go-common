@@ -98,12 +98,12 @@ func (m *LocalDLock) acquire(key string, expireMillis *int) {
 	l := &lockMeta{}
 	if expireMillis != nil {
 		nowMs := ctime.CurrentEpochSecsInInt() * 1000
-		m.m.Lock()
 		l.expireAt = numbers.IntToPtr(nowMs + *expireMillis)
-		m.m.Unlock()
 	}
 
+	m.m.Lock()
 	m.locks[key] = l
+	m.m.Unlock()
 }
 
 func (m *LocalDLock) release(key string) {
