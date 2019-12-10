@@ -7,6 +7,11 @@ import (
 	ethTypes "github.com/ethereum/go-ethereum/core/types"
 )
 
+const (
+	// SchemaVersion is the current schema version for the article data
+	SchemaVersion = "1.0"
+)
+
 // Contributor is someone who was part of creating an article
 type Contributor struct {
 	Role string
