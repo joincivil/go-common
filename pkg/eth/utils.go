@@ -23,7 +23,7 @@ import (
 // NOTE(PN): Need to ensure the client passed in is a websocket client.
 // XXX(PN): I'm not sure of it's effectiveness since all nodes may be configured
 // differently in regards to keeping connections open.
-func WebsocketPing(client *ethclient.Client, killChan <-chan bool, pingIntervalSecs int) {
+func WebsocketPing(client *ethclient.Client, killChan <-chan struct{}, pingIntervalSecs int) {
 	log.Infof("Starting ws ping at %v sec intervals...", pingIntervalSecs)
 Loop:
 	for {

@@ -59,7 +59,7 @@ type GooglePubSub struct {
 	ctx       context.Context
 
 	publishChan       chan *GooglePubSubMsg
-	publishKill       chan bool
+	publishKill       chan struct{}
 	publishStarted    bool
 	numRunningPublish int
 	publishMutex      sync.Mutex
@@ -87,7 +87,7 @@ func (g *GooglePubSub) StartPublishers() error {
 	g.publishMutex.Lock()
 	defer g.publishMutex.Unlock()
 	g.publishChan = make(chan *GooglePubSubMsg)
-	g.publishKill = make(chan bool)
+	g.publishKill = make(chan struct{})
 	g.publishStarted = false
 	g.numRunningPublish = 0
 
@@ -174,16 +174,6 @@ func (g *GooglePubSub) NumPublishersRunning() int {
 
 // StopPublishers will stop the publisher goroutines
 func (g *GooglePubSub) StopPublishers() error {
-	for {
-		g.publishMutex.Lock()
-		if g.numRunningPublish == 0 {
-			g.publishMutex.Unlock()
-			break
-		}
-		g.publishMutex.Unlock()
-		g.publishKill <- true
-		time.Sleep(1 * time.Second)
-	}
 	close(g.publishKill)
 	close(g.publishChan)
 	g.publishStarted = false

@@ -14,7 +14,7 @@ type WorkersConfig struct {
 	PubSubTopicName        string
 	PubSubSubscriptionName string
 	NumWorkers             int
-	QuitChan               chan bool
+	QuitChan               chan struct{}
 	EventHandlers          []EventHandler
 }
 
@@ -46,8 +46,8 @@ func NewWorkers(config *WorkersConfig) (*Workers, error) {
 		numWorkers:             config.NumWorkers,
 		quitChan:               config.QuitChan,
 		eventHandlers:          config.EventHandlers,
-		workerStartChan:        make(chan bool),
-		workerStopChan:         make(chan bool),
+		workerStartChan:        make(chan struct{}),
+		workerStopChan:         make(chan struct{}),
 	}, nil
 }
 
@@ -64,11 +64,11 @@ type Workers struct {
 	pubSubSubscriptionName string
 	numWorkers             int
 	numActiveWorkers       int
-	quitChan               chan bool
+	quitChan               chan struct{}
 	eventHandlers          []EventHandler
 	mut                    sync.Mutex
-	workerStartChan        chan bool
-	workerStopChan         chan bool
+	workerStartChan        chan struct{}
+	workerStopChan         chan struct{}
 }
 
 // NumActiveWorkers returns the number of active workers
@@ -117,10 +117,10 @@ Loop:
 func (w *Workers) runWorker() {
 	go func() {
 		time.Sleep(1 * time.Second)
-		w.workerStartChan <- true
+		close(w.workerStartChan)
 		// Blocks here, unless initial failure
 		w.worker()
-		w.workerStopChan <- true
+		close(w.workerStopChan)
 	}()
 }
 
