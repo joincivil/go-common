@@ -31,7 +31,7 @@ const (
 type waiter struct {
 	Mutex       *sync.Mutex
 	DoneWaiting bool
-	QuitChan    chan bool
+	QuitChan    chan struct{}
 }
 
 // TxListener provides methods to interact with Ethereum transactions
@@ -84,7 +84,7 @@ func (t *TxListener) PollForTxCompletion(txID string, updates chan<- string) {
 	w := &waiter{
 		Mutex:       &sync.Mutex{},
 		DoneWaiting: false,
-		QuitChan:    make(chan bool),
+		QuitChan:    make(chan struct{}),
 	}
 	go t.waitForTimeout(w)
 	defer close(w.QuitChan)

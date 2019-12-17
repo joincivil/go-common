@@ -3,10 +3,10 @@
 package pubsub_test
 
 import (
+	"encoding/json"
 	"sync"
 	"testing"
 	"time"
-	"encoding/json"
 
 	"github.com/joincivil/go-common/pkg/pubsub"
 )
@@ -59,7 +59,7 @@ func TestWorkers(t *testing.T) {
 		testHandler1,
 		testHandler2,
 	}
-	quit := make(chan bool)
+	quit := make(chan struct{})
 	config := &pubsub.WorkersConfig{
 		PubSubProjectID:        "civil-media",
 		PubSubTopicName:        "governance-events",
@@ -109,7 +109,7 @@ func TestWorkers(t *testing.T) {
 		t.Fatalf("Should not have given an error on workers creation: err: %v", err)
 	}
 
-	itquit := make(chan bool)
+	itquit := make(chan struct{})
 
 	go func() {
 		workers.Start()
@@ -160,7 +160,7 @@ func TestWorkersRecovery(t *testing.T) {
 		testHandler1,
 		testHandler2,
 	}
-	quit := make(chan bool)
+	quit := make(chan struct{})
 	config := &pubsub.WorkersConfig{
 		PubSubProjectID:        "civil-media",
 		PubSubTopicName:        "governance-events",
@@ -175,7 +175,7 @@ func TestWorkersRecovery(t *testing.T) {
 		t.Fatalf("Should not have given an error on workers creation: err: %v", err)
 	}
 
-	itquit := make(chan bool)
+	itquit := make(chan struct{})
 
 	go func() {
 		workers.Start()

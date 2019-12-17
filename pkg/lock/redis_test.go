@@ -62,7 +62,7 @@ func TestRedisDLock(t *testing.T) {
 		}
 	}(key, dlock)
 
-	kill := make(chan bool)
+	kill := make(chan struct{})
 	go func() {
 		select {
 		case <-time.After(5 * time.Second):
