@@ -117,10 +117,10 @@ Loop:
 func (w *Workers) runWorker() {
 	go func() {
 		time.Sleep(1 * time.Second)
-		close(w.workerStartChan)
+		w.workerStartChan <- struct{}{}
 		// Blocks here, unless initial failure
 		w.worker()
-		close(w.workerStopChan)
+		w.workerStopChan <- struct{}{}
 	}()
 }
 

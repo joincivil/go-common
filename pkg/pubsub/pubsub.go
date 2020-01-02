@@ -174,6 +174,16 @@ func (g *GooglePubSub) NumPublishersRunning() int {
 
 // StopPublishers will stop the publisher goroutines
 func (g *GooglePubSub) StopPublishers() error {
+	for {
+		g.publishMutex.Lock()
+		if g.numRunningPublish == 0 {
+			g.publishMutex.Unlock()
+			break
+		}
+		g.publishMutex.Unlock()
+		g.publishKill <- struct{}{}
+		time.Sleep(1 * time.Second)
+	}
 	close(g.publishKill)
 	close(g.publishChan)
 	g.publishStarted = false

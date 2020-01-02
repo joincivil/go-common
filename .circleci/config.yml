@@ -6,10 +6,13 @@ defaults: &defaults
     - image: circleci/golang:1.12.7
     - image: circleci/redis:4.0.14-alpine
     # CircleCI PostgreSQL images available at: https://hub.docker.com/r/circleci/postgres/
-    # - image: circleci/postgres:9.4.12-alpine
+    # - image: circleci/postgres:9.6-alpine
     #   environment:
     #     POSTGRES_USER: root
     #     POSTGRES_DB: circle_test
+    # Run the Google Pub Sub emulator
+    - image: kinok/google-pubsub-emulator:latest
+
 jobs:
   build:
     <<: *defaults
@@ -98,10 +101,10 @@ jobs:
       - run:
           name: Run unit tests
           # environment:
-          #    DB_URL: "postgres://root@localhost:5432/circle_test?sslmode=disable"
-          #    DB_MIGRATIONS: /go/src/github.com/joincivil/go-common/migrations
+          #   DB_URL: "postgres://root@localhost:5432/circle_test?sslmode=disable"
+          #   DB_MIGRATIONS: ~/repos/go-common/migrations
           command: |
-            make test
+            make test-integration
       - save_cache:
           key: go-mod-v1-{{ checksum "go.sum" }}
           paths:
