@@ -41,6 +41,7 @@ type PersisterConfig interface {
 	PoolMaxConns() *int
 	PoolMaxIdleConns() *int
 	PoolConnLifetimeSecs() *int
+	DataVersion() string
 }
 
 const (
