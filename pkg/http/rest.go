@@ -156,7 +156,9 @@ func (h *RestHelper) buildPostPutRequest(method string, url string,
 		url,
 		reqBody,
 	)
+	// XXX(PN): Make headers configurable, likely send other data besides JSON
 	req.Header.Add("Content-Type", "application/json")
+	req.Header.Add("Accept", "*/*")
 	if err != nil {
 		return nil, err
 	}
@@ -171,6 +173,7 @@ func (h *RestHelper) buildGetDeleteRequest(method string, url string,
 		url,
 		nil,
 	)
+	req.Header.Add("Accept", "*/*")
 	if err != nil {
 		return nil, err
 	}
